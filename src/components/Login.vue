@@ -69,11 +69,13 @@
         </div>
     </div>
 
+
+
   </div>
 </template>
 
 <script>
-
+import {mapGetters} from 'vuex';
 
 export default {
   name: 'Login',
@@ -87,9 +89,10 @@ export default {
   },
 async beforeMount(){
 
-    
   },
-
+  computed: {
+   ...mapGetters(['httpReq']),
+  },
 methods:{
     checkLogin(){
         document.cookie = 'token = 556';
