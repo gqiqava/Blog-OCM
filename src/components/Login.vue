@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div style="">
 
 	<div class="modal-dialog modal-md modal-dialog-centered" role="document" v-if="pressed">
     <div class="modal-content border-0">
@@ -10,9 +10,9 @@
                             <div class="heading_s1">
                                 <h4>Register | Login</h4>
                             </div>
-                                <div class="form-group">
-                                    <input type="text" required="" class="form-control" v-model="number" name="Number" placeholder="Number">
-                                </div>
+                            <div style="margin-bottom: 20px; margin-top: 40px;">
+                            <VuePhoneNumberInput autofocus v-model="number" @update="onUpdate" style="" default-country-code="FR"/>
+                            </div> 
                                 <div class="login_footer form-group">
                                     <div class="chek-form">
                                         <div class="custome-checkbox">
@@ -23,15 +23,8 @@
                                     <a href="#">Forgot password?</a>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-default btn-block" name="login" @click="pressed = false">Next</button>
+                                    <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="pressed = false">Next</button>
                                 </div>
-                            <div class="different_login">
-                                <span> or</span>
-                            </div>
-                            <ul class="btn-login list_none text-center">
-                                <li><a href="#" class="btn btn-facebook rounded-0"><i class="ion-social-facebook"></i>Facebook</a></li>
-                                <li><a href="#" class="btn btn-google rounded-0"><i class="ion-social-googleplus"></i>Google</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -48,7 +41,7 @@
                                 <h4>OTP</h4>
                             </div>
                                 <div class="form-group">
-                                    <input type="text" required="" class="form-control" v-model="OTP" name="OTP" placeholder="Enter OTP">
+                                    <input type="text" required="" @keyup.enter="checkLogin()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="Enter OTP">
                                 </div>
                                 <div class="login_footer form-group">
                                     <div class="chek-form">
@@ -69,13 +62,12 @@
         </div>
     </div>
 
-
-
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex';
+import VuePhoneNumberInput from 'vue-phone-number-input';
 
 export default {
   name: 'Login',
@@ -85,6 +77,7 @@ export default {
           number: '',
           OTP: '',
           test: '',
+          results: {},
       }
   },
 async beforeMount(){
@@ -92,23 +85,28 @@ async beforeMount(){
   },
   computed: {
    ...mapGetters(['httpReq']),
+   resultsTable () {
+        return Object.keys(this.results)
+      },
   },
 methods:{
     checkLogin(){
         document.cookie = 'token = 556';
         location.assign('/')
     },
-
+     onUpdate (payload) {
+        this.results = payload
+      },
 },
 
 props: {
 },
 components: {
+  VuePhoneNumberInput,
 }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import '../assets/style.css';
 @import '../assets/responsive.css';
