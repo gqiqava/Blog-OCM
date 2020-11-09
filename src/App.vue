@@ -2,6 +2,7 @@
   <div id="app">
     <Landing v-if="cookiesObject.token" />
     <Login v-else />
+    <!-- {{ $t('LanguageEn.loginButton') }}     -->
   </div>
 </template>
 
@@ -18,6 +19,8 @@ export default {
 beforeMount(){
   var cookiesObject = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
   this.cookiesObject = cookiesObject;
+
+  // this.$i18n.locale = 'en';
 },
 
   components: {
