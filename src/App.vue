@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Landing v-if="cookiesObject.token" />
+    <Landing v-if="cookiesObject.token1" />
     <Login v-else />
     <!-- {{ $t('LanguageEn.loginButton') }}     -->
   </div>
