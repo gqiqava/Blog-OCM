@@ -74,12 +74,12 @@ export default new Router ({
         },
         {
             name: 'categoryPosts',
-            path: '/categoryPosts',
+            path: '/categoryPosts/:categoryId',
             component: categoryPosts,
         },
         {
             name: 'singlePost',
-            path: '/singlePost',
+            path: '/singlePost/categoryid:categoryId/contentid:contentId',
             component: singlePost,
         },
         // },

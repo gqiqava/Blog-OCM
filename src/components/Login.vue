@@ -66,14 +66,13 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 import VuePhoneNumberInput from 'vue-phone-number-input';
 
 export default {
   name: 'Login',
   data(){
       return{
-          pressed: true,
           number: '',
           OTP: '',
           test: '',
@@ -81,6 +80,7 @@ export default {
           cookiesObject: '',
           chosenBundle: '',
           bundles: [],
+          kekw: '',
       }
   },
 async beforeMount(){
@@ -91,12 +91,13 @@ this.bundless();
 
   },
   computed: {
-   ...mapGetters(['httpReq']),
+   ...mapGetters(['tocken']),
    resultsTable () {
         return Object.keys(this.results)
       },
   },
 methods:{
+    ...mapActions(["setToken", "setPermission"]),
     showModal() {
         this.$refs['my-modal2'].show()
       },
@@ -140,18 +141,19 @@ methods:{
         .then(response => response.json())
         .then(result => {
             if (result.userStatus == 'NOT_FOUND') {
-                this.$refs['my-modal2'].show()
+                this.$refs['my-modal2'].show();
             } else if (result.userStatus == 'ACTIVE') {
-                this.$refs['my-modal'].show()
+                this.$refs['my-modal'].show();
             }
-            document.cookie = 'token = ' + result.token;
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            this.setToken(result.token);
             })
         .catch(error => console.log('error', error));
     },
 
     verifyOtp(){
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
+        myHeaders.append("Authorization", "Bearer " + this.tocken);
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
 
@@ -166,13 +168,22 @@ methods:{
 
         fetch("http://contentapi.zuniac.com/verifyOtp", requestOptions)
         .then(response => response.json())
-        .then(result => console.log(result))
+        .then(result => {
+            if (result.status == 'ACTIVE') {
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            this.setToken(result.token); 
+            location.assign('/')
+            } else {
+               console.log(result) 
+            }
+            })
         .catch(error => console.log('error', error));
     },
 
     register(){
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
+        myHeaders.append("Authorization", "Bearer " + this.tocken);
         myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
 
         var requestOptions = {
@@ -186,6 +197,8 @@ methods:{
         .then(result => {
             this.$refs['my-modal2'].hide();
             this.$refs['my-modal'].show();
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            this.setToken(result.token);
             console.log(result);
         })
         .catch(error => console.log('error', error));

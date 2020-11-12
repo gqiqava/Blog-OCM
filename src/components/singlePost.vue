@@ -9,12 +9,12 @@
                     <div class="blog_img">
                         <img src="https://previews.123rf.com/images/ohsuriya/ohsuriya1505/ohsuriya150500066/40055715-an-iamge-of-sugar-palm-trees-that-shining-with-the-light-of-led-lamps-in-the-night-.jpg" alt="blog_img1">
                         <div class="blog_tags">
-                            <a class="blog_tags_cat bg_blue" href="#">fashion</a>
+                            <a class="blog_tags_cat bg_blue" href="#">{{post.content.category.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
-                            <h2 class="blog_title">Sanford Stadium Project Consists</h2>
+                            <h2 class="blog_title">{{post.content.category.name}}</h2>
                             <ul class="blog_meta">
                                 <li><a href="#"><i class="ti-calendar"></i> April 14, 2018</a></li>
                                 <li><a href="#"><i class="ti-comments"></i> 2 Comment</a></li>
@@ -210,14 +210,40 @@
 
 <script>
 
+
 export default {
   name: 'singlePost',
   data(){
   return {
+      categoryId: '',
+      contentId: '',
+      post: {},
     }
   },
   async created(){
-    
+    this.categoryId = this.$route.params.categoryId;
+    this.contentId = this.$route.params.contentId;
+
+
+    var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMzc2OTc1MDAwNTIiLCJwZXJpb2RJZCI6MSwicGVybWlzc2lvbnMiOnsiMSI6WyJSRUFEX0NPTlRFTlQiXX0sInNlcnZpY2VJZCI6MSwiZXhwIjoxNjA1MjIyMDAwLCJ0cmFuc2FjdGlvbklkIjoiNThmNmE5YTQtMGMxMy00NGI0LTkxMTctIiwic3RhdHVzIjoiQUNUSVZFIn0.-BYg1rbcQ7CjAoehiJpVNHtcWcnkzPzm3_juHJZLIMwxAQSMPfhri4ZleM7WxzHPL2rdpEUqmj6F7zHksC25sw");
+        myHeaders.append("categoryId", "5");
+        myHeaders.append("contentId", "36");
+        myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/user/categories/" + this.categoryId + "/content/" + this.contentId, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            this.post = result;
+            console.log(result)
+            })
+        .catch(error => console.log('error', error));
 
   },
   components: {

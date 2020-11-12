@@ -8,19 +8,22 @@
                         <a >
                             <img src="https://i.pinimg.com/originals/e6/95/a9/e695a9c3b6f25de4fd2d79111668d5f8.jpg" alt="blog_img" style="height: 100%; width: 100%;">
                         </a>
+                         <div class="blog_tags">
+                            <a class="blog_tags_cat bg_default" href="#">{{post.name}}</a>
+                        </div>
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
                             <h5 class="blog_heading">
-                              <router-link :to="{ name: 'categoryPosts', params: {}}">
-                              {{post.title}}
+                              <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id }}">
+                              {{post.name}}
                               </router-link>
                               </h5>
                             <ul class="blog_meta">
-                                <li><a ><i class="ti-calendar"></i> <span>{{post.userId}}</span></a></li>
+                                <li><a ><i class="ti-calendar"></i> <span>{{post.id}}</span></a></li>
                                 <li><a ><i class="ti-comments"></i> <span>2 Comments</span></a></li>
                             </ul>
-                            <p>{{post.body}}</p>
+                            <p>{{post.description}}</p>
                         </div>
                     </div>
                 </div>
@@ -51,12 +54,30 @@ export default {
   data(){
   return {
           posts: [],
+          cookiesObject: '',
     }
   },
   async created(){
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-    const data = await res.json();
-    this.posts = data;
+
+    var cookiesObject = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
+    this.cookiesObject = cookiesObject;
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
+    myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("http://contentapi.zuniac.com/user/getCategories", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        this.posts = result.content;
+        })
+      .catch(error => console.log('error', error));
 
   },
   components: {

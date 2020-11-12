@@ -1,8 +1,14 @@
 export default {
     actions: {
-       async setLeagueId({ commit }, leagueIden){
-            commit('newLeagueId', leagueIden);
-                },
+      async setLeagueId({ commit }, leagueIden){
+        commit('newLeagueId', leagueIden);
+        },
+      async setToken({ commit }, tocken){
+        commit('newToken', tocken);
+          },
+      async setPermission({ commit }, permission){
+        commit('permStatus', permission);
+          },           
             async getArray({ commit, state},){
             const res = await fetch('https://sportapi.zuniac.com/favorites?timezone=%2B04%3A00&token=' + state.token.token);
             const data = await res.json();
@@ -47,7 +53,8 @@ export default {
 
     },
     mutations: {
-      newLeagueId: (state, leagueIden) => state.leagueIDe = leagueIden,
+      newToken: (state, tocken) => state.tocken = tocken,
+      permStatus: (state, permission) => state.permission = permission,
       updateArray(state, favs){
         state.favs = favs;
       },
@@ -59,19 +66,21 @@ export default {
       },
     },
     state: {
-        leagueIDe: '',  
+        tocken: '', 
+        permission: false, 
         favs: [],
         favsT: [],
         favsTe: [],
         httpReq: 'https://sportapi.zuniac.com',
     },
     getters: {
-        leagueIDe: (state) => state.leagueIDe,
-        favs: (state) => state.favs,
-        favsT: (state) => state.favsT,
-        favsTe: (state) => state.favsTe,
-        token: (state) => state.token,
-        lang: (state) => state.lang,
-        httpReq: (state) => state.httpReq,
+      tocken: (state) => state.tocken,
+      permission: (state) => state.permission,
+      favs: (state) => state.favs,
+      favsT: (state) => state.favsT,
+      favsTe: (state) => state.favsTe,
+      token: (state) => state.token,
+      lang: (state) => state.lang,
+      httpReq: (state) => state.httpReq,
     },
 }

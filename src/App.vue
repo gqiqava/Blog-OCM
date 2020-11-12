@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <Landing v-if="cookiesObject.token1" />
+    <Landing v-if="cookiesObject.permission == 'granted'" />
     <Login v-else />
     <!-- {{ $t('LanguageEn.loginButton') }}     -->
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import Landing from'./components/Landing'
 import Login from'./components/Login'
 
@@ -22,6 +23,12 @@ beforeMount(){
 
   // this.$i18n.locale = 'en';
 },
+computed: {
+   ...mapGetters(['permission']),
+   resultsTable () {
+        return Object.keys(this.results)
+      },
+  },
 
   components: {
     Landing,
