@@ -62,6 +62,18 @@
         </b-col>
         </b-row>
     </b-modal>
+    <b-modal ref="my-modal3" hide-footer hide-header title="Using Component Methods">
+        <h1>Activate account?</h1>
+        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <b-row>
+        <b-col>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: #ff324d;" @click="$refs['my-modal3'].hide()">Cancel</button>
+        </b-col>
+        <b-col>
+            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="activate()">Activate</button>
+        </b-col>
+        </b-row>
+    </b-modal>
   </div>
 </template>
 
@@ -80,7 +92,7 @@ export default {
           cookiesObject: '',
           chosenBundle: '',
           bundles: [],
-          kekw: '',
+          activateToken: '',
       }
   },
 async beforeMount(){
@@ -142,8 +154,10 @@ methods:{
         .then(result => {
             if (result.userStatus == 'NOT_FOUND') {
                 this.$refs['my-modal2'].show();
-            } else if (result.userStatus == 'ACTIVE') {
+            } else if (result.userStatus == 'ACTIVE' || result.userStatus == 'PAST_DUE') {
                 this.$refs['my-modal'].show();
+            } else {
+                console.log(result)
             }
             document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             this.setToken(result.token);
@@ -174,13 +188,42 @@ methods:{
             document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             this.setToken(result.token); 
             location.assign('/')
+            } else if (result.status == 'PAST_DUE'){
+            this.activateToken = result.token;
+            this.$refs['my-modal'].hide();
+            this.$refs['my-modal3'].show();
             } else {
                console.log(result) 
             }
             })
         .catch(error => console.log('error', error));
     },
+    
+    activate(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + this.activateToken);
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
 
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/activate", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+           if (result.message == 'User activated successfully.' ) {
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            location.assign('/')
+           } else {
+               alert(result.message);
+               console.log(result)
+           }
+        })
+        .catch(error => console.log('error', error));
+    },
     register(){
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + this.tocken);

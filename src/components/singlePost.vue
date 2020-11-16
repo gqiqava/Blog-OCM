@@ -4,22 +4,22 @@
 <div class="section">
 	<div class="container">
     <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
             <div class="single_post">
                     <div class="blog_img">
                         <img src="https://previews.123rf.com/images/ohsuriya/ohsuriya1505/ohsuriya150500066/40055715-an-iamge-of-sugar-palm-trees-that-shining-with-the-light-of-led-lamps-in-the-night-.jpg" alt="blog_img1">
                         <div class="blog_tags">
-                            <a class="blog_tags_cat bg_blue" href="#">{{post.content.category.name}}</a>
+                            <a class="blog_tags_cat bg_blue" href="#">{{postContent.category.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
-                            <h2 class="blog_title">{{post.content.category.name}}</h2>
+                            <h2 class="blog_title">{{postContent.category.name}}</h2>
                             <ul class="blog_meta">
                                 <li><a href="#"><i class="ti-calendar"></i> April 14, 2018</a></li>
                                 <li><a href="#"><i class="ti-comments"></i> 2 Comment</a></li>
                             </ul>
-                            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Curabitur malesuada malesuada metus ut placerat. Cras a porttitor quam, eget ornare sapien. In sit amet vulputate metus. Nullam eget rutrum nisl. Sed tincidunt lorem sed maximus interdum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque efficitur mauris nec tincidunt. cursus leo mieu ultricies magna faucibus id.</p>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                             <blockquote class="blockquote_style1">
                             <p>Integer is metus site turpis facilisis customers. elementum an mauris in venenatis consectetur east. Praesent condimentum bibendum Morbi sit amet commodo pellentesque at fringilla tincidunt risus.</p>
                             </blockquote>
@@ -156,7 +156,7 @@
                     </form>
                 </div> -->
             </div>
-            <div class="col-lg-4">
+            <!-- <div class="col-lg-4">
             <div class="sidebar mt-4 pt-2 mt-lg-0 pt-lg-0">
                 <div class="widget">
                     <h5 class="widget_title">About Me</h5>
@@ -198,7 +198,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -218,15 +218,19 @@ export default {
       categoryId: '',
       contentId: '',
       post: {},
+      postContent: {},
     }
   },
   async created(){
     this.categoryId = this.$route.params.categoryId;
     this.contentId = this.$route.params.contentId;
 
+    var cookiesObject = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
+    this.cookiesObject = cookiesObject;
+
 
     var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMzc2OTc1MDAwNTIiLCJwZXJpb2RJZCI6MSwicGVybWlzc2lvbnMiOnsiMSI6WyJSRUFEX0NPTlRFTlQiXX0sInNlcnZpY2VJZCI6MSwiZXhwIjoxNjA1MjIyMDAwLCJ0cmFuc2FjdGlvbklkIjoiNThmNmE5YTQtMGMxMy00NGI0LTkxMTctIiwic3RhdHVzIjoiQUNUSVZFIn0.-BYg1rbcQ7CjAoehiJpVNHtcWcnkzPzm3_juHJZLIMwxAQSMPfhri4ZleM7WxzHPL2rdpEUqmj6F7zHksC25sw");
+        myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
         myHeaders.append("categoryId", "5");
         myHeaders.append("contentId", "36");
         myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
@@ -241,6 +245,7 @@ export default {
         .then(response => response.json())
         .then(result => {
             this.post = result;
+            this.postContent = result.content;
             console.log(result)
             })
         .catch(error => console.log('error', error));
