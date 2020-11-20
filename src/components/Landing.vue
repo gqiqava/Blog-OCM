@@ -48,7 +48,7 @@
 </header>
 
 <!-------------------------- START BLOG  ----------------------->
-<router-view></router-view>
+<router-view :key="$route.path"></router-view>
 <!-- END BLOG -->
  
     

@@ -5,25 +5,34 @@
 	<div class="container">
     <div class="row">
     <div class="col-lg-12">
-            <div class="single_post">
+            <div class="single_post" v.for>
                     <div class="blog_img">
                         <img src="https://previews.123rf.com/images/ohsuriya/ohsuriya1505/ohsuriya150500066/40055715-an-iamge-of-sugar-palm-trees-that-shining-with-the-light-of-led-lamps-in-the-night-.jpg" alt="blog_img1">
                         <div class="blog_tags">
-                            <a class="blog_tags_cat bg_blue" href="#">{{postContent.category.name}}</a>
+                            <a class="blog_tags_cat bg_blue" href="#">{{post.content.category.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
-                            <h2 class="blog_title">{{postContent.category.name}}</h2>
+                            <h2 class="blog_title">{{postContent.title}}</h2>
                             <ul class="blog_meta">
                                 <li><a href="#"><i class="ti-calendar"></i> April 14, 2018</a></li>
                                 <li><a href="#"><i class="ti-comments"></i> 2 Comment</a></li>
                             </ul>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                            <blockquote class="blockquote_style1">
+                            <p>{{postContent.body}}</p>
+                            <div style="text-align: center;">
+                            <audio controls style="">
+                            <source :src="postContent.audio">
+                            </audio>
+                            </div>
+                            <!-- <blockquote class="blockquote_style1">
                             <p>Integer is metus site turpis facilisis customers. elementum an mauris in venenatis consectetur east. Praesent condimentum bibendum Morbi sit amet commodo pellentesque at fringilla tincidunt risus.</p>
-                            </blockquote>
-                            <div class="row">
+                            </blockquote> -->
+
+                            <!-- Images -->
+
+
+                            <!-- <div class="row">
                             <div class="col-sm-6">
                                 <div class="single_img">
                                 <img class="w-100 mb-4" src="https://i.pinimg.com/originals/a9/87/99/a987995fb73938287f939163b3c0d54a.jpg" alt="blog_single_img1">
@@ -34,9 +43,7 @@
                             <img class="w-100 mb-4" src="https://i.pinimg.com/originals/03/1c/80/031c8052245d537b2be3f230eedf94b5.jpg" alt="blog_single_img2">
                                     </div>
                                 </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent id dolor dui, dapibus gravida elit. Donec consequat laoreet sagittis. Suspendisse ultricies ultrices viverra. Morbi rhoncus laoreet tincidunt. Mauris interdum convallis metus. Suspendisse vel lacus est, sit amet tincidunt erat. Etiam purus sem, euismod eu vulputate eget, porta quis sapien. Donec tellus est, rhoncus vel scelerisque id, iaculis eu nibh.</p>
-                            <p>Duis vestibulum quis quam vel accumsan. Nunc a vulputate lectus. Vestibulum eleifend nisl sed massa sagittis vestibulum. Vestibulum pretium blandit tellus, sodales volutpat sapien varius vel. Phasellus tristique cursus erat, a placerat tellus laoreet eget. Fusce vitae dui sit amet lacus rutrum convallis. Vivamus sit amet lectus venenatis est rhoncus interdum a vitae velit.</p>
+                            </div> -->
                     <div class="blog_post_footer">
                                 <div class="row justify-content-between align-items-center">
                                     <div class="col-md-8 mb-3 mb-md-0">
@@ -218,7 +225,7 @@ export default {
       categoryId: '',
       contentId: '',
       post: {},
-      postContent: {},
+      postContent: [],
     }
   },
   async created(){
@@ -231,8 +238,8 @@ export default {
 
     var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
-        myHeaders.append("categoryId", "5");
-        myHeaders.append("contentId", "36");
+        myHeaders.append("categoryId", this.categoryId);
+        myHeaders.append("contentId", this.contentId);
         myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
 
         var requestOptions = {
@@ -245,8 +252,8 @@ export default {
         .then(response => response.json())
         .then(result => {
             this.post = result;
-            this.postContent = result.content;
-            console.log(result)
+            this.postContent = result.content.contentDataSet[0];
+            console.log(this.postContent)
             })
         .catch(error => console.log('error', error));
 
