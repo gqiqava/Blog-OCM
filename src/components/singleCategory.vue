@@ -6,7 +6,7 @@
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
-                            <img src="https://i.pinimg.com/originals/e6/95/a9/e695a9c3b6f25de4fd2d79111668d5f8.jpg" alt="blog_img" style="height: 100%; width: 100%;">
+                            <img :src="post.icon" :alt="post.icon" style="height: 100%; width: 100%;">
                         </a>
                          <div class="blog_tags">
                             <a class="blog_tags_cat bg_default" href="#">{{post.name}}</a>
@@ -19,10 +19,10 @@
                               {{post.name}}
                               </router-link>
                               </h5>
-                            <ul class="blog_meta">
-                                <li><a ><i class="ti-calendar"></i> <span>{{post.id}}</span></a></li>
+                            <!-- <ul class="blog_meta">
+                                <li><a ><i class="ti-calendar"></i> <span> date </span></a></li>
                                 <li><a ><i class="ti-comments"></i> <span>2 Comments</span></a></li>
-                            </ul>
+                            </ul> -->
                             <p>{{post.description}}</p>
                         </div>
                     </div>

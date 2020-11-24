@@ -152,7 +152,7 @@ methods:{
         fetch("http://contentapi.zuniac.com/login", requestOptions)
         .then(response => response.json())
         .then(result => {
-            if (result.userStatus == 'NOT_FOUND') {
+            if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
                 this.$refs['my-modal2'].show();
             } else if (result.userStatus == 'ACTIVE' || result.userStatus == 'PAST_DUE') {
                 this.$refs['my-modal'].show();
