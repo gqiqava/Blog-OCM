@@ -91,6 +91,7 @@ export default {
           categoryId: '',
           actToken: '',
           verToken: '',
+          OTP: '',
     }
   },
   async created(){
