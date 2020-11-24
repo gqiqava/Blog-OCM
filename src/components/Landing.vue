@@ -58,7 +58,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <p class="copyright m-0 text-center">© 2020 All Rights Reserved By Morus.</p>
+                    <p class="copyright m-0 text-center"> © {{new Date().getFullYear()}} {{ $t('LanguageEn.reserved') }}</p>
                 </div>
             </div>
         </div>
