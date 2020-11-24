@@ -12,6 +12,7 @@
       "activate": "Activate account?",
       "subscribe": "Subscribe",
       "activateButton": "activate",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "alsoSee": "Also See"
 }
 }
