@@ -218,16 +218,16 @@ button:focus {
     font-size: 22px;
 }
 .btn-default {
-	background-color: #FF324D;
-	border: 1px solid #FF324D;
+	background-color: #ff7900;
+	border: 1px solid #ff7900;
 	color: #fff;
 	position: relative;
 	z-index: 1;
 }
 .btn-default:hover {
 	color: #fff !important;
-	background-color: #BF000D;
-	border: 1px solid #BF000D;
+	background-color: #e87105;
+	border: 1px solid #e87105;
 }
 .btn-white {
 	background-color: transparent;
