@@ -17,7 +17,6 @@
                             <h2 class="blog_title">{{postContent.title}}</h2>
                             <ul class="blog_meta">
                                 <li><a href="#"><i class="ti-calendar"></i> April 14, 2018</a></li>
-                                <li><a href="#"><i class="ti-comments"></i> 2 Comment</a></li>
                             </ul>
                             <p>{{postContent.body}}</p>
                             <div style="text-align: center;">
