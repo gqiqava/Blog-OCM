@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import singleCategory from '../components/singleCategory'
 import categoryPosts from '../components/categoryPosts'
 import singlePost from '../components/singlePost'
+import linkPager from '../components/linkPager'
 
 
 Vue.use(Router)
@@ -13,60 +14,6 @@ export default new Router ({
         return { x: 0, y: 100 }
       },
     routes: [
-        //     {
-        //     path: '/',
-        //     redirect:'/Today',
-        //     component: NavbarLinks,
-        //     children: [
-        //         {   
-        //             name: 'AllGamesPar',
-        //             path:'AllGamesPar',
-        //             component: AllGamesPar,
-                    
-        //         },
-        //         {   
-        //             name: 'AllGames',
-        //             path:'AllGames',
-        //             component: AllGames,
-                    
-        //         },
-        //         {
-        //             name: 'FinishedPar',
-        //             path:'FinishedPar',
-        //             component: FinishedPar
-        //         },
-        //         {
-        //             name: 'Finished',
-        //             path:'gamesFrom/:dateS',
-        //             component: Finished
-        //         },
-        //         {
-        //             name: 'Live',
-        //             path:'Live',
-        //             component: Live
-        //         },
-        //         {
-        //             name: 'Today',
-        //             path:'Today',
-        //             component: Today
-        //         },
-        //         {
-        //             name: 'Scheduled',
-        //             path:'Scheduled',
-        //             component: Scheduled
-        //         },
-        //         {
-        //             name: 'MyGames',
-        //             path:'MyGames',
-        //             component: MyGames
-        //         },
-        //         {   
-        //             name: 'Leagues',
-        //             path:'Leagues',
-        //             component: Leagues,
-        //         },
-        //     ],
-        // },
         {
             name: 'singleCategory',
             path: '/',
@@ -81,6 +28,11 @@ export default new Router ({
             name: 'singlePost',
             path: '/singlePost/categoryid:categoryId/contentid:contentId',
             component: singlePost,
+        },
+        {
+            name: 'linkPager',
+            path: '/contentLink/id=:id',
+            component: linkPager,
         },
         // },
         // {
