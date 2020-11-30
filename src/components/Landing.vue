@@ -16,16 +16,24 @@
 
 
 <!-- START HEADER -->
-<header class="header_wrap dark_skin">
-	<div class="container">
-  <nav class="navbar navbar-expand-lg bg-light fixed-top container" style="height: 60px; background: white !important;"> 
+<!-- <header class="header_wrap dark_skin">
+  <nav class="navbar navbar-expand-lg bg-light fixed-top" style="height: 60px; background: #202325 !important;"> 
+      <b-row>
+        <b-col>
+            <a v-b-toggle.sidebar-1>
+                <img src="@/assets/menuIcon.png" alt="Menu" style="width: 40px;">
+            </a>
+        </b-col>
+        <b-col>
             <a class="navbar-brand">
-                <router-link :to="{ name: 'singleCategory', params: {}}">
-                <img class="logo_dark" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Bass_logo.svg/800px-Bass_logo.svg.png" alt="logo" style="width: 30px; margin-left: 20px;"/>
+                <router-link :to="{ name: 'singleCategory'}">
+                <img class="logo_dark" src="@/assets/logo.svg" alt="logo" style="width: 60px;"/>
                 </router-link>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="ion-android-menu"></span> </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        </b-col>
+        </b-row> -->
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="ion-android-menu"></span> </button> -->
+            <!-- <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown">Menu</a>
                         <div class="dropdown-menu dropdown-reverse">
@@ -33,27 +41,111 @@
                                 <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example1</a></li>
                                 <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example2</a></li>
                                 <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example3</a></li>
-                                <div class="divider"></div>
                                 <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">Language</a></li>
                                 <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">Terms & Conditions</a></li>
-                                <div class="divider"></div>
                                 <li><a class="dropdown-item nav-link nav_item" @click="logout()" style="cursor: pointer;">Logout </a></li>
                             </ul>
                         </div>
                     </li>  
                 </ul>
-            </div>
-		</nav>
-	</div>
-</header>
+            </div> -->
+		<!-- </nav>
+</header> -->
 
-<!-------------------------- START BLOG  ----------------------->
+<div>
+  <b-navbar fixed="top" type="dark" variant="dark" style="background: black !important; height: 60px;">
+      <a v-b-toggle.sidebar-1>
+                <img src="@/assets/menuIcon.png" alt="Menu" style="width: 28px; cursor: pointer; margin-left: 20px;">
+            </a>
+    <b-navbar-brand href="#">
+        <router-link :to="{ name: 'singleCategory'}">
+        <img src="@/assets/logo.svg" alt="ZuniLife" style="width: 80px; margin-left: 20px;">
+        </router-link>
+    </b-navbar-brand>
+      <!-- <b-navbar-nav class="mr-auto">
+        <b-nav-item-dropdown text="Lang" right>
+          <b-dropdown-item href="#">EN</b-dropdown-item>
+          <b-dropdown-item href="#">ES</b-dropdown-item>
+          <b-dropdown-item href="#">RU</b-dropdown-item>
+          <b-dropdown-item href="#">FA</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item-dropdown right>
+          <template #button-content>
+            <em>User</em>
+          </template>
+          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav> -->
+  </b-navbar>
+</div>
+
+<!-- start Sidebar -->
+
+<div>
+    <b-sidebar id="sidebar-1" title="" shadow>
+      <div class="px-3 py-2">
+        <div style="text-align: left;">
+            <img src="@/assets/ZunilifeLogo.svg"  alt="Zunilife" style="width: 80px; margin-bottom: 30px;">
+        </div>
+          <div style="text-align: left; margin-bottom: 20px;">
+            <span style="font-size: 17px;"> {{cookiesObject.number}} </span>
+            <img src="@/assets/logout-256.png" @click="logout()" alt="Menu" style="width: 30px; cursor: pointer;">
+          </div>
+        <p style="font-size: 19px; text-align: left; color: black;"> 
+            <img src="@/assets/settings.png" alt="." style="width: 30px; cursor: pointer; margin-top: -5px;">
+            <span> Settings </span>
+        </p>
+        <ul style="list-style-type: none; text-align: left; margin-left: 30px;"> 
+            <!-- <li class="listItem">
+            <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
+            <a style="cursor: pointer; margin-left: 5px;">example </a>
+            </li>
+            <li class="listItem">
+            <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
+            <a style="cursor: pointer; margin-left: 5px;">example </a>
+            </li> -->
+            <li class="listItem">
+            <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
+            <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.about') }} </a>
+            </li>
+            <li class="listItem" @click="$refs['language-modal'].show()">
+            <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
+            <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.language') }}</a>
+            </li>
+            <li class="listItem">
+            <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
+            <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.termsC') }}</a>
+            </li>
+        </ul>
+      </div>
+    </b-sidebar>
+  </div>
+
+<!-- End Sidebar -->
+
+<b-modal ref="language-modal" hide-footer hide-header title="Using Component Methods">
+        <h4>{{ $t('LanguageEn.language') }}</h4>
+        <ul style="list-style-type: none; text-align: left;"> 
+            <li class="listItem" v-bind:class="{ chosenLanguage: $i18n.locale == 'fr' }" @click="$i18n.locale = 'fr'">
+            <a style="cursor: pointer; margin-left: 5px;">Français</a>
+            </li>
+            <li class="listItem" v-bind:class="{ chosenLanguage: $i18n.locale == 'en' }" @click="$i18n.locale = 'en'">
+            <a style="cursor: pointer; margin-left: 5px;">English</a>
+            </li>
+        </ul>
+    </b-modal>
+
+
+<!-- START BLOG  -->
+
 <router-view :key="$route.path"></router-view>
+
 <!-- END BLOG -->
  
     
 <!-- START FOOTER SECTION --> 
-<footer class="footer_dark bg_black">
+<footer class="footer_dark bg_black" style="background: black;">
     <div class="bottom_footer border-top-tran">
         <div class="container">
             <div class="row">
@@ -82,15 +174,15 @@ export default {
       return{
           loader: true,
           posts: [],
+          cookiesObject: '',
       }
   },
  async beforeMount(){
 
     this.loader = true;
      
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-    const data = await res.json();
-    this.posts = data;
+    var cookiesObject = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
+    this.cookiesObject = cookiesObject;
     
     this.loader = false;
   },
@@ -125,5 +217,20 @@ export default {
 
 .header_wrap{
   margin-top: 60px;
+}
+
+.listItem{
+    margin-top: 5px;
+    color: black;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.listItem:hover{
+    color: #ffa500;
+}
+
+.chosenLanguage{
+  color:  #e99a06;
 }
 </style>

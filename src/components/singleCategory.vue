@@ -2,28 +2,26 @@
 <div class="section">
 	<div class="container">
   <div class="row">
+    <!-- Col xl size for biggest web -->
       <div v-for="post in posts" :key="post.id" class="col-xl-4 col-lg-4 col-md-6">
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
-                            <img :src="post.icon" :alt="post.icon" style="height: 100%; width: 100%;">
+                          <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id }}">  
+                            <img :src="imageLink + post.id" :alt="post.id" style="height: 100%; width: 100%;">
+                          </router-link>
                         </a>
                          <div class="blog_tags">
-                            <a class="blog_tags_cat bg_default" href="#">{{post.name}}</a>
+                            <a class="blog_tags_cat bg_warning" style="background: #ff7900;">{{post.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
-                            <h5 class="blog_heading">
-                              <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id }}">
-                              {{post.name}}
-                              </router-link>
-                              </h5>
                             <!-- <ul class="blog_meta">
                                 <li><a ><i class="ti-calendar"></i> <span> date </span></a></li>
                                 <li><a ><i class="ti-comments"></i> <span>2 Comments</span></a></li>
                             </ul> -->
-                            <p>{{post.description}}</p>
+                            <p style="color: black;">{{post.description}}</p>
                         </div>
                     </div>
                 </div>
@@ -53,8 +51,9 @@ export default {
   name: 'singleCategory',
   data(){
   return {
-          posts: [],
-          cookiesObject: '',
+        posts: [],
+        cookiesObject: '',
+        imageLink: 'http://contentapi.zuniac.com/images/',
     }
   },
   async created(){

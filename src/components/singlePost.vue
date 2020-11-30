@@ -5,11 +5,11 @@
 	<div class="container">
     <div class="row">
     <div class="col-lg-12">
-            <div class="single_post" v.for>
+            <div class="single_post">
                     <div class="blog_img">
                         <img src="https://previews.123rf.com/images/ohsuriya/ohsuriya1505/ohsuriya150500066/40055715-an-iamge-of-sugar-palm-trees-that-shining-with-the-light-of-led-lamps-in-the-night-.jpg" alt="blog_img1">
                         <div class="blog_tags">
-                            <a class="blog_tags_cat bg_blue" href="#">{{post.content.category.name}}</a>
+                            <a class="blog_tags_cat bg_blue" style="background: #ff7900;">{{post.content.category.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
@@ -225,6 +225,7 @@ export default {
       contentId: '',
       post: {},
       postContent: [],
+      ex: '',
     }
   },
   async created(){
@@ -252,7 +253,8 @@ export default {
         .then(result => {
             this.post = result;
             this.postContent = result.content.contentDataSet[0];
-            console.log(this.postContent)
+            this.ex = result.content.contentDataSet[0].body;
+            console.log(this.postContent);
             })
         .catch(error => console.log('error', error));
 

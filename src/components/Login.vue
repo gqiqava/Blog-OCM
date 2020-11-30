@@ -8,18 +8,18 @@
     <div class="col-12">
     <div class="padding_eight_all">	
                             <div class="heading_s1">
-                                <h4>Register | Login</h4>
+                                <h4>{{ $t('LanguageEn.regLog') }}</h4>
                             </div>
                             <div style="margin-bottom: 20px; margin-top: 40px;">
                             <VuePhoneNumberInput autofocus v-model="number" @update="onUpdate" style="" default-country-code="CM"/>
                             </div> 
-                            <span style="float: left; margin-bottom: 10px;">Select bundle to subscribe:</span>
+                            <span style="float: left; margin-bottom: 10px;">{{ $t('LanguageEn.selectBundle') }}</span>
                             <b-form-select v-model="chosenBundle" class="mb-3">
                                 <b-form-select-option v-for="bundle in bundles" :key="bundle.id" :value="bundle.id"> {{bundle.name}}</b-form-select-option>
                             </b-form-select>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="login()" v-if="chosenBundle != '' && results.isValid == true">Next</button>
-                                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" disabled v-else>Complete Form</button>
+                                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" disabled v-else>{{ $t('LanguageEn.completeForm') }}</button>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                                     <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="Enter OTP">
                                 </div>
                                 <div class="form-group">
-                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">Send</button>
+                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.send') }}</button>
                                 </div>
                         </div>
                     </div>
@@ -51,26 +51,26 @@
     </div>
     </b-modal>
     <b-modal ref="my-modal2" hide-footer hide-header title="Using Component Methods">
-        <h1>Registration terms</h1>
+        <h1>{{ $t('LanguageEn.regTerms') }}</h1>
         <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         <b-row>
         <b-col>
-            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: #ff324d;" @click="$refs['my-modal2'].hide()">Cancel</button>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide()">{{ $t('LanguageEn.cancel') }}</button>
         </b-col>
         <b-col>
-            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="register()">Subscribe</button>
+            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="register()">{{ $t('LanguageEn.subscribe') }}</button>
         </b-col>
         </b-row>
     </b-modal>
     <b-modal ref="my-modal3" hide-footer hide-header title="Using Component Methods">
-        <h1>Activate account?</h1>
+        <h1>{{ $t('LanguageEn.activate') }}</h1>
         <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         <b-row>
         <b-col>
-            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: #ff324d;" @click="$refs['my-modal3'].hide()">Cancel</button>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal3'].hide()">{{ $t('LanguageEn.cancel') }}</button>
         </b-col>
         <b-col>
-            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="activate()">Activate</button>
+            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="activate()">{{ $t('LanguageEn.activateButton') }}</button>
         </b-col>
         </b-row>
     </b-modal>
@@ -163,6 +163,7 @@ methods:{
             this.setToken(result.token);
             })
         .catch(error => console.log('error', error));
+        document.cookie = 'number = ' + this.results.formattedNumber + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
     },
 
     verifyOtp(){
@@ -193,7 +194,7 @@ methods:{
             this.$refs['my-modal'].hide();
             this.$refs['my-modal3'].show();
             } else {
-               console.log(result) 
+               alert(result.message) 
             }
             })
         .catch(error => console.log('error', error));
@@ -275,7 +276,8 @@ components: {
 }
 
 .mbtn:hover{
-    color: #BF000D !important;
+    color: #ff7900 !important;
+    border-color: #ff7900 !important;
 }
 
 

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Landing v-if="cookiesObject.permission == 'granted'" />
+    <linkPager v-else-if="$route.name == 'linkPager'" :key="$route.path"/>
     <Login v-else />
     <!-- {{ $t('LanguageEn.loginButton') }}     -->
   </div>
@@ -10,6 +11,7 @@
 import {mapGetters} from 'vuex';
 import Landing from'./components/Landing'
 import Login from'./components/Login'
+import linkPager from'./components/linkPager'
 
 export default {
    data(){
@@ -33,6 +35,7 @@ computed: {
   components: {
     Landing,
     Login,
+    linkPager,
   },
 }
 </script>
