@@ -52,7 +52,7 @@
 		<!-- </nav>
 </header> -->
 
-<div>
+<div style="margin-bottom: 10px;">
   <b-navbar fixed="top" type="dark" variant="dark" style="background: black !important; height: 60px;">
       <a v-b-toggle.sidebar-1>
                 <img src="@/assets/menuIcon.png" alt="Menu" style="width: 28px; cursor: pointer; margin-left: 20px;">
@@ -88,15 +88,17 @@
         <div style="text-align: left;">
             <img src="@/assets/ZunilifeLogo.svg"  alt="Zunilife" style="width: 80px; margin-bottom: 30px;">
         </div>
-          <div style="text-align: left; margin-bottom: 20px;">
-            <span style="font-size: 17px;"> {{cookiesObject.number}} </span>
+          <div style="text-align: left; margin-bottom: 20px;" v-if="cookiesObject.permission == 'granted'">
+            <span style="font-size: 17px;"> {{cookiesObject.number.slice(1)}} </span>
             <img src="@/assets/logout-256.png" @click="logout()" alt="Menu" style="width: 30px; cursor: pointer;">
           </div>
+          <div style="text-align: left; margin-bottom: 20px;" v-else>
+            <b-button type="" name="login" @click="$refs['first-modal'].show()" style="font-size: 12px; background: #ff7900; font-weight: bold;">{{ $t('LanguageEn.login') }}</b-button>
+          </div>
         <p style="font-size: 19px; text-align: left; color: black;"> 
-            <img src="@/assets/settings.png" alt="." style="width: 30px; cursor: pointer; margin-top: -5px;">
-            <span> Settings </span>
+            <span style="color: #ff7900"> Settings </span>
         </p>
-        <ul style="list-style-type: none; text-align: left; margin-left: 30px;"> 
+        <ul style="list-style-type: none; text-align: left; margin-left: 10px;"> 
             <!-- <li class="listItem">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">example </a>
@@ -111,7 +113,7 @@
             </li>
             <li class="listItem" @click="$refs['language-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
-            <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.language') }}</a>
+            <a style="cursor: pointer; margin-left: 5px;" >{{ $t('LanguageEn.language') }}</a>
             </li>
             <li class="listItem">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
@@ -158,7 +160,72 @@
 </footer>
 <!-- END FOOTER SECTION --> 
 
-<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a> 
+<!--  MODALS -->   
+
+<b-modal ref="first-modal" id="first-modall" hide-footer hide-header title="Using Component Methods">
+        <div class="heading_s1">
+            <img src="@/assets/logo.svg" alt="ZuniLife" style="width: 80px;">
+        </div>
+        <div style="margin-bottom: 20px; margin-top: 40px;">
+            <VuePhoneNumberInput autofocus v-model="number" @update="onUpdate" style="" default-country-code="CM"/>
+        </div> 
+        <span style="float: left; margin-bottom: 10px;">{{ $t('LanguageEn.selectBundle') }}</span>
+        <b-form-select v-model="chosenBundle" class="mb-3">
+            <b-form-select-option v-for="bundle in bundles" :key="bundle.id" :value="bundle.id"> {{bundle.name}}</b-form-select-option>
+        </b-form-select>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="login(), $refs['first-modal'].hide()" v-if="chosenBundle != '' && results.isValid == true">Next</button>
+                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" disabled v-else>Next</button>
+            </div>
+    </b-modal>
+    <b-modal ref="my-modal" hide-footer hide-header title="Using Component Methods">
+      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+    <div class="modal-content border-0">
+    <div class="modal-body">
+    <div class="row no-gutters">
+    <div class="col-12">
+    <div class="padding_eight_all">	
+                            <div class="heading_s1">
+                                <h4>OTP</h4>
+                            </div>
+                                <div class="form-group">
+                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="Enter OTP">
+                                </div>
+                                <div class="form-group">
+                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.send') }}</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </b-modal>
+    <b-modal ref="my-modal2" hide-footer hide-header title="Using Component Methods">
+        <h1>{{ $t('LanguageEn.regTerms') }}</h1>
+        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <b-row>
+        <b-col>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide()">{{ $t('LanguageEn.cancel') }}</button>
+        </b-col>
+        <b-col>
+            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="register()">{{ $t('LanguageEn.subscribe') }}</button>
+        </b-col>
+        </b-row>
+    </b-modal>
+    <b-modal ref="my-modal3" hide-footer hide-header title="Using Component Methods">
+        <h1>{{ $t('LanguageEn.activate') }}</h1>
+        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <b-row>
+        <b-col>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal3'].hide()">{{ $t('LanguageEn.cancel') }}</button>
+        </b-col>
+        <b-col>
+            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="activate()">{{ $t('LanguageEn.activateButton') }}</button>
+        </b-col>
+        </b-row>
+    </b-modal>
+
 
 
 
@@ -166,7 +233,8 @@
 </template>
 
 <script>
-
+import {mapGetters, mapActions} from 'vuex';
+import VuePhoneNumberInput from 'vue-phone-number-input';
 
 export default {
   name: 'Landing',
@@ -174,7 +242,14 @@ export default {
       return{
           loader: true,
           posts: [],
+          number: '',
+          OTP: '',
+          test: '',
+          results: {},
           cookiesObject: '',
+          chosenBundle: '',
+          bundles: [],
+          activateToken: '',
       }
   },
  async beforeMount(){
@@ -183,20 +258,167 @@ export default {
      
     var cookiesObject = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
     this.cookiesObject = cookiesObject;
+
+    this.bundless();
     
     this.loader = false;
-  },
-  methods:{
-      logout(){
-         document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
-         document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
-         location.assign('/')
-      },
   },
   props: {
   },
   components: {
-}
+  VuePhoneNumberInput,
+},
+computed: {
+   ...mapGetters(['tocken']),
+   resultsTable () {
+        return Object.keys(this.results)
+      },
+  },
+  methods:{
+    ...mapActions(["setToken", "setPermission"]),
+     logout(){
+         document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+         document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+         location.assign('/')
+      },
+    showModal() {
+        this.$refs['my-modal2'].show()
+      },
+
+    onUpdate (payload) {
+        this.results = payload
+    },
+    bundless(){
+        var myHeaders = new Headers();
+            myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+            var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+            };
+
+            fetch("http://contentapi.zuniac.com/bundleServices", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                this.bundles = result
+                })
+            .catch(error => console.log('error', error));
+    },
+
+    login(){
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+        var raw = JSON.stringify({"msisdn": this.results.formattedNumber.slice(1) ,"periodId": 1,"serviceId": this.chosenBundle});
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/login", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
+                this.$refs['my-modal2'].show();
+            } else if (result.userStatus == 'ACTIVE' || result.userStatus == 'PAST_DUE') {
+                this.$refs['my-modal'].show();
+            } else {
+                console.log(result)
+            }
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            this.setToken(result.token);
+            })
+        .catch(error => console.log('error', error));
+        document.cookie = 'number = ' + this.results.formattedNumber + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+    },
+
+    verifyOtp(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + this.tocken);
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+        var raw = JSON.stringify({"otp": this.OTP});
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/verifyOtp", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result.status == 'ACTIVE') {
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            this.setToken(result.token); 
+            location.assign('/')
+            } else if (result.status == 'PAST_DUE'){
+            this.activateToken = result.token;
+            this.$refs['my-modal'].hide();
+            this.$refs['my-modal3'].show();
+            } else {
+               alert(result.message) 
+            }
+            })
+        .catch(error => console.log('error', error));
+    },
+    
+    activate(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + this.activateToken);
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/activate", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+           if (result.message == 'User activated successfully.' ) {
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            location.assign('/')
+           } else {
+               alert(result.message);
+               console.log(result)
+           }
+        })
+        .catch(error => console.log('error', error));
+    },
+    register(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + this.tocken);
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/register", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            this.$refs['my-modal2'].hide();
+            this.$refs['my-modal'].show();
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            this.setToken(result.token);
+            console.log(result);
+        })
+        .catch(error => console.log('error', error));
+    },
+},
 }
 </script>
 

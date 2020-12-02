@@ -2,14 +2,17 @@
 <div class="section">
 	<div class="container">
   <div class="row">
-      <div v-for="post in posts" :key="post.id" class="col-xl-4 col-lg-4 col-md-6">
+      <div v-for="post in posts" :key="post.id" class="col-xl-3 col-lg-3 col-md-6">
         <div class="blog_post">
                 <div class="blog_img">
-                        <a href="#">
-                            <img src="https://i.pinimg.com/originals/e6/95/a9/e695a9c3b6f25de4fd2d79111668d5f8.jpg" alt="blog_img" style="height: 100%; width: 100%;">
-                        </a>
+                        <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}">
+                            <img :src="'http://contentapi.zuniac.com/contentImages/' + post.content.id" alt="blog_img" style="height: 100%; width: 100%;">
+                        </router-link>
                          <div class="blog_tags">
-                            <a class="blog_tags_cat bg_warning" style="background: #ff7900;">{{post.content.category.name}}</a>
+                             <div style="margin-right: 30px; margin-bottom: 5px;">
+                            <img src="@/assets/calendar.png" alt="" style="width: 20px;"> <span style="font-size: 13px;">{{post.subscriptionDate.slice(0,10)}}</span>
+                            </div>
+                            <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: categoryId == 1, orangePill: categoryId == 2, bluePill: categoryId == 3, yellowPill: categoryId == 4, pinkPill: categoryId == 5, maroonPill: categoryId == 6}">{{post.content.category.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
@@ -20,7 +23,7 @@
                               </router-link>
                               </h5>
                             <ul class="blog_meta">
-                                <li><a href="#"><i class="ti-calendar"></i> <span>{{post.subscriptionDate.slice(0,10)}}</span></a></li>
+                                <!-- <li><img src="@/assets/calendar.png" alt="" style="width: 20px;"> <span style="font-size: 13px; font-style: italic;">{{post.subscriptionDate.slice(0,10)}}</span></li> -->
                                 <!-- <li><a href="#"><i class="ti-comments"></i> <span>{{post.id}}</span></a></li> -->
                             </ul>
                             <p>{{post.content.contentDataSet[0].description}}</p>
@@ -115,7 +118,7 @@ export default {
     fetch("http://contentapi.zuniac.com/user/categories/"+ this.categoryId +"/content?", requestOptions)
       .then(response => response.json())
       .then(result => {
-        if (result.status == 'Unauthorized') {
+        if (result.status == 'Forbidden') {
                 this.$refs['my-modal2'].show();
                 this.actToken = result.newToken;
                 console.log(result)
@@ -205,7 +208,7 @@ methods: {
             this.$refs['my-modal'].hide();
             this.$refs['my-modal3'].show();
             } else {
-               console.log(result) 
+               alert(result.message) 
             }
             })
         .catch(error => console.log('error', error));
@@ -234,6 +237,25 @@ methods: {
 .mbtn:hover{
     color: #ff7900 !important;
     border-color: #ff7900 !important;
+}
+
+.redPill{
+background: rgb(197, 11, 11);
+}
+.orangePill{
+background: rgb(226, 125, 9);
+}
+.bluePill{
+background: rgb(9, 49, 226);
+}
+.pinkPill{
+background: rgb(226, 9, 197);
+}
+.yellowPill{
+background: rgb(212, 209, 0);
+}
+.maroonPill{
+background: rgb(172, 51, 51);
 }
 
 </style>

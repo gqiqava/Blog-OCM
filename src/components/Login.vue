@@ -1,6 +1,6 @@
 <template>
   <div style="">
-
+    <b-modal ref="first-modal" hide-footer hide-header title="Using Component Methods">
 	<div class="modal-dialog modal-md modal-dialog-centered" role="document">
     <div class="modal-content border-0">
     <div class="modal-body">
@@ -27,6 +27,7 @@
             </div>
         </div>
     </div>
+    </b-modal>
     <b-modal ref="my-modal" hide-footer hide-header title="Using Component Methods">
       <div class="modal-dialog modal-md modal-dialog-centered" role="document">
     <div class="modal-content border-0">

@@ -1,13 +1,13 @@
 <template>
 <div>
-<header class="header_wrap dark_skin">
+<!-- <header class="header_wrap dark_skin">
 	<div class="container">
   <nav class="navbar navbar-expand-lg bg-light fixed-top container" style="height: 60px; background: white !important;"> 
             <a class="navbar-brand">
                 <router-link :to="{ name: 'singleCategory', params: {}}">
                 <img class="logo_dark" src="@/assets/logo.svg" alt="logo" style="width: 30px; margin-left: 20px;"/>
                 </router-link>
-            </a>
+            </a> -->
             <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="ion-android-menu"></span> </button> -->
             <!-- <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
@@ -27,9 +27,9 @@
                     </li>  
                 </ul>
             </div> -->
-		</nav>
+		<!-- </nav>
 	</div>
-</header>
+</header> -->
 
 <!-- START BLOG -->
 <div class="section">
@@ -108,7 +108,7 @@
  
 <!-- END BLOG -->
 
-<footer class="footer_dark bg_black">
+<!-- <footer class="footer_dark bg_black">
     <div class="bottom_footer border-top-tran">
         <div class="container">
             <div class="row">
@@ -118,7 +118,7 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> -->
 	
 </div>
 </template>
@@ -186,7 +186,7 @@ props: {
 @import '../assets/magnific-popup.css';
 
 .links:hover{
-    color: #ff3e58;
+    color: orange;
 }
 
 </style>
