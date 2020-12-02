@@ -1,6 +1,7 @@
 {
 "LanguageEn" : {
       "regLog": "Register | Login",
+      "login": "Login",
       "completeForm": "Complete form",
       "selectBundle": "Select bundle to subscribe:",
       "reserved": "All Rights Reserved By ZuniLife",

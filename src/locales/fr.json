@@ -1,20 +1,21 @@
 {
-      "LanguageEn" : {
-            "regLog": "Register | Login",
-            "completeForm": "Complete form",
-            "selectBundle": "Select bundle to subscribe:",
-            "reserved": "All Rights Reserved By ZuniLife",
-            "termsC": "Terms and Conditions",
-            "language": "Language",
-            "logout": "Logout",
-            "send": "Send",
-            "regTerms": "Registration Terms",
-            "activate": "Activate account?",
-            "subscribe": "Subscribe",
-            "activateButton": "activate",
-            "cancel": "Cancel",
-            "alsoSee": "Also See",
-            "next": "Next",
-            "about": "About"
+"LanguageEn" : {
+      "regLog": "S'abonner | Connexion",
+      "login": "Connexion",
+      "completeForm": "Remplir le formulaire",
+      "selectBundle": "Selectionner votre formule pour vous abonner:",
+      "reserved": "Tous droit reservés par ZuniLife",
+      "termsC": "Termes et conditions",
+      "language": "Langue",
+      "logout": "Deconnexion",
+      "send": "Envoyer",
+      "regTerms": "Conditions d'inscription",
+      "activate": "Activation du compte?",
+      "subscribe": "S'Abonnement",
+      "activateButton": "Ativation",
+      "cancel": "Annuler",
+      "alsoSee": "Voir Aussi",
+      "next": "Suivant"
       }
+      
       }
