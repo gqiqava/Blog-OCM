@@ -169,12 +169,28 @@
         <div style="margin-bottom: 20px; margin-top: 40px;">
             <VuePhoneNumberInput autofocus v-model="number" @update="onUpdate" style="" default-country-code="CM"/>
         </div> 
-        <span style="float: left; margin-bottom: 10px;">{{ $t('LanguageEn.selectBundle') }}</span>
-        <b-form-select v-model="chosenBundle" class="mb-3">
-            <b-form-select-option v-for="bundle in bundles" :key="bundle.id" :value="bundle.id"> {{bundle.name}}</b-form-select-option>
+        <span style="float: left; margin-bottom: 10px;">{{ $t('LanguageEn.selectBundle') }}</span><br>
+        <b-form-select v-model="bundlee" class="mb-3" @change="setBundle">
+            <b-form-select-option v-for="bundle in bundles" :key="bundle.id" @change="setBundle(bundle.bundleId)" :value="bundle.bundleId"> <span> {{bundle.bundleName}} </span> </b-form-select-option>
         </b-form-select>
+        <!-- <div>
+            <b-dropdown id="dropdown-1" text="Bundles" class="m-md-2" style="background: #ff7900 !important; color: white !important; font-size: 10px; !important" variant="none">
+                <b-dropdown-item v-for="bundle in bundles" :key="bundle.id" :value="bundle.bundleId"><span @click="setBundle(bundle.bundleId)"> {{bundle.bundleName}} </span></b-dropdown-item>
+            </b-dropdown>
+        </div> -->
+        <!-- <div>
+        <ul v-for="bundle in bundles" :key="bundle.id" :value="bundle.bundleId">
+            <li> <span @click="setBundle(bundle.bundleId)" > {{bundle.bundleName}} {{bundle.bundleId}} </span></li>
+        </ul>
+        </div> -->
+        <div v-if="bundlee != ''" style="margin-left: 2px; margin-bottom: 5px;">
+        bundle includes: 
+        <span style="margin-right: 5px;" v-for="categoriess in bundles[bundlee - 1].categories" :key="categoriess.id">
+        {{categoriess.name}}
+        </span>
+        </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="login(), $refs['first-modal'].hide()" v-if="chosenBundle != '' && results.isValid == true">Next</button>
+                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="login(), $refs['first-modal'].hide()" v-if="bundlee != '' && results.isValid == true">Next</button>
                 <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" disabled v-else>Next</button>
             </div>
     </b-modal>
@@ -269,13 +285,13 @@ export default {
   VuePhoneNumberInput,
 },
 computed: {
-   ...mapGetters(['tocken']),
+   ...mapGetters(['tocken', 'bundlee']),
    resultsTable () {
         return Object.keys(this.results)
       },
   },
   methods:{
-    ...mapActions(["setToken", "setPermission"]),
+    ...mapActions(["setToken", "setPermission", "setBundle"]),
      logout(){
          document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
          document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
@@ -311,7 +327,7 @@ computed: {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
 
-        var raw = JSON.stringify({"msisdn": this.results.formattedNumber.slice(1) ,"periodId": 1,"serviceId": this.chosenBundle});
+        var raw = JSON.stringify({"msisdn": this.results.formattedNumber.slice(1) ,"periodId": 1,"serviceId": this.bundlee});
 
         var requestOptions = {
         method: 'POST',

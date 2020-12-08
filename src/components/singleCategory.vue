@@ -1,27 +1,19 @@
 <template>
 <div class="section">
 <!-- <button type="" class="btn btn-default" name="login" @click="slidePrev()">prev</button> -->
-<div v-if="cookiesObject.permission == 'granted'">
-  <hooper  class="container" :settings="hooperSettings" :infiniteScroll="true" :autoPlay="true" :playSpeed="4000" style="margin-bottom: 10px; height: 100%;" >
+<div v-if="cookiesObject.permission == 'granted'" style="">
+  <hooper  class=""  :settings="hooperSettings" :autoPlay="true" :playSpeed="4000" :infiniteScroll="true" :centerMode="true" style="margin-bottom: 10px; height: 100%;">
     <slide v-for="(post, indx) in posts" :key="indx" :index="indx" class="">
-        <div class="blog_post">
+          <div class="blog_post">
                 <div class="blog_img">
-                        <a >
+                        <a>
                           <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id }}">  
-                            <img :src="imageLink + post.id" :alt="post.id" style="width: 95%;">
+                            <img :src="imageLink + post.icon" :alt="post.id" style="width: 99.9%; height: 300px;">
                           </router-link>
                         </a>
-                         <div class="blog_tags">
-                            <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
-                        </div>
-                    </div>
-                    <div class="blog_content">
-                        <div class="blog_text">
-                            <!-- <ul class="blog_meta">
-                                <li><a ><i class="ti-calendar"></i> <span> date </span></a></li>
-                                <li><a ><i class="ti-comments"></i> <span>2 Comments</span></a></li>
-                            </ul> -->
-                            <p style="color: black;">{{post.description}}</p>
+                         <div class="blog_tags" style="background: rgba(24, 24, 24, 0.65); text-align: center;">
+                            <h2 class="blog_tags_cat" style="">{{post.serviceName}}</h2>
+                            <a class="blog_tags_cat bg_warning" style="margin-left: 4px; margin-bottom: 4px;" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -29,70 +21,73 @@
         <hooper-navigation slot="hooper-addons"></hooper-navigation>
   </hooper>
   </div>
-  <hooper  class="container"  :settings="hooperSettings" :autoPlay="true" :playSpeed="4000" :infiniteScroll="true" style="margin-bottom: 10px; height: 100%;" v-else>
+  <hooper  class=""  :settings="hooperSettings" :autoPlay="true" :playSpeed="4000" :infiniteScroll="true" :centerMode="true" style="margin-bottom: 10px; height: 100%;" v-else>
     <slide v-for="(post, indx) in posts" :key="indx" :index="indx" class="">
-        <div class="blog_post">
+          <div class="blog_post">
                 <div class="blog_img">
-                        <a >
-                            <img :src="imageLink + post.id" :alt="post.id" v-b-modal.first-modall style="width: 95%;">
+                        <a>
+                            <img :src="imageLink + post.icon" :alt="post.id" v-b-modal.first-modall @click="setBundle(post.serviceId)" style="width: 99.9%; height: 300px;">
                         </a>
-                         <div class="blog_tags">
-                            <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
-                        </div>
-                    </div>
-                    <div class="blog_content">
-                        <div class="blog_text">
-                            <!-- <ul class="blog_meta">
-                                <li><a ><i class="ti-calendar"></i> <span> date </span></a></li>
-                                <li><a ><i class="ti-comments"></i> <span>2 Comments</span></a></li>
-                            </ul> -->
-                            <p style="color: black;">{{post.description}}</p>
+                         <div class="blog_tags" style="background: rgba(24, 24, 24, 0.65); text-align: center;">
+                            <h2 class="blog_tags_cat" style="">{{post.serviceName}}</h2>
+                            <a class="blog_tags_cat bg_warning" style="margin-left: 4px; margin-bottom: 4px;" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
                         </div>
                     </div>
                 </div>
     </slide>
         <hooper-navigation slot="hooper-addons"></hooper-navigation>
   </hooper>
+  
 
 	<div class="container" v-if="cookiesObject.permission == 'granted'">
+   <div v-for="bundle in loggedArticles" :key="bundle.id">
+   <div class="sidebar mt-4 pt-2 mt-lg-0 pt-lg-0 container">
+    <div class="widget">
+      <h5 class="widget_title" style="text-align: left;">{{bundle.name}}</h5>
+    </div>
+  </div>
   <div class="row">
-    <!-- Col xl size for biggest web -->
-      <div v-for="article in randomArticles" :key="article.id" class="col-xl-3 col-lg-3 col-md-6">
+      <div v-for="article in bundle.initialContent" :key="article.id" class="col-xl-3 col-lg-3 col-md-6">
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
-                            <!-- <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, contentId: article.id }}"> -->
-                            <img :src="'http://contentapi.zuniac.com/contentImages/' + article.id" alt="blog_img" style="width: 100%;">
-                          <!-- </router-link> -->
+                          <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, contentId: article.id }}">
+                            <img :src="imageLink + article.image" alt="blog_img" style="width: 100%;">
+                          </router-link>
                         </a>
                          <div class="blog_tags">
                             <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: article.category.id == 1, orangePill: article.category.id == 2, bluePill: article.category.id == 3, yellowPill: article.category.id == 4, pinkPill: article.category.id == 5, maroonPill: article.category.id == 6}">{{article.category.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
+                      <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, contentId: article.id }}">
                         <div class="blog_text">
-                           <h6 class="blog_heading">
-                              <!-- <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}"> -->
-                              {{article.contentDataSet[0].title}}
-                              <!-- </router-link> -->
-                            </h6>
-                            <p style="">{{article.contentDataSet[0].body}}</p>
+                          <h6 class="blog_heading">
+                           <span v-html="article.contentDataSet[0].title">{{article.contentDataSet[0].title}}</span>
+                          </h6>
+                          <p style="" v-html="article.contentDataSet[0].body">{{article.contentDataSet[0].body}}</p>
                         </div>
+                      </router-link>
                     </div>
                 </div>
         </div>
   </div>
 </div>
+</div>
+
 <div class="container" v-else>
+  <div v-for="bundle in randomArticles" :key="bundle.id">
+   <div class="sidebar mt-4 pt-2 mt-lg-0 pt-lg-0 container">
+    <div class="widget">
+      <h5 class="widget_title" style="text-align: left;">{{bundle.name}}</h5>
+    </div>
+  </div>
   <div class="row">
-    <!-- Col xl size for biggest web -->
-      <div v-for="article in randomArticles" :key="article.id" class="col-xl-3 col-lg-3 col-md-6">
+      <div v-for="article in bundle.initialContent" :key="article.id" class="col-xl-3 col-lg-3 col-md-6" v-b-modal.first-modall @click="setBundle(bundle.id)">
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
-                          <!-- <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id }}">   -->
-                            <img :src="'http://contentapi.zuniac.com/contentImages/' + article.id" v-b-modal.first-modall alt="blog_img" style="width: 100%;">
-                          <!-- </router-link> -->
+                            <img :src="imageLink + article.image" alt="blog_img" style="width: 100%;">
                         </a>
                          <div class="blog_tags">
                             <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: article.category.id == 1, orangePill: article.category.id == 2, bluePill: article.category.id == 3, yellowPill: article.category.id == 4, pinkPill: article.category.id == 5, maroonPill: article.category.id == 6}">{{article.category.name}}</a>
@@ -101,11 +96,9 @@
                     <div class="blog_content">
                         <div class="blog_text">
                            <h6 class="blog_heading">
-                              <!-- <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}"> -->
-                              {{article.contentDataSet[0].title}}
-                              <!-- </router-link> -->
+                            <span v-html="article.contentDataSet[0].title">{{article.contentDataSet[0].title}}</span>
                             </h6>
-                            <p style="">{{article.contentDataSet[0].body}}</p>
+                            <p style="" v-html="article.contentDataSet[0].body">{{article.contentDataSet[0].body}}</p>
                         </div>
                     </div>
                 </div>
@@ -114,7 +107,7 @@
 </div>
 
 <!-- END BLOG -->   
-
+</div>
 </div>
 </template>
 
@@ -135,19 +128,21 @@ export default {
           200: {
             itemsToShow: 1
           },
-          400: {
-            itemsToShow: 2
+          450: {
+            itemsToShow: 1
           },
           765: {
-            itemsToShow: 3
+            itemsToShow: 1.5
           },
           1000: {
-            itemsToShow: 4,
+            itemsToShow: 1.5,
           }
         }
       },
-      imageLink: 'http://contentapi.zuniac.com/images/',
+      imageLink: 'http://contentapi.zuniac.com/media/',
       randomArticles: [],
+      loggedArticles: [],
+      filtered: [],
     }
   },
   async created(){
@@ -156,6 +151,7 @@ export default {
     this.cookiesObject = cookiesObject;
 
     this.randomArticle();
+    this.loggedRandom();
     // this.bundless();
 
     var myHeaders = new Headers();
@@ -168,12 +164,14 @@ export default {
       redirect: 'follow'
     };
 
-    fetch("http://contentapi.zuniac.com/user/getCategories", requestOptions)
+    fetch("http://contentapi.zuniac.com/user/categories", requestOptions)
       .then(response => response.json())
       .then(result => {
         this.posts = result.content;
         })
       .catch(error => console.log('error', error));
+
+
   },
 components: {
   Hooper,
@@ -181,10 +179,30 @@ components: {
   HooperNavigation,
 },
 methods:{
-    ...mapActions(["setToken", "setPermission"]),
+    ...mapActions(["setToken", "setPermission", "setBundle"]),
     slidePrev() {
       this.$refs.carousel.slidePrev();
     },
+    loggedRandom(){
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
+      myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("http://contentapi.zuniac.com/userInitialContent", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          this.loggedArticles = result;
+          })
+        .catch(error => console.log('error', error));
+    },
+
+
     randomArticle(){
       var myHeaders = new Headers();
       myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
@@ -343,7 +361,7 @@ methods:{
 props: {
   },
   computed: {
-   ...mapGetters(['tocken']),
+   ...mapGetters(['tocken', 'bundlee']),
    resultsTable () {
         return Object.keys(this.results)
       },
@@ -386,4 +404,21 @@ background: rgb(212, 209, 0);
 background: rgb(172, 51, 51);
 }
 
+/* .hooper-prev {
+  background: white;
+}
+.hooper-next {
+  background: white;
+} */
+
+.icon-arrowLeft {
+  background: rgba(255, 255, 255, 0.65) !important;
+  width: 40px;
+  height: 40px;
+}
+.icon-arrowRight {
+  background: rgba(255, 255, 255, 0.65) !important;
+  width: 40px;
+  height: 40px;
+}
 </style>

@@ -7,23 +7,25 @@
     <div class="col-lg-12">
             <div class="single_post">
                     <div class="blog_img">
-                        <img src="https://previews.123rf.com/images/ohsuriya/ohsuriya1505/ohsuriya150500066/40055715-an-iamge-of-sugar-palm-trees-that-shining-with-the-light-of-led-lamps-in-the-night-.jpg" alt="blog_img1">
+                        <img :src="imageLink + banner" alt="blog_img1">
                         <div class="blog_tags">
-                            <a class="blog_tags_cat bg_blue" style="background: #ff7900;">{{post.content.category.name}}</a>
+                            <!-- <a class="blog_tags_cat bg_blue" style="background: #ff7900;">{{}}</a> -->
                         </div>
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
-                            <h2 class="blog_title">{{postContent.title}}</h2>
+                            <h2 class="blog_title">{{post.title}}</h2>
                             <ul class="blog_meta">
-                                <li><a href="#"><i class="ti-calendar"></i> April 14, 2018</a></li>
-                            </ul>
-                            <p>{{postContent.body}}</p>
-                            <div style="text-align: center;">
-                            <audio controls style="">
-                            <source :src="postContent.audio">
-                            </audio>
+                            <div style="" @click="openPlayer()">
+                            <a><img src="@/assets/player1.png" :alt="audio" style="width: 50px; cursor: pointer;"></a>
                             </div>
+                            </ul>
+                            <p v-html="post.body">{{post.body}}</p>
+                            <!-- <div style="text-align: center;">
+                            <audio controls style="">
+                            <source v-html="audio" :src="audio">
+                            </audio>
+                            </div> -->
                             <!-- <blockquote class="blockquote_style1">
                             <p>Integer is metus site turpis facilisis customers. elementum an mauris in venenatis consectetur east. Praesent condimentum bibendum Morbi sit amet commodo pellentesque at fringilla tincidunt risus.</p>
                             </blockquote> -->
@@ -43,7 +45,7 @@
                                     </div>
                                 </div>
                             </div> -->
-                    <div class="blog_post_footer">
+                    <!-- <div class="blog_post_footer">
                                 <div class="row justify-content-between align-items-center">
                                     <div class="col-md-8 mb-3 mb-md-0">
                                         <div class="artical_tags">
@@ -62,7 +64,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -210,6 +212,54 @@
 </div>
 <!-- END BLOG -->
 
+<b-modal ref="my-modal2" hide-footer hide-header title="Using Component Methods">
+        <h1>{{ $t('LanguageEn.regTerms') }}</h1>
+        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <b-row>
+        <b-col>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide(), $router.push({ path: '/' })">{{ $t('LanguageEn.cancel') }}</button>
+        </b-col>
+        <b-col>
+            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="register()">{{ $t('LanguageEn.subscribe') }}</button>
+        </b-col>
+        </b-row>
+    </b-modal>
+    <b-modal ref="my-modal3" hide-footer hide-header title="Using Component Methods">
+        <h1>{{ $t('LanguageEn.activate') }}</h1>
+        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <b-row>
+        <b-col>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal3'].hide()">{{ $t('LanguageEn.cancel') }}</button>
+        </b-col>
+        <b-col>
+            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="activate()">{{ $t('LanguageEn.activateButton') }}</button>
+        </b-col>
+        </b-row>
+    </b-modal>
+     <b-modal ref="my-modal" hide-footer hide-header title="Using Component Methods">
+      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+    <div class="modal-content border-0">
+    <div class="modal-body">
+    <div class="row no-gutters">
+    <div class="col-12">
+    <div class="padding_eight_all">	
+                            <div class="heading_s1">
+                                <h4>OTP</h4>
+                            </div>
+                                <div class="form-group">
+                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="Enter OTP">
+                                </div>
+                                <div class="form-group">
+                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.send') }}</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </b-modal>
+
 	
 </div>
 </template>
@@ -225,7 +275,13 @@ export default {
       contentId: '',
       post: {},
       postContent: [],
+      actToken: '',
+      verToken: '',
       ex: '',
+      OTP: '',
+      audio: '',
+      imageLink: 'http://contentapi.zuniac.com/media/',
+      banner: '',
     }
   },
   async created(){
@@ -251,10 +307,16 @@ export default {
         fetch("http://contentapi.zuniac.com/user/categories/" + this.categoryId + "/content/" + this.contentId, requestOptions)
         .then(response => response.json())
         .then(result => {
-            this.post = result;
-            this.postContent = result.content.contentDataSet[0];
-            this.ex = result.content.contentDataSet[0].body;
-            console.log(this.postContent);
+                if (result.code == 403) {
+                     this.$refs['my-modal2'].show();
+                    this.actToken = result.newToken;
+                    console.log(result)
+                }
+                else {
+                this.post = result.content.contentDataSet[0];
+                this.audio = 'http://contentapi.zuniac.com/media/' + result.content.contentDataSet[0].audio;
+                this.banner = result.content.category.banner;
+                }
             })
         .catch(error => console.log('error', error));
 
@@ -263,6 +325,90 @@ export default {
 },
 props: {
   },
+
+methods:{
+    register(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + this.actToken);
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/register", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            this.$refs['my-modal2'].hide();
+            this.$refs['my-modal'].show();
+            // document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            this.verToken = result.token;
+            console.log(result);
+        })
+        .catch(error => console.log('error', error));
+    },
+    activate(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + this.actToken);
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/activate", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+           if (result.message == 'User activated successfully.' ) {
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            location.assign('/')
+           } else {
+               alert(result.message);
+               console.log(result)
+           }
+        })
+        .catch(error => console.log('error', error));
+    },
+    verifyOtp(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + this.verToken);
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+        var raw = JSON.stringify({"otp": this.OTP});
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/verifyOtp", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result.status == 'ACTIVE') {
+            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            location.assign('/')
+            } else if (result.status == 'PAST_DUE'){
+            this.activateToken = result.token;
+            this.$refs['my-modal'].hide();
+            this.$refs['my-modal3'].show();
+            } else {
+               alert(result.message) 
+            }
+            })
+        .catch(error => console.log('error', error));
+    },
+    openPlayer(){
+        window.open(this.audio, 'newwin', 'height=80px, width=280px');
+    },
+},
 
 }
 </script>

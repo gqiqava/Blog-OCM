@@ -8,7 +8,10 @@ export default {
           },
       async setPermission({ commit }, permission){
         commit('permStatus', permission);
-          },           
+          },
+      async setBundle({ commit }, bundlee){
+            commit('bundleId', bundlee);
+              },           
             async getArray({ commit, state},){
             const res = await fetch('https://sportapi.zuniac.com/favorites?timezone=%2B04%3A00&token=' + state.token.token);
             const data = await res.json();
@@ -55,6 +58,7 @@ export default {
     mutations: {
       newToken: (state, tocken) => state.tocken = tocken,
       permStatus: (state, permission) => state.permission = permission,
+      bundleId: (state, bundlee) => state.bundlee = bundlee,
       updateArray(state, favs){
         state.favs = favs;
       },
@@ -72,10 +76,12 @@ export default {
         favsT: [],
         favsTe: [],
         httpReq: 'https://sportapi.zuniac.com',
+        bundlee: '',
     },
     getters: {
       tocken: (state) => state.tocken,
       permission: (state) => state.permission,
+      bundlee: (state) => state.bundlee,
       favs: (state) => state.favs,
       favsT: (state) => state.favsT,
       favsTe: (state) => state.favsTe,

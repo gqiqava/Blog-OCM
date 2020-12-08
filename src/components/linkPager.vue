@@ -39,22 +39,27 @@
             <div class="single_post">
                     <div class="blog_img">
                         <img src="https://previews.123rf.com/images/ohsuriya/ohsuriya1505/ohsuriya150500066/40055715-an-iamge-of-sugar-palm-trees-that-shining-with-the-light-of-led-lamps-in-the-night-.jpg" alt="blog_img1">
-                        <div class="blog_tags">
+                        <!-- <div class="blog_tags">
                             <a class="blog_tags_cat bg_blue" href="#">{{post.name}}</a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
                             <h2 class="blog_title">{{postContent.title}}</h2>
                             <ul class="blog_meta">
-                                <li><a href="#"><i class="ti-calendar"></i> April 14, 2018</a></li>
+                            <div style="" @click="openPlayer()">
+                            <a><img src="@/assets/player1.png" :alt="audio" style="width: 50px; cursor: pointer;"></a>
+                            </div>
                             </ul>
-                            <p>{{postContent.body}}</p>
-                            <div style="text-align: center;">
+                            <p v-html="postContent.body">{{postContent.body}}</p>
+                            <!-- <div style="text-align: center;">
                             <audio controls style="">
                             <source :src="postContent.audio">
                             </audio>
-                            </div>
+                            </div> -->
+                            <!-- <div style="text-align: center;">
+                            <a :href="postContent.audio" target="_blank"><img src="@/assets/player2.png" :alt="audio" style="width: 130px;"></a>
+                            </div> -->
                             <!-- <blockquote class="blockquote_style1">
                             <p>Integer is metus site turpis facilisis customers. elementum an mauris in venenatis consectetur east. Praesent condimentum bibendum Morbi sit amet commodo pellentesque at fringilla tincidunt risus.</p>
                             </blockquote> -->
@@ -74,18 +79,6 @@
                                     </div>
                                 </div>
                             </div> -->
-                    <div class="blog_post_footer">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-md-4">
-                                        <ul class="social_icons rounded_social text-md-left">
-                                            <li><a href="#" class="sc_facebook"><i class="ion-social-facebook"></i></a></li>
-                                            <li><a href="#" class="sc_twitter"><i class="ion-social-twitter"></i></a></li>
-                                            <li><a href="#" class="sc_google"><i class="ion-social-googleplus"></i></a></li>
-                                            <li><a href="#" class="sc_instagram"><i class="ion-social-instagram-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -134,6 +127,7 @@ export default {
       post: {},
       postContent: [],
       links: [],
+      audio: '',
     }
   },
   async created(){
@@ -157,12 +151,17 @@ export default {
         .then(result => {
             this.post = result.contentDTO.category;
             this.postContent = result.contentDTO.contentDataSet[0];
+            this.audio = 'http://contentapi.zuniac.com/media/' + result.contentDTO.contentDataSet[0].audio;
             this.links = result.contentLinks;
-            console.log(this.links)
             })
         .catch(error => console.log('error', error));
 
         this.$forceUpdate();
+  },
+  methods:{
+       openPlayer(){
+        window.open(this.audio, 'newwin', 'height=80px, width=280px');
+    },
   },
   components: {
 },

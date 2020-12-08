@@ -6,27 +6,24 @@
         <div class="blog_post">
                 <div class="blog_img">
                         <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}">
-                            <img :src="'http://contentapi.zuniac.com/contentImages/' + post.content.id" alt="blog_img" style="height: 100%; width: 100%;">
+                            <img :src="imageLink + post.content.image" alt="blog_img" style="height: 100%; width: 100%;">
                         </router-link>
                          <div class="blog_tags">
-                             <div style="margin-right: 30px; margin-bottom: 5px;">
-                            <img src="@/assets/calendar.png" alt="" style="width: 20px;"> <span style="font-size: 13px;">{{post.subscriptionDate.slice(0,10)}}</span>
-                            </div>
                             <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: categoryId == 1, orangePill: categoryId == 2, bluePill: categoryId == 3, yellowPill: categoryId == 4, pinkPill: categoryId == 5, maroonPill: categoryId == 6}">{{post.content.category.name}}</a>
                         </div>
-                    </div>
+                    </div>  
                     <div class="blog_content">
                         <div class="blog_text">
                             <h5 class="blog_heading">
                               <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}">
-                              {{post.content.contentDataSet[0].title}}
+                               <span v-html="post.content.contentDataSet[0].title"> {{post.content.contentDataSet[0].title}} </span>
                               </router-link>
                               </h5>
                             <ul class="blog_meta">
                                 <!-- <li><img src="@/assets/calendar.png" alt="" style="width: 20px;"> <span style="font-size: 13px; font-style: italic;">{{post.subscriptionDate.slice(0,10)}}</span></li> -->
                                 <!-- <li><a href="#"><i class="ti-comments"></i> <span>{{post.id}}</span></a></li> -->
                             </ul>
-                            <p>{{post.content.contentDataSet[0].description}}</p>
+                            <p v-html="post.content.contentDataSet[0].body"> {{post.content.contentDataSet[0].body}} </p>
                         </div>
                     </div>
                 </div>
@@ -38,7 +35,7 @@
         <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         <b-row>
         <b-col>
-            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide(), $router.go(-1)">{{ $t('LanguageEn.cancel') }}</button>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide(), $router.push({ path: '/' })">{{ $t('LanguageEn.cancel') }}</button>
         </b-col>
         <b-col>
             <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="register()">{{ $t('LanguageEn.subscribe') }}</button>
@@ -89,12 +86,13 @@ export default {
   name: 'categoryPosts',
   data(){
   return {
-          posts: [],
-          cookiesObject: '',
-          categoryId: '',
-          actToken: '',
-          verToken: '',
-          OTP: '',
+        posts: [],
+        cookiesObject: '',
+        categoryId: '',
+        actToken: '',
+        verToken: '',
+        OTP: '',
+        imageLink: 'http://contentapi.zuniac.com/media/',
     }
   },
   async created(){
