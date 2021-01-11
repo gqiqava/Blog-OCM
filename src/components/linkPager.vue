@@ -60,10 +60,10 @@
             <div class="widget" style="margin-top: 25px;">
                 <h5 class="widget_title" style="text-align: left;">Categories</h5>
                 <ul class="widget_categories" v-if="cookiesObject.permission == 'granted'">
-                    <li v-for="category in categors" :key="category.id" @click="goTo(category.id)" style="cursor: pointer;"><div class="cat_bg background_bg overlay_bg_50" :style="{ backgroundImage: 'url(' + media + category.icon + ')' }" ><div class="post_category"><span class="cat_title">{{category.name}}</span></div></div></li>
+                    <li v-for="category in categors" :key="category.id" @click="goTo(category.id)" style="cursor: pointer;"><div class="cat_bg background_bg overlay_bg_50" :style="{ backgroundImage: 'url(' + media + category.icon + ')' }" ><div class="post_category"><span class="cat_title"><img src="@/assets/current.png" alt="" style="width: 22px; margin-right: 8px;" v-if="post.id == category.id">{{category.name}}</span></div></div></li>
                 </ul>
                 <ul class="widget_categories" v-b-modal.first-modall v-else>
-                    <li v-for="category in categors" :key="category.id" style="cursor: pointer;"><div class="cat_bg background_bg overlay_bg_50" :style="{ backgroundImage: 'url(' + media + category.icon + ')' }" ><div class="post_category"><span class="cat_title">{{category.name}}</span></div></div></li>
+                    <li v-for="category in categors" :key="category.id" @click="setBundle(category.serviceId)"  style="cursor: pointer;"><div class="cat_bg background_bg overlay_bg_50" :style="{ backgroundImage: 'url(' + media + category.icon + ')' }" ><div class="post_category"><span class="cat_title"><img src="@/assets/current.png" alt="" style="width: 22px; margin-right: 8px;" v-if="post.id == category.id">{{category.name}}</span></div></div></li>
                 </ul>
             </div>
             <div class="widget" style="margin-top: 25px;">

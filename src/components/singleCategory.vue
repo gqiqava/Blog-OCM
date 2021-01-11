@@ -42,7 +42,7 @@
 	<div class="container" v-if="cookiesObject.permission == 'granted'">
    <div v-for="bundle in loggedArticles" :key="bundle.id">
    <div class="widget">
-      <h5 class="border-bottom" style="text-align: left; font-weight: 600; font-size: 23px; line-height: 50px;">{{bundle.serviceName}}</h5>
+      <h5 class="border-bottom" style="text-align: left; font-weight: 600; font-size: 23px; line-height: 50px;"><img src="@/assets/check.png" alt="" style="width: 22px; margin-bottom: 10px;" v-if="bundle.isActive == true"> {{bundle.serviceName}} </h5>
     </div>
   <div class="row">
       <div v-for="article in bundle.initialContent" :key="article.id" class="col-xl-3 col-lg-3 col-md-6">
@@ -197,10 +197,17 @@ methods:{
       fetch("http://contentapi.zuniac.com/refresh", requestOptions)
         .then(response => response.json())
         .then(result => {
-            document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-            document.cookie = 'refToken = ' + result.refreshToken + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-            console.log(result)
-            location.reload(); 
+            if (result.token && result.token != 'undefined') {
+              document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+              document.cookie = 'refToken = ' + result.refreshToken + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+              location.reload();
+            } else {
+              document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+              document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+              document.cookie = "number = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+              document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+              location.assign('/');
+            }
           })
         .catch(error => console.log('error', error));
     },
@@ -219,8 +226,24 @@ methods:{
         .then(response => response.json())
         .then(result => {
           if (result.code == 401) {
-            this.refreshTok();
-            console.log(result);
+            if (result.customErrorCode == 1004) {
+                    alert(result.message); 
+                    document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "number = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    location.assign('/');
+                } else if (result.customErrorCode == 1003) {
+                    alert(result.message); 
+                    document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "number = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    location.assign('/');
+                } else {
+                  this.refreshTok();
+                  console.log(result);
+                }
           } else
           this.loggedArticles = result;
           })
@@ -446,5 +469,8 @@ background: rgb(172, 51, 51);
   background: rgba(255, 255, 255, 0.65) !important;
   width: 40px;
   height: 40px;
+}
+.notSub{
+  background: rgba(0, 0, 0, 0.2); ;
 }
 </style>

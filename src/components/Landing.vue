@@ -107,7 +107,7 @@
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">example </a>
             </li> -->
-            <li class="listItem" @click="showText(1),$refs['text-modal'].show()">
+            <li class="listItem" @click="showText(1,2),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.about') }} </a>
             </li>
@@ -115,7 +115,7 @@
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;" >{{ $t('LanguageEn.language') }}</a>
             </li>
-            <li class="listItem"  @click="showText(2),$refs['text-modal'].show()">
+            <li class="listItem"  @click="showText(2,2),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.termsC') }}</a>
             </li>
@@ -137,8 +137,7 @@
             </li>
         </ul>
     </b-modal>
-    <b-modal ref="text-modal" hide-footer hide-header title="Using Component Methods">
-        <h4 v-html="text.title">{{text.title}}</h4>
+    <b-modal ref="text-modal" hide-footer :title="text.title">
         <p v-html="text.text">{{text.text}}</p>
     </b-modal>
 
@@ -271,6 +270,7 @@ export default {
           bundles: [],
           activateToken: '',
           text:'',
+          lang: '2',
       }
   },
  async beforeMount(){
@@ -307,7 +307,7 @@ computed: {
     showModal() {
         this.$refs['my-modal2'].show()
       },
-      showText(val){
+      showText(val1, val2){
           var myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
 
@@ -317,7 +317,7 @@ computed: {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/pageInfo?languageId=2&pageId=" + val, requestOptions)
+        fetch("http://contentapi.zuniac.com/pageInfo?languageId=" + this.lang + "&pageId=" + val1 + "&serviceId=" + val2, requestOptions)
         .then(response => response.json())
         .then(result => {
                 this.text = result;
@@ -365,7 +365,7 @@ computed: {
         .then(response => response.json())
         .then(result => {
             if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
-                this.showText(3);
+                this.showText(4, this.bundlee);
                 this.$refs['my-modal2'].show();
             } else if (result.userStatus == 'ACTIVE' || result.userStatus == 'PAST_DUE') {
                 this.showText(3);

@@ -1,8 +1,12 @@
 <template>
 <div>
-
 <div class="section" v-if="showCont == 3">
 <div class="container">
+    <div class="col-xl-5 col-md-5 col-sm-12 pl-0 pr-0" style="margin-top: 23px;">
+    <b-form-select v-model="categoryId" class="mb-3" @change="setCat">
+        <b-form-select-option v-for="sngl in cats" :key="sngl.id" @change="setCat(sngl.id)" :value="sngl.id"> <span> {{sngl.name}} </span> </b-form-select-option>
+    </b-form-select>
+    </div>
   <div class="row">
       <div v-for="post in posts" :key="post.id" class="col-xl-3 col-lg-3 col-md-6">
         <div class="blog_post">
@@ -126,6 +130,8 @@ export default {
         imageLink: 'http://contentapi.zuniac.com/media/',
         showCont: '',
         text: '',
+        cats: '',
+        cat:'',
     }
   },
   async created(){
@@ -173,10 +179,33 @@ export default {
         }
         })
       .catch(error => console.log('error', error));
+
+      this.categories();
   },
   components: {
 },
 methods: {
+    setCat(val){
+        this.$router.push({ name: 'categoryPosts', params: { categoryId: val } })
+    },
+    categories(){
+         var myHeaders = new Headers();
+    // myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
+    myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("http://contentapi.zuniac.com/user/categories", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        this.cats = result.content;
+        })
+      .catch(error => console.log('error', error));
+    },
     showText(val){
           var myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
