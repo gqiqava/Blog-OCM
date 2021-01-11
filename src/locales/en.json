@@ -16,6 +16,13 @@
       "cancel": "Cancel",
       "alsoSee": "Also See",
       "next": "Next",
-      "about": "About"
+      "about": "About",
+      "bundleIncludes": "Bundle includes:",
+      "verification": "verification",
+      "enterCode": "Enter the code from SMS",
+      "verify": "verify",
+      "notFound": "Page not found",
+      "homePage": "Home Page",
+      "notSubbed": "You are not subscribed to this content"
 }
 }

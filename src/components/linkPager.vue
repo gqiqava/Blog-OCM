@@ -1,35 +1,5 @@
 <template>
 <div>
-<!-- <header class="header_wrap dark_skin">
-	<div class="container">
-  <nav class="navbar navbar-expand-lg bg-light fixed-top container" style="height: 60px; background: white !important;"> 
-            <a class="navbar-brand">
-                <router-link :to="{ name: 'singleCategory', params: {}}">
-                <img class="logo_dark" src="@/assets/logo.svg" alt="logo" style="width: 30px; margin-left: 20px;"/>
-                </router-link>
-            </a> -->
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="ion-android-menu"></span> </button> -->
-            <!-- <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown">Menu</a>
-                        <div class="dropdown-menu dropdown-reverse">
-                            <ul> 
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example1</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example2</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example3</a></li>
-                                <div class="divider"></div>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">Language</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">Terms & Conditions</a></li>
-                                <div class="divider"></div>
-                                <li><a class="dropdown-item nav-link nav_item" @click="logout()" style="cursor: pointer;">Logout </a></li>
-                            </ul>
-                        </div>
-                    </li>  
-                </ul>
-            </div> -->
-		<!-- </nav>
-	</div>
-</header> -->
 
 <!-- START BLOG -->
 <div class="section">
@@ -37,8 +7,8 @@
     <div class="row">
     <div class="col-lg-9">
             <div class="single_post">
-                    <div class="blog_img">
-                        <img src="https://previews.123rf.com/images/ohsuriya/ohsuriya1505/ohsuriya150500066/40055715-an-iamge-of-sugar-palm-trees-that-shining-with-the-light-of-led-lamps-in-the-night-.jpg" alt="blog_img1">
+                    <div class="blog_img" style="margin-top: 25px;">
+                        <img :src="media + post.banner" alt="blog_img1">
                         <!-- <div class="blog_tags">
                             <a class="blog_tags_cat bg_blue" href="#">{{post.name}}</a>
                         </div> -->
@@ -47,8 +17,10 @@
                         <div class="blog_text">
                             <h2 class="blog_title">{{postContent.title}}</h2>
                             <ul class="blog_meta">
-                            <div style="" @click="openPlayer()">
-                            <a><img src="@/assets/player1.png" :alt="audio" style="width: 50px; cursor: pointer;"></a>
+                            <div style="position: fixed; bottom: 20px; left: auto;  z-index: 1;">
+                            <audio controls style="">
+                            <source v-html="audio" :src="audio">
+                            </audio>
                             </div>
                             </ul>
                             <p v-html="postContent.body">{{postContent.body}}</p>
@@ -84,13 +56,42 @@
                 </div>
             </div>
 
-        <div class="col-lg-3">
-            <div class="sidebar mt-4 pt-2 mt-lg-0 pt-lg-0">
+        <div class="sidebar col-lg-3">
+            <div class="widget" style="margin-top: 25px;">
+                <h5 class="widget_title" style="text-align: left;">Categories</h5>
+                <ul class="widget_categories" v-if="cookiesObject.permission == 'granted'">
+                    <li v-for="category in categors" :key="category.id" @click="goTo(category.id)" style="cursor: pointer;"><div class="cat_bg background_bg overlay_bg_50" :style="{ backgroundImage: 'url(' + media + category.icon + ')' }" ><div class="post_category"><span class="cat_title">{{category.name}}</span></div></div></li>
+                </ul>
+                <ul class="widget_categories" v-b-modal.first-modall v-else>
+                    <li v-for="category in categors" :key="category.id" style="cursor: pointer;"><div class="cat_bg background_bg overlay_bg_50" :style="{ backgroundImage: 'url(' + media + category.icon + ')' }" ><div class="post_category"><span class="cat_title">{{category.name}}</span></div></div></li>
+                </ul>
+            </div>
+            <div class="widget" style="margin-top: 25px;">
+                <h5 class="widget_title" style="text-align: left;">{{ $t('LanguageEn.alsoSee') }}:</h5>
+                    <ul class="recent_post">
+                        <li v-for="(link, indx) in links" :key="link.id" @click="newCon(link.day)" style="cursor: pointer;">
+                            <div class="post_footer" v-if="indx < val">
+                                <div class="post_img">
+                                    <img class="rounded-circle" :src="media + link.image" alt="letest_post1">
+                                </div>
+                                <div class="post_content">
+                                    <h6 class="hov" style="font-size: 12px; line-height: 18px; text-align: left;" v-html="link.title">{{link.title}}</h6>
+                                </div>
+                                </div>
+                        </li>
+                        <button @click="val = val + 5" style="background: none; border: none; "><img src="@/assets/loadMore.png" alt="" style="width: 20px;"></button>
+                </ul>
+            </div>
+            <!-- <div class="sidebar mt-4 pt-2 mt-lg-0 pt-lg-0">
                 <div class="widget">
-                    <h5 class="widget_title">Also see:</h5>
-                        <p class="links" v-for="link in links" :key="link.id" style="cursor: pointer; text-align: left;">{{link.title}}</p>
+                    <h5 class="widget_title" style="margin-top: 25px; text-align: left;">{{ $t('LanguageEn.alsoSee') }}:</h5>
+                        <div class="" v-for="(link, indx) in links" :key="link.id" style="cursor: pointer; text-align: left;  z-index: -1;" @click="newCon(link.contentId)">
+                            <img src="https://diagnostax.co.uk/wp-content/uploads/Cool-Cats-2.0-1024x585.png" v-if="indx < val" alt="" style="width: 300px;">
+                            <p class="links" v-html="link.title" v-if="indx < val"> {{link.title}} </p>
+                        </div>
+                        <button @click="val = val+5" style="background: none; border: none;"><img src="@/assets/loadMore.png" alt="" style="width: 30px; margin-top: 10px;"></button>
                     </div>
-                </div>
+                </div> -->
             </div>
     </div>
   </div>
@@ -117,6 +118,7 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex';
 
 
 export default {
@@ -128,10 +130,16 @@ export default {
       postContent: [],
       links: [],
       audio: '',
+      media: 'http://contentapi.zuniac.com/media/',
+      d: '',
+      categors:'',
+      val: 5,
+      cookiesObject:'',
     }
   },
   async created(){
     this.id = this.$route.params.id;
+    this.d = this.$route.params.d;
 
     var cookiesObject = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
     this.cookiesObject = cookiesObject;
@@ -146,7 +154,7 @@ export default {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/content?id=" + this.id, requestOptions)
+        fetch("http://contentapi.zuniac.com/content?d="+ this.d +"&id=" + this.id, requestOptions)
         .then(response => response.json())
         .then(result => {
             this.post = result.contentDTO.category;
@@ -156,16 +164,44 @@ export default {
             })
         .catch(error => console.log('error', error));
 
-        this.$forceUpdate();
+        this.getCategories();
   },
   methods:{
+    ...mapActions(["setToken", "setPermission", "setBundle"]),
+      goTo(val){
+        this.$router.push({ name: 'categoryPosts', params: { categoryId: val } })
+    },
+      getCategories(){
+        var myHeaders = new Headers();
+    // myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
+    myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("http://contentapi.zuniac.com/user/categories", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        this.categors = result.content;
+        })
+      .catch(error => console.log('error', error));
+    },
        openPlayer(){
         window.open(this.audio, 'newwin', 'height=80px, width=280px');
     },
+        newCon(day){
+            this.$router.push({ name: 'linkPager', params: { d: day, id: this.id } })
+        },
   },
   components: {
-},
-props: {
+    },
+    props: {
+  },
+  computed:{
+   ...mapGetters(['tocken', 'bundlee']),
   },
 
 }

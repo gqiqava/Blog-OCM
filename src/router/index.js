@@ -31,7 +31,7 @@ export default new Router ({
         },
         {
             name: 'linkPager',
-            path: '/contentLink/id=:id',
+            path: '/contentLink/d=:d/id=:id',
             component: linkPager,
         },
         // },

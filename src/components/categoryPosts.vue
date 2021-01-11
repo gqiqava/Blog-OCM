@@ -1,6 +1,8 @@
 <template>
-<div class="section">
-	<div class="container">
+<div>
+
+<div class="section" v-if="showCont == 3">
+<div class="container">
   <div class="row">
       <div v-for="post in posts" :key="post.id" class="col-xl-3 col-lg-3 col-md-6">
         <div class="blog_post">
@@ -23,19 +25,47 @@
                                 <!-- <li><img src="@/assets/calendar.png" alt="" style="width: 20px;"> <span style="font-size: 13px; font-style: italic;">{{post.subscriptionDate.slice(0,10)}}</span></li> -->
                                 <!-- <li><a href="#"><i class="ti-comments"></i> <span>{{post.id}}</span></a></li> -->
                             </ul>
-                            <p v-html="post.content.contentDataSet[0].body"> {{post.content.contentDataSet[0].body}} </p>
+                            <p style="line-height: 1.25;" v-html="post.content.contentDataSet[0].body"> {{post.content.contentDataSet[0].body}} </p>
                         </div>
                     </div>
                 </div>
         </div>
   </div>
     </div>
-    <b-modal ref="my-modal2" hide-footer hide-header title="Using Component Methods">
-        <h1>{{ $t('LanguageEn.regTerms') }}</h1>
-        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+<div class="section" v-else-if="showCont == 2">
+	<div class="container">
+    <div class="row">
+    <div class="col-lg-12">
+            <img src="@/assets/ZunilifeLogo.svg" alt="" style="width: 350px;">    
+            <h1 style="margin-top: 50px;">404 <br> {{ $t('LanguageEn.notFound') }}</h1> 
+            <router-link :to="{ name: 'singleCategory'}">
+            <b-button variant="warning" style="color: white; background: #ff7900; margin-top: 30px;">{{ $t('LanguageEn.homePage') }}</b-button>
+            </router-link>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section" v-else-if="showCont == 1">
+	<div class="container">
+    <div class="row">
+    <div class="col-lg-12">
+            <img src="@/assets/ZunilifeLogo.svg" alt="" style="width: 350px;">    
+            <h3 style="margin-top: 50px;">{{ $t('LanguageEn.notSubbed') }}</h3> 
+            <router-link :to="{ name: 'singleCategory'}">
+            <b-button variant="warning" style="color: white; background: #ff7900; margin-top: 30px;">{{ $t('LanguageEn.homePage') }}</b-button>
+            </router-link>     
+            </div>
+        </div>
+    </div>
+</div>
+
+<b-modal ref="my-modal2" hide-footer hide-header title="Using Component Methods">
+        <h1 v-html="text.title">{{text.title}}</h1>
+        <p v-html="text.text">{{text.text}}</p>
         <b-row>
         <b-col>
-            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide(), $router.push({ path: '/' })">{{ $t('LanguageEn.cancel') }}</button>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide(), $router.go(-1)">{{ $t('LanguageEn.cancel') }}</button>
         </b-col>
         <b-col>
             <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="register()">{{ $t('LanguageEn.subscribe') }}</button>
@@ -43,8 +73,8 @@
         </b-row>
     </b-modal>
     <b-modal ref="my-modal3" hide-footer hide-header title="Using Component Methods">
-        <h1>{{ $t('LanguageEn.activate') }}</h1>
-        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <h1 v-html="text.title">{{text.title}}</h1>
+        <p v-html="text.text">{{text.text}}</p>
         <b-row>
         <b-col>
             <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal3'].hide()">{{ $t('LanguageEn.cancel') }}</button>
@@ -61,14 +91,14 @@
     <div class="row no-gutters">
     <div class="col-12">
     <div class="padding_eight_all">	
-                            <div class="heading_s1">
-                                <h4>OTP</h4>
+                             <div class="heading_s1">
+                                <h4>{{ $t('LanguageEn.verification') }}</h4>
                             </div>
                                 <div class="form-group">
-                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="Enter OTP">
+                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" :placeholder="$t('LanguageEn.enterCode')">
                                 </div>
                                 <div class="form-group">
-                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.send') }}</button>
+                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.verify') }}</button>
                                 </div>
                         </div>
                     </div>
@@ -77,6 +107,7 @@
         </div>
     </div>
     </b-modal>
+
 </div>
 </template>
 
@@ -93,6 +124,8 @@ export default {
         verToken: '',
         OTP: '',
         imageLink: 'http://contentapi.zuniac.com/media/',
+        showCont: '',
+        text: '',
     }
   },
   async created(){
@@ -117,22 +150,51 @@ export default {
       .then(response => response.json())
       .then(result => {
         if (result.status == 'Forbidden') {
+                this.showCont = 1;
+                this.showText(3);
                 this.$refs['my-modal2'].show();
                 this.actToken = result.newToken;
                 console.log(result)
+        } else if(result.code == 404){
+                    this.showCont = 2;
+                console.log(result)
         } else if ( result.status == 'PAST_DUE'){
+                this.showCont = 1;
+                this.showText(3);
                 this.$refs['my-modal3'].show();
                 this.actToken = result.newToken;
                 console.log(result)
+        }  else if ( result.code == 401){
+                location.assign('/');
         } else {
         this.posts = result.content;
-        console.log(result)}
+        console.log(result)
+        this.showCont = 3;
+        }
         })
       .catch(error => console.log('error', error));
   },
   components: {
 },
 methods: {
+    showText(val){
+          var myHeaders = new Headers();
+        myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/pageInfo?languageId=2&pageId=" + val, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+                this.text = result;
+            })
+        .catch(error => console.log('error', error));
+    
+      },
   register(){
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + this.actToken);

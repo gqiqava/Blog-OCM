@@ -89,7 +89,7 @@
             <img src="@/assets/ZunilifeLogo.svg"  alt="Zunilife" style="width: 80px; margin-bottom: 30px;">
         </div>
           <div style="text-align: left; margin-bottom: 20px;" v-if="cookiesObject.permission == 'granted'">
-            <span style="font-size: 17px;"> {{cookiesObject.number.slice(1)}} </span>
+            <span style="font-size: 17px;" v-if="cookiesObject.number"> {{cookiesObject.number.slice(1)}} </span>
             <img src="@/assets/logout-256.png" @click="logout()" alt="Menu" style="width: 30px; cursor: pointer;">
           </div>
           <div style="text-align: left; margin-bottom: 20px;" v-else>
@@ -107,7 +107,7 @@
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">example </a>
             </li> -->
-            <li class="listItem">
+            <li class="listItem" @click="showText(1),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.about') }} </a>
             </li>
@@ -115,7 +115,7 @@
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;" >{{ $t('LanguageEn.language') }}</a>
             </li>
-            <li class="listItem">
+            <li class="listItem"  @click="showText(2),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.termsC') }}</a>
             </li>
@@ -136,6 +136,10 @@
             <a style="cursor: pointer; margin-left: 5px;">English</a>
             </li>
         </ul>
+    </b-modal>
+    <b-modal ref="text-modal" hide-footer hide-header title="Using Component Methods">
+        <h4 v-html="text.title">{{text.title}}</h4>
+        <p v-html="text.text">{{text.text}}</p>
     </b-modal>
 
 
@@ -184,14 +188,14 @@
         </ul>
         </div> -->
         <div v-if="bundlee != ''" style="margin-left: 2px; margin-bottom: 5px;">
-        bundle includes: 
-        <span style="margin-right: 5px;" v-for="categoriess in bundles[bundlee - 1].categories" :key="categoriess.id">
-        {{categoriess.name}}
+        {{ $t('LanguageEn.bundleIncludes') }} 
+        <span style="margin-right: 5px;" v-for="(categoriess, indx) in bundles[bundlee - 1].categories" :key="categoriess.id">
+        {{categoriess.name}} <span v-if="indx < bundles[bundlee - 1].categories.length - 1">,</span>
         </span>
         </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="login(), $refs['first-modal'].hide()" v-if="bundlee != '' && results.isValid == true">Next</button>
-                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" disabled v-else>Next</button>
+                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="login(), $refs['first-modal'].hide()" v-if="bundlee != '' && results.isValid == true">{{ $t('LanguageEn.next') }}</button>
+                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" disabled v-else>{{ $t('LanguageEn.next') }}</button>
             </div>
     </b-modal>
     <b-modal ref="my-modal" hide-footer hide-header title="Using Component Methods">
@@ -202,13 +206,13 @@
     <div class="col-12">
     <div class="padding_eight_all">	
                             <div class="heading_s1">
-                                <h4>OTP</h4>
+                                <h4>{{ $t('LanguageEn.verification') }}</h4>
                             </div>
                                 <div class="form-group">
-                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="Enter OTP">
+                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" :placeholder="$t('LanguageEn.enterCode')">
                                 </div>
                                 <div class="form-group">
-                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.send') }}</button>
+                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.verify') }}</button>
                                 </div>
                         </div>
                     </div>
@@ -219,7 +223,7 @@
     </b-modal>
     <b-modal ref="my-modal2" hide-footer hide-header title="Using Component Methods">
         <h1>{{ $t('LanguageEn.regTerms') }}</h1>
-        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <p v-html="text.text">{{text.text}}</p>
         <b-row>
         <b-col>
             <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide()">{{ $t('LanguageEn.cancel') }}</button>
@@ -231,7 +235,7 @@
     </b-modal>
     <b-modal ref="my-modal3" hide-footer hide-header title="Using Component Methods">
         <h1>{{ $t('LanguageEn.activate') }}</h1>
-        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <p v-html="text.text">{{text.text}}</p>
         <b-row>
         <b-col>
             <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal3'].hide()">{{ $t('LanguageEn.cancel') }}</button>
@@ -266,6 +270,7 @@ export default {
           chosenBundle: '',
           bundles: [],
           activateToken: '',
+          text:'',
       }
   },
  async beforeMount(){
@@ -276,7 +281,7 @@ export default {
     this.cookiesObject = cookiesObject;
 
     this.bundless();
-    
+
     this.loader = false;
   },
   props: {
@@ -294,11 +299,31 @@ computed: {
     ...mapActions(["setToken", "setPermission", "setBundle"]),
      logout(){
          document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+         document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+         document.cookie = "number = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
          document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
          location.assign('/')
       },
     showModal() {
         this.$refs['my-modal2'].show()
+      },
+      showText(val){
+          var myHeaders = new Headers();
+        myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://contentapi.zuniac.com/pageInfo?languageId=2&pageId=" + val, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+                this.text = result;
+            })
+        .catch(error => console.log('error', error));
+    
       },
 
     onUpdate (payload) {
@@ -340,14 +365,18 @@ computed: {
         .then(response => response.json())
         .then(result => {
             if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
+                this.showText(3);
                 this.$refs['my-modal2'].show();
             } else if (result.userStatus == 'ACTIVE' || result.userStatus == 'PAST_DUE') {
+                this.showText(3);
                 this.$refs['my-modal'].show();
             } else {
-                console.log(result)
+                alert(result.message)
             }
             document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            // document.cookie = 'refToken = ' + result.refreshToken + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             this.setToken(result.token);
+            console.log(result)
             })
         .catch(error => console.log('error', error));
         document.cookie = 'number = ' + this.results.formattedNumber + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
@@ -372,16 +401,41 @@ computed: {
         .then(response => response.json())
         .then(result => {
             if (result.status == 'ACTIVE') {
+            console.log(result);
             document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
+            document.cookie = 'refToken = ' + result.refreshToken + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             this.setToken(result.token); 
-            location.assign('/')
+            // this.$router.push({name: 'categoryPosts', params: { categoryId : 2 }})
+            location.reload(); 
             } else if (result.status == 'PAST_DUE'){
             this.activateToken = result.token;
             this.$refs['my-modal'].hide();
             this.$refs['my-modal3'].show();
+            } else if (result.code == 401) {
+                if (result.customErrorCode == 1001) {
+                    alert(result.message); 
+                    document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                } else if (result.customErrorCode == 1002) {
+                    alert(result.message); 
+                    this.$refs['my-modal'].hide();
+                    document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+                } else {
+                    alert(result.message); 
+                    document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                    document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+            
             } else {
-               alert(result.message) 
+                alert(result.message); 
+                document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
+                document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
             }
             })
         .catch(error => console.log('error', error));

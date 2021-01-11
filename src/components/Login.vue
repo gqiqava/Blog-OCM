@@ -35,14 +35,14 @@
     <div class="row no-gutters">
     <div class="col-12">
     <div class="padding_eight_all">	
-                            <div class="heading_s1">
-                                <h4>OTP</h4>
+                             <div class="heading_s1">
+                                <h4>{{ $t('LanguageEn.verification') }}</h4>
                             </div>
                                 <div class="form-group">
-                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="Enter OTP">
+                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" :placeholder="$t('LanguageEn.enterCode')">
                                 </div>
                                 <div class="form-group">
-                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.send') }}</button>
+                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.verify') }}</button>
                                 </div>
                         </div>
                     </div>

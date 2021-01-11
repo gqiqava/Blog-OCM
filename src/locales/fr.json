@@ -16,6 +16,13 @@
       "cancel": "Annuler",
       "alsoSee": "Voir Aussi",
       "next": "Suivant",
-      "about": "à propos"
+      "about": "à propos",
+      "bundleIncludes": "le forfait comprend:",
+      "verification": "Vérification",
+      "enterCode": "Entrez le code envoyé par SMS",
+      "verify": "Vérifier",
+      "notFound": "Page non trouvée",
+      "homePage": "page d'accueil",
+      "notSubbed": "vous n'êtes pas abonné à ce contenu"
       }
       }
