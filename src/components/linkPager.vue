@@ -130,7 +130,7 @@ export default {
       postContent: [],
       links: [],
       audio: '',
-      media: 'http://contentapi.zuniac.com/media/',
+      media: window.API+'/media/',
       d: '',
       categors:'',
       val: 5,
@@ -154,12 +154,12 @@ export default {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/content?d="+ this.d +"&id=" + this.id, requestOptions)
+        fetch(window.API+"/content?d="+ this.d +"&id=" + this.id, requestOptions)
         .then(response => response.json())
         .then(result => {
             this.post = result.contentDTO.category;
             this.postContent = result.contentDTO.contentDataSet[0];
-            this.audio = 'http://contentapi.zuniac.com/media/' + result.contentDTO.contentDataSet[0].audio;
+            this.audio = window.API+'/media/' + result.contentDTO.contentDataSet[0].audio;
             this.links = result.contentLinks;
             })
         .catch(error => console.log('error', error));
@@ -182,7 +182,7 @@ export default {
       redirect: 'follow'
     };
 
-    fetch("http://contentapi.zuniac.com/user/categories", requestOptions)
+    fetch(window.API+"/user/categories", requestOptions)
       .then(response => response.json())
       .then(result => {
         this.categors = result.content;

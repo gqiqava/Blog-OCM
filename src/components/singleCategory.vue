@@ -38,7 +38,6 @@
         <hooper-navigation slot="hooper-addons"></hooper-navigation>
   </hooper>
   
-
 	<div class="container" v-if="cookiesObject.permission == 'granted'">
    <div v-for="bundle in loggedArticles" :key="bundle.id">
    <div class="widget">
@@ -135,7 +134,7 @@ export default {
           }
         }
       },
-      imageLink: 'http://contentapi.zuniac.com/media/',
+      imageLink: window.API + '/media/',
       randomArticles: [],
       loggedArticles: [],
       filtered: [],
@@ -164,7 +163,7 @@ export default {
       redirect: 'follow'
     };
 
-    fetch("http://contentapi.zuniac.com/user/categories", requestOptions)
+    fetch( window.API + "/user/categories", requestOptions)
       .then(response => response.json())
       .then(result => {
         this.posts = result.content;
@@ -194,7 +193,7 @@ methods:{
         redirect: 'follow'
       };
 
-      fetch("http://contentapi.zuniac.com/refresh", requestOptions)
+      fetch( window.API + "/refresh", requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result.token && result.token != 'undefined') {
@@ -222,7 +221,7 @@ methods:{
         redirect: 'follow'
       };
 
-      fetch("http://contentapi.zuniac.com/userInitialContent", requestOptions)
+      fetch(window.API+"/userInitialContent", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.code == 401) {
@@ -261,7 +260,7 @@ methods:{
         redirect: 'follow'
       };
 
-      fetch("http://contentapi.zuniac.com/initialContent", requestOptions)
+      fetch(window.API+"/initialContent", requestOptions)
         .then(response => response.json())
         .then(result => {
           this.randomArticles = result;
@@ -272,140 +271,6 @@ methods:{
      showModal() {
         this.$refs['my-modal2'].show()
       },
-
-    // onUpdate (payload) {
-    //     this.results = payload
-    // },
-    // bundless(){
-    //     var myHeaders = new Headers();
-    //         myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
-
-    //         var requestOptions = {
-    //         method: 'GET',
-    //         headers: myHeaders,
-    //         redirect: 'follow'
-    //         };
-
-    //         fetch("http://contentapi.zuniac.com/bundleServices", requestOptions)
-    //         .then(response => response.json())
-    //         .then(result => {
-    //             this.bundles = result
-    //             })
-    //         .catch(error => console.log('error', error));
-    // },
-
-    // login(){
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Content-Type", "application/json");
-    //     myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
-
-    //     var raw = JSON.stringify({"msisdn": this.results.formattedNumber.slice(1) ,"periodId": 1,"serviceId": this.chosenBundle});
-
-    //     var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: 'follow'
-    //     };
-
-    //     fetch("http://contentapi.zuniac.com/login", requestOptions)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //         if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
-    //             this.$refs['my-modal2'].show();
-    //         } else if (result.userStatus == 'ACTIVE' || result.userStatus == 'PAST_DUE') {
-    //             this.$refs['my-modal'].show();
-    //         } else {
-    //             console.log(result)
-    //         }
-    //         document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-    //         this.setToken(result.token);
-    //         })
-    //     .catch(error => console.log('error', error));
-    //     document.cookie = 'number = ' + this.results.formattedNumber + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-    // },
-
-    // verifyOtp(){
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Authorization", "Bearer " + this.tocken);
-    //     myHeaders.append("Content-Type", "application/json");
-    //     myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
-
-    //     var raw = JSON.stringify({"otp": this.OTP});
-
-    //     var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: 'follow'
-    //     };
-
-    //     fetch("http://contentapi.zuniac.com/verifyOtp", requestOptions)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //         if (result.status == 'ACTIVE') {
-    //         document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-    //         document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-    //         this.setToken(result.token); 
-    //         location.assign('/')
-    //         } else if (result.status == 'PAST_DUE'){
-    //         this.activateToken = result.token;
-    //         this.$refs['my-modal'].hide();
-    //         this.$refs['my-modal3'].show();
-    //         } else {
-    //            alert(result.message) 
-    //         }
-    //         })
-    //     .catch(error => console.log('error', error));
-    // },
-    
-    // activate(){
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Authorization", "Bearer " + this.activateToken);
-    //     myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
-
-    //     var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     redirect: 'follow'
-    //     };
-
-    //     fetch("http://contentapi.zuniac.com/activate", requestOptions)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //        if (result.message == 'User activated successfully.' ) {
-    //         document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-    //         document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-    //         location.assign('/')
-    //        } else {
-    //            alert(result.message);
-    //            console.log(result)
-    //        }
-    //     })
-    //     .catch(error => console.log('error', error));
-    // },
-    // register(){
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Authorization", "Bearer " + this.tocken);
-    //     myHeaders.append("Cookie", "__cfduid=de50d5d8cce3ff6592c911352191001a61602584234");
-
-    //     var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     redirect: 'follow'
-    //     };
-
-    //     fetch("http://contentapi.zuniac.com/register", requestOptions)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //         this.$refs['my-modal2'].hide();
-    //         this.$refs['my-modal'].show();
-    //         document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
-    //         this.setToken(result.token);
-    //         console.log(result);
-    //     })
-    //     .catch(error => console.log('error', error));
-    // },
   },
 props: {
   },

@@ -128,7 +128,7 @@ methods:{
             redirect: 'follow'
             };
 
-            fetch("http://contentapi.zuniac.com/bundleServices", requestOptions)
+            fetch(window.API+"/bundleServices", requestOptions)
             .then(response => response.json())
             .then(result => {
                 this.bundles = result
@@ -150,7 +150,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/login", requestOptions)
+        fetch(window.API+"/login", requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
@@ -182,7 +182,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/verifyOtp", requestOptions)
+        fetch(window.API+"/verifyOtp", requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result.status == 'ACTIVE') {
@@ -212,7 +212,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/activate", requestOptions)
+        fetch(window.API+"/activate", requestOptions)
         .then(response => response.json())
         .then(result => {
            if (result.message == 'User activated successfully.' ) {
@@ -237,7 +237,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/register", requestOptions)
+        fetch(window.API+"/register", requestOptions)
         .then(response => response.json())
         .then(result => {
             this.$refs['my-modal2'].hide();

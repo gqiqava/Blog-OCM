@@ -165,7 +165,7 @@ export default {
       ex: '',
       OTP: '',
       audio: '',
-      imageLink: 'http://contentapi.zuniac.com/media/',
+      imageLink: window.API+'/media/',
       banner: '',
       visible: '',
       refToken: '',
@@ -197,7 +197,7 @@ export default {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/user/categories/" + this.categoryId + "/content/" + this.contentId, requestOptions)
+        fetch(window.API+"/user/categories/" + this.categoryId + "/content/" + this.contentId, requestOptions)
         .then(response => response.json())
         .then(result => {
              if (result.code == 401) {
@@ -216,7 +216,7 @@ export default {
                 }
                 else {
                 this.post = result.content.contentDataSet[0];
-                this.audio = 'http://contentapi.zuniac.com/media/' + result.content.contentDataSet[0].audio;
+                this.audio = window.API+'/media/' + result.content.contentDataSet[0].audio;
                 this.banner = result.content.category.banner;
                 this.links = result.similarContent;
                 this.showCont = 3;
@@ -248,7 +248,7 @@ methods:{
       redirect: 'follow'
     };
 
-    fetch("http://contentapi.zuniac.com/user/categories", requestOptions)
+    fetch(window.API+"/user/categories", requestOptions)
       .then(response => response.json())
       .then(result => {
         this.categors = result.content;
@@ -265,7 +265,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/pageInfo?languageId=2&pageId=" + val, requestOptions)
+        fetch(window.API+"/pageInfo?languageId=2&pageId=" + val, requestOptions)
         .then(response => response.json())
         .then(result => {
                 this.text = result;
@@ -284,7 +284,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/register", requestOptions)
+        fetch(window.API+"/register", requestOptions)
         .then(response => response.json())
         .then(result => {
             this.$refs['my-modal2'].hide();
@@ -306,7 +306,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/activate", requestOptions)
+        fetch(window.API+"/activate", requestOptions)
         .then(response => response.json())
         .then(result => {
            if (result.message == 'User activated successfully.' ) {
@@ -335,7 +335,7 @@ methods:{
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/verifyOtp", requestOptions)
+        fetch(window.API+"/verifyOtp", requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result.status == 'ACTIVE') {

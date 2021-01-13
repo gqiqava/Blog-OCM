@@ -127,7 +127,7 @@ export default {
         actToken: '',
         verToken: '',
         OTP: '',
-        imageLink: 'http://contentapi.zuniac.com/media/',
+        imageLink:  window.API+'/media/',
         showCont: '',
         text: '',
         cats: '',
@@ -152,7 +152,7 @@ export default {
       redirect: 'follow'
     };
 
-    fetch("http://contentapi.zuniac.com/user/categories/"+ this.categoryId +"/content?", requestOptions)
+    fetch( window.API+"/user/categories/"+ this.categoryId +"/content?", requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.status == 'Forbidden') {
@@ -199,7 +199,7 @@ methods: {
       redirect: 'follow'
     };
 
-    fetch("http://contentapi.zuniac.com/user/categories", requestOptions)
+    fetch( window.API+"/user/categories", requestOptions)
       .then(response => response.json())
       .then(result => {
         this.cats = result.content;
@@ -216,7 +216,7 @@ methods: {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/pageInfo?languageId=2&pageId=" + val, requestOptions)
+        fetch( window.API+"/pageInfo?languageId=2&pageId=" + val, requestOptions)
         .then(response => response.json())
         .then(result => {
                 this.text = result;
@@ -235,7 +235,7 @@ methods: {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/register", requestOptions)
+        fetch( window.API+"/register", requestOptions)
         .then(response => response.json())
         .then(result => {
             this.$refs['my-modal2'].hide();
@@ -257,7 +257,7 @@ methods: {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/activate", requestOptions)
+        fetch( window.API+"/activate", requestOptions)
         .then(response => response.json())
         .then(result => {
            if (result.message == 'User activated successfully.' ) {
@@ -286,7 +286,7 @@ methods: {
         redirect: 'follow'
         };
 
-        fetch("http://contentapi.zuniac.com/verifyOtp", requestOptions)
+        fetch( window.API+"/verifyOtp", requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result.status == 'ACTIVE') {
