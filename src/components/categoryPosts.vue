@@ -132,11 +132,14 @@ export default {
         text: '',
         cats: '',
         cat:'',
+        serId: '',
+         lang: 2,
     }
   },
   async created(){
 
     this.categoryId = this.$route.params.categoryId;
+    this.serId = this.$route.params.servicId;
 
     var cookiesObject = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
     this.cookiesObject = cookiesObject;
@@ -157,7 +160,7 @@ export default {
       .then(result => {
         if (result.status == 'Forbidden') {
                 this.showCont = 1;
-                this.showText(3);
+                this.showText(4, this.serId);
                 this.$refs['my-modal2'].show();
                 this.actToken = result.newToken;
                 console.log(result)
@@ -186,7 +189,7 @@ export default {
 },
 methods: {
     setCat(val){
-        this.$router.push({ name: 'categoryPosts', params: { categoryId: val } })
+        this.$router.push({ name: 'categoryPosts',params: { categoryId : val, servicId : 3 } })
     },
     categories(){
          var myHeaders = new Headers();
@@ -206,7 +209,7 @@ methods: {
         })
       .catch(error => console.log('error', error));
     },
-    showText(val){
+    showText(val1, val2){
           var myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=d5ca0d5e64110e5f363d0c088919307101605176554");
 
@@ -216,7 +219,7 @@ methods: {
         redirect: 'follow'
         };
 
-        fetch( window.API+"/pageInfo?languageId=2&pageId=" + val, requestOptions)
+        fetch(window.API+"/pageInfo?languageId=" + this.lang + "&pageId=" + val1 + "&serviceId=" + val2, requestOptions)
         .then(response => response.json())
         .then(result => {
                 this.text = result;

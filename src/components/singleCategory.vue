@@ -7,7 +7,7 @@
           <div class="blog_post">
                 <div class="blog_img">
                         <a>
-                          <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id }}">  
+                          <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
                             <img :src="imageLink + post.icon" :alt="post.id" style="width: 99.9%; height: 300px; object-fit: cover;">
                           </router-link>
                         </a>
@@ -48,7 +48,7 @@
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
-                          <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, contentId: article.id }}">
+                      <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, servicId: article.category.serviceId, contentId: article.id }}">
                             <img :src="imageLink + article.image" alt="blog_img" style="width: 100%;">
                           </router-link>
                         </a>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="blog_content">
-                      <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, contentId: article.id }}">
+                      <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, servicId: article.category.serviceId, contentId: article.id }}">
                         <div class="blog_text">
                           <h6 class="blog_heading">
                            <span v-html="article.contentDataSet[0].title">{{article.contentDataSet[0].title}}</span>
