@@ -12,7 +12,7 @@
         <div class="blog_post">
                 <div class="blog_img">
                         <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}">
-                            <img :src="imageLink + post.content.image" alt="blog_img" style="height: 100%; width: 100%;">
+                            <img :src="imageLink + post.content.thumbnail" alt="blog_img" style="height: 100%; width: 100%;">
                         </router-link>
                          <div class="blog_tags">
                             <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: categoryId == 1, orangePill: categoryId == 2, bluePill: categoryId == 3, yellowPill: categoryId == 4, pinkPill: categoryId == 5, maroonPill: categoryId == 6}">{{post.content.category.name}}</a>

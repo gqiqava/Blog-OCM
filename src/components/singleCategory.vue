@@ -49,7 +49,7 @@
                 <div class="blog_img">
                         <a >
                       <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, servicId: article.category.serviceId, contentId: article.id }}">
-                            <img :src="imageLink + article.image" alt="blog_img" style="width: 100%;">
+                            <img :src="imageLink + article.thumbnail" alt="blog_img" style="width: 100%;">
                           </router-link>
                         </a>
                          <div class="blog_tags">
@@ -82,7 +82,7 @@
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
-                            <img :src="imageLink + article.image" alt="blog_img" style="width: 100%;">
+                            <img :src="imageLink + article.thumbnail" alt="blog_img" style="width: 100%;">
                         </a>
                          <div class="blog_tags">
                             <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: article.category.id == 1, orangePill: article.category.id == 2, bluePill: article.category.id == 3, yellowPill: article.category.id == 4, pinkPill: article.category.id == 5, maroonPill: article.category.id == 6}">{{article.category.name}}</a>

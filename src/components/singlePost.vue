@@ -43,7 +43,7 @@
                         <li v-for="(link, indx) in links" :key="link.id" @click="newCon(link.contentId)" style="cursor: pointer;">
                             <div class="post_footer" v-if="indx < val">
                                 <div class="post_img">
-                                    <img class="rounded-circle" :src="imageLink + link.image" alt="letest_post1">
+                                    <img class="rounded-circle" :src="imageLink + link.thumbnail" alt="letest_post1">
                                 </div>
                                 <div class="post_content">
                                     <h6 class="hov" style="font-size: 12px; line-height: 18px; text-align: left;" v-html="link.title">{{link.title}}</h6>
@@ -218,7 +218,7 @@ export default {
                 }
                 else {
                 this.post = result.content.contentDataSet[0];
-                this.audio = window.API+'/media/' + result.content.contentDataSet[0].audio;
+                this.audio = window.API+'/media/' + result.content.contentDataSet[0].media;
                 this.banner = result.content.category.banner;
                 this.links = result.similarContent;
                 this.showCont = 3;

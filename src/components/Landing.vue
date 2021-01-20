@@ -111,10 +111,10 @@
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.about') }} </a>
             </li>
-            <li class="listItem" @click="$refs['language-modal'].show()">
+            <!-- <li class="listItem" @click="$refs['language-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;" >{{ $t('LanguageEn.language') }}</a>
-            </li>
+            </li> -->
             <li class="listItem"  @click="showText(2,2),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.termsC') }}</a>
