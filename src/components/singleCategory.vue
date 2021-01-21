@@ -264,7 +264,6 @@ methods:{
         .then(response => response.json())
         .then(result => {
           this.randomArticles = result;
-          console.log(result)
           })
         .catch(error => console.log('error', error));
           },
