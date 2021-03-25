@@ -13,45 +13,6 @@
 </div>
 <!-- END LOADER --> 
 
-
-
-<!-- START HEADER -->
-<!-- <header class="header_wrap dark_skin">
-  <nav class="navbar navbar-expand-lg bg-light fixed-top" style="height: 60px; background: #202325 !important;"> 
-      <b-row>
-        <b-col>
-            <a v-b-toggle.sidebar-1>
-                <img src="@/assets/menuIcon.png" alt="Menu" style="width: 40px;">
-            </a>
-        </b-col>
-        <b-col>
-            <a class="navbar-brand">
-                <router-link :to="{ name: 'singleCategory'}">
-                <img class="logo_dark" src="@/assets/logo.svg" alt="logo" style="width: 60px;"/>
-                </router-link>
-            </a>
-        </b-col>
-        </b-row> -->
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="ion-android-menu"></span> </button> -->
-            <!-- <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown">Menu</a>
-                        <div class="dropdown-menu dropdown-reverse">
-                            <ul> 
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example1</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example2</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">example3</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">Language</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" style="cursor: pointer;">Terms & Conditions</a></li>
-                                <li><a class="dropdown-item nav-link nav_item" @click="logout()" style="cursor: pointer;">Logout </a></li>
-                            </ul>
-                        </div>
-                    </li>  
-                </ul>
-            </div> -->
-		<!-- </nav>
-</header> -->
-
 <div style="margin-bottom: 10px;">
   <b-navbar fixed="top" type="dark" variant="dark" style="background: black !important; height: 60px;">
       <a v-b-toggle.sidebar-1>
@@ -59,24 +20,9 @@
             </a>
     <b-navbar-brand href="#">
         <router-link :to="{ name: 'singleCategory'}">
-        <img src="@/assets/logo.svg" alt="ZuniLife" style="width: 80px; margin-left: 20px;">
+        <img src="@/assets/zlifeWhite.png" alt="ZuniLife" style="width: 90px; margin-left: 20px;">
         </router-link>
     </b-navbar-brand>
-      <!-- <b-navbar-nav class="mr-auto">
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
-        </b-nav-item-dropdown>
-        <b-nav-item-dropdown right>
-          <template #button-content>
-            <em>User</em>
-          </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav> -->
   </b-navbar>
 </div>
 
@@ -86,7 +32,7 @@
     <b-sidebar id="sidebar-1" title="" shadow>
       <div class="px-3 py-2">
         <div style="text-align: left;">
-            <img src="@/assets/ZunilifeLogo.svg"  alt="Zunilife" style="width: 80px; margin-bottom: 30px;">
+            <img src="@/assets/zlifeBlack.png"  alt="Zunilife" style="width: 90px; margin-bottom: 30px;">
         </div>
           <div style="text-align: left; margin-bottom: 20px;" v-if="cookiesObject.permission == 'granted'">
             <span style="font-size: 17px;" v-if="cookiesObject.number"> {{cookiesObject.number.slice(1)}} </span>
@@ -111,10 +57,10 @@
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.about') }} </a>
             </li>
-            <!-- <li class="listItem" @click="$refs['language-modal'].show()">
+            <li v-if="showLang == 1" class="listItem" @click="$refs['language-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;" >{{ $t('LanguageEn.language') }}</a>
-            </li> -->
+            </li>
             <li class="listItem"  @click="showText(2,2),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.termsC') }}</a>
@@ -167,7 +113,7 @@
 
 <b-modal ref="first-modal" id="first-modall" hide-footer hide-header title="Using Component Methods">
         <div class="heading_s1">
-            <img src="@/assets/logo.svg" alt="ZuniLife" style="width: 80px;">
+            <img src="@/assets/zlifeBlack.png" alt="ZuniLife" style="width: 90px;">
         </div>
         <div style="margin-bottom: 20px; margin-top: 40px;">
             <VuePhoneNumberInput autofocus v-model="number" @update="onUpdate" style="" default-country-code="CM"/>
@@ -220,8 +166,7 @@
         </div>
     </div>
     </b-modal>
-    <b-modal ref="my-modal2" hide-footer hide-header title="Using Component Methods">
-        <h1>{{ $t('LanguageEn.regTerms') }}</h1>
+   <b-modal ref="my-modal2" hide-footer  :title="$t('LanguageEn.regTerms')">
         <p v-html="text.text">{{text.text}}</p>
         <b-row>
         <b-col>
@@ -232,8 +177,7 @@
         </b-col>
         </b-row>
     </b-modal>
-    <b-modal ref="my-modal3" hide-footer hide-header title="Using Component Methods">
-        <h1>{{ $t('LanguageEn.activate') }}</h1>
+    <b-modal ref="my-modal3" hide-footer  :title="$t('LanguageEn.activate')">
         <p v-html="text.text">{{text.text}}</p>
         <b-row>
         <b-col>
@@ -243,6 +187,10 @@
             <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="activate()">{{ $t('LanguageEn.activateButton') }}</button>
         </b-col>
         </b-row>
+    </b-modal>
+     <b-modal ref="my-modal7" hide-footer  :title="$t('LanguageEn.regTerms')">
+        <p v-html="text.text">{{text.text}}</p>
+        <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal7'].hide(), login()">Daxil Ol</button>
     </b-modal>
 
 
@@ -271,6 +219,9 @@ export default {
           activateToken: '',
           text:'',
           lang: '2',
+          showLang: '',
+          webSubs: '',
+          activPage: '', 
       }
   },
  async beforeMount(){
@@ -281,6 +232,7 @@ export default {
     this.cookiesObject = cookiesObject;
 
     this.bundless();
+    this.appData();
 
     this.loader = false;
   },
@@ -297,6 +249,26 @@ computed: {
   },
   methods:{
     ...mapActions(["setToken", "setPermission", "setBundle"]),
+    appData(){
+        var myHeaders = new Headers();
+        myHeaders.append("Cookie", "__cfduid=daa11664c49161bf93cd02dbd6c4fb8131611146765");
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch(window.API+"/appData", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+                // console.log(result)
+                this.showLang = result.Languages.value;
+                this.webSubs = result.webSubs.value;
+                this.activPage = result.activPage.value;
+            })
+        .catch(error => console.log('error', error));
+    },
      logout(){
          document.cookie = "permission = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
          document.cookie = "refToken = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; 
@@ -364,11 +336,20 @@ computed: {
         fetch(window.API+"/login", requestOptions)
         .then(response => response.json())
         .then(result => {
-            if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
-                this.showText(4, this.bundlee);
-                this.$refs['my-modal2'].show();
+             if (result.userStatus == 'NOT_FOUND' || result.userStatus == 'UNSUBSCRIBED') {
+                if (this.webSubs == 1) {
+                    if (this.activPage == 1) {
+                        this.showText(4, this.bundlee);
+                        this.$refs['my-modal2'].show();
+                    } else {
+                        this.register(); 
+                    }
+                } else {
+                    this.showText(5, this.bundlee);
+                    this.$refs['my-modal7'].show();
+                }
             } else if (result.userStatus == 'ACTIVE' || result.userStatus == 'PAST_DUE') {
-                this.showText(3);
+                this.showText(3, this.bundlee);
                 this.$refs['my-modal'].show();
             } else {
                 alert(result.message)

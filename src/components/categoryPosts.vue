@@ -41,7 +41,7 @@
 	<div class="container">
     <div class="row">
     <div class="col-lg-12">
-            <img src="@/assets/ZunilifeLogo.svg" alt="" style="width: 350px;">    
+            <img src="@/assets/zlifeBlack.png" alt="" style="width: 350px;">    
             <h1 style="margin-top: 50px;">404 <br> {{ $t('LanguageEn.notFound') }}</h1> 
             <router-link :to="{ name: 'singleCategory'}">
             <b-button variant="warning" style="color: white; background: #ff7900; margin-top: 30px;">{{ $t('LanguageEn.homePage') }}</b-button>
@@ -54,7 +54,7 @@
 	<div class="container">
     <div class="row">
     <div class="col-lg-12">
-            <img src="@/assets/ZunilifeLogo.svg" alt="" style="width: 350px;">    
+            <img src="@/assets/zlifeBlack.png" alt="" style="width: 350px;">    
             <h3 style="margin-top: 50px;">{{ $t('LanguageEn.notSubbed') }}</h3> 
             <router-link :to="{ name: 'singleCategory'}">
             <b-button variant="warning" style="color: white; background: #ff7900; margin-top: 30px;">{{ $t('LanguageEn.homePage') }}</b-button>

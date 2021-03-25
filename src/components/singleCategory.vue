@@ -40,7 +40,7 @@
   
 	<div class="container" v-if="cookiesObject.permission == 'granted'">
    <div v-for="bundle in loggedArticles" :key="bundle.id">
-   <div class="widget">
+   <div v-if="showSeparator == 1" class="widget">
       <h5 class="border-bottom" style="text-align: left; font-weight: 600; font-size: 23px; line-height: 50px;"><img src="@/assets/check.png" alt="" style="width: 22px; margin-bottom: 10px;" v-if="bundle.isActive == true"> {{bundle.serviceName}} </h5>
     </div>
   <div class="row">
@@ -74,7 +74,7 @@
 
 <div class="container" v-else>
   <div v-for="bundle in randomArticles" :key="bundle.id">
-    <div class="widget">
+    <div v-if="showSeparator == 1" class="widget">
       <h5 class="border-bottom" style="text-align: left; font-weight: 600; font-size: 23px; line-height: 50px;">{{bundle.serviceName}}</h5>
     </div>
   <div class="row">
@@ -139,6 +139,7 @@ export default {
       loggedArticles: [],
       filtered: [],
       refToken: '',
+      showSeparator: '',
     }
   },
   async created(){
@@ -152,6 +153,7 @@ export default {
     this.randomArticle();
     }
     // this.bundless();
+    this.appData();
 
     var myHeaders = new Headers();
     // myHeaders.append("Authorization", "Bearer " + this.cookiesObject.token);
@@ -182,6 +184,23 @@ methods:{
     // slidePrev() {
     //   this.$refs.carousel.slidePrev();
     // },
+    appData(){
+        var myHeaders = new Headers();
+        myHeaders.append("Cookie", "__cfduid=daa11664c49161bf93cd02dbd6c4fb8131611146765");
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch(window.API+"/appData", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+                this.showSeparator = result.Separator.value;
+            })
+        .catch(error => console.log('error', error));
+    },
     refreshTok(){
       var myHeaders = new Headers();
       myHeaders.append("authorization", "Refresh " + this.cookiesObject.refToken);
