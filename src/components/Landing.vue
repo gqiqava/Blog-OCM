@@ -20,7 +20,7 @@
             </a>
     <b-navbar-brand href="#">
         <router-link :to="{ name: 'singleCategory'}">
-        <img src="@/assets/zlifeWhite.png" alt="ZuniLife" style="width: 90px; margin-left: 20px;">
+        <img src="@/assets/zlifeWhite.png" alt="ZuniLife" style="width: 100px; margin-left: 20px;">
         </router-link>
     </b-navbar-brand>
   </b-navbar>
@@ -32,7 +32,7 @@
     <b-sidebar id="sidebar-1" title="" shadow>
       <div class="px-3 py-2">
         <div style="text-align: left;">
-            <img src="@/assets/zlifeBlack.png"  alt="Zunilife" style="width: 90px; margin-bottom: 30px;">
+            <img src="@/assets/zlifeBlack.png"  alt="Zunilife" style="width: 100px; margin-bottom: 30px;">
         </div>
           <div style="text-align: left; margin-bottom: 20px;" v-if="cookiesObject.permission == 'granted'">
             <span style="font-size: 17px;" v-if="cookiesObject.number"> {{cookiesObject.number.slice(1)}} </span>
@@ -113,7 +113,7 @@
 
 <b-modal ref="first-modal" id="first-modall" hide-footer hide-header title="Using Component Methods">
         <div class="heading_s1">
-            <img src="@/assets/zlifeBlack.png" alt="ZuniLife" style="width: 90px;">
+            <img src="@/assets/zlifeBlack.png" alt="ZuniLife" style="width: 100px;">
         </div>
         <div style="margin-bottom: 20px; margin-top: 40px;">
             <VuePhoneNumberInput autofocus v-model="number" @update="onUpdate" style="" default-country-code="CM"/>
