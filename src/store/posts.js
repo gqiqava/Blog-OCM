@@ -3,6 +3,9 @@ export default {
       async setLeagueId({ commit }, leagueIden){
         commit('newLeagueId', leagueIden);
         },
+        async setTheme({ commit }, dark){
+          commit('newTheme', dark);
+          },
       async setToken({ commit }, tocken){
         commit('newToken', tocken);
           },
@@ -57,6 +60,7 @@ export default {
     },
     mutations: {
       newToken: (state, tocken) => state.tocken = tocken,
+      newTheme: (state, dark) => state.dark = dark,
       permStatus: (state, permission) => state.permission = permission,
       bundleId: (state, bundlee) => state.bundlee = bundlee,
       updateArray(state, favs){
@@ -77,9 +81,11 @@ export default {
         favsTe: [],
         httpReq: 'https://sportapi.zuniac.com',
         bundlee: '',
+        dark: false,
     },
     getters: {
       tocken: (state) => state.tocken,
+      dark: (state) => state.dark,
       permission: (state) => state.permission,
       bundlee: (state) => state.bundlee,
       favs: (state) => state.favs,
