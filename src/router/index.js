@@ -4,7 +4,8 @@ import singleCategory from '../components/singleCategory'
 import categoryPosts from '../components/categoryPosts'
 import singlePost from '../components/singlePost'
 import linkPager from '../components/linkPager'
-
+import terms from '../components/terms'
+import about from '../components/about'
 
 Vue.use(Router)
 
@@ -23,6 +24,16 @@ export default new Router ({
             name: 'categoryPosts',
             path: '/categoryPosts/:categoryId',
             component: categoryPosts,
+        },
+        {
+            name: 'about',
+            path: '/about',
+            component: about,
+        },
+        {
+            name: 'terms',
+            path: '/terms',
+            component: terms,
         },
         {
             name: 'singlePost',
