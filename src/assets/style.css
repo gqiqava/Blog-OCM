@@ -27,6 +27,8 @@ Version      : 1.0
 /*===================================*
   01. GENERAL STYLE
 *===================================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap');
+
 html, body {
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
@@ -44,17 +46,15 @@ body {
 	-moz-osx-font-smoothing:grayscale;
 }
 h1,h2,h3,h4,h5,h6 {
-	color: #000000;
-	font-family: "Tahoma", sans-serif;
+	/* color: #000000; */
+    font-family: 'Poppins', sans-serif;
 }
 p {
-	color: #666;
-	line-height: 26px;
-	margin-bottom: 20px;
+	line-height: 20px;
 	font-weight: 400;
 }
 a {
-	color: #000000;
+	/* color: #000000; */
 	text-decoration: none;
 	-webkit-transition: all 0.5s ease;
 	transition: all .5s ease;
@@ -919,7 +919,7 @@ button:focus {
 .dropdown-toggle::after, .dropdown-toggler::after {
 	border: 0 none;
 	content: "\f3d0";
-	font-family: "Ionicons";
+    font-family: 'Poppins', sans-serif;
 	line-height: normal;
 	margin-left: 5px;
 	vertical-align: middle;
@@ -1112,7 +1112,7 @@ button:focus {
 }
 .search_trigger.open i::before {
 	content: "\f129";
-	font-family: "Ionicons";
+    font-family: 'Poppins', sans-serif;
 }
 .search_wrap {
 	position: fixed;
@@ -1963,7 +1963,7 @@ input.text {
 .ddArrow::before {
 	content: "\f3d0";
 	color: #878787;
-	font-family: ionicons;
+    font-family: 'Poppins', sans-serif;
 	position: absolute;
 	right: 0;
 	top: 7px;
@@ -2403,7 +2403,7 @@ header.vertical_menu .navbar-collapse .navbar-nav {
 	position: absolute;
 	left: 0;
 	bottom: 20px;
-	font-family: "Prata", sans-serif;
+    font-family: 'Poppins', sans-serif;
 	font-size: 26px;
 	line-height: 1;
 	text-transform: uppercase;
@@ -2693,7 +2693,7 @@ header.vertical_menu .navbar-collapse .navbar-nav {
 	font-weight: normal;
 	padding: 4px 10px;
 	display: inline-block;
-	border-radius: 50px;
+	border-radius: 10px;
 	line-height: 1;
 	margin-right: 5px;
 }
@@ -3196,7 +3196,7 @@ footer .widget_title {
 }
 .breadcrumb-item + .breadcrumb-item::before {
 	content: "\f3d1";
-	font-family: "Ionicons";
+    font-family: 'Poppins', sans-serif;
 	vertical-align: middle;
 }
 .page-title + .breadcrumb {
@@ -3598,7 +3598,7 @@ select option {
 }
 .custom_select::before {
 	content: "\e64b";
-	font-family: 'themify';
+    font-family: 'Poppins', sans-serif;
 	position: absolute;
 	display: block;
 	color: #848484;
@@ -3864,7 +3864,7 @@ footer .widget_recent_post .post_img img {
 }
 .artical_tags::before {
 	content: "\ea56";
-	font-family: Linearicons;
+    font-family: 'Poppins', sans-serif;
 	vertical-align: middle;
 	margin-right: 5px;
 	display: inline-block;
@@ -3889,7 +3889,7 @@ footer .widget_recent_post .post_img img {
 }
 .widget_tweet_feed li::before {
 	content: "\e74b";
-	font-family: 'themify';
+    font-family: 'Poppins', sans-serif;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -4232,11 +4232,11 @@ footer .widget_recent_post .post_img img {
 }
 .nav_style7 .ion-arrow-left-c::before {
 	content: "\ec43";
-	font-family: 'Linearicons';
+    font-family: 'Poppins', sans-serif;
 }
 .nav_style7 .ion-arrow-right-c::before {
 	content: "\ec44";
-	font-family: 'Linearicons';
+    font-family: 'Poppins', sans-serif;
 }
 .nav_style2.owl-theme .owl-nav .owl-prev {
 	left: -70px;
@@ -4271,12 +4271,12 @@ footer .widget_recent_post .post_img img {
 .nav_style3 .owl-prev i::before,
 .nav_style6 .owl-prev i::before {
 	content: "\ec43";
-	font-family: 'Linearicons';
+    font-family: 'Poppins', sans-serif;
 }
 .nav_style3 .owl-next i::before,
 .nav_style6 .owl-next i::before {
 	content: "\ec44";
-	font-family: 'Linearicons';
+    font-family: 'Poppins', sans-serif;
 }
 .nav_style4.owl-theme .owl-nav [class*="owl-"],
 .nav_style5.owl-theme .owl-nav [class*="owl-"] {
@@ -4394,7 +4394,7 @@ footer .widget_recent_post .post_img img {
 }
 .slick-prev::before {
 	content: "\f108";
-	font-family: "Ionicons";
+    font-family: 'Poppins', sans-serif;
 	color: #333;
 	opacity: 1;
 	display: block;
@@ -4402,7 +4402,7 @@ footer .widget_recent_post .post_img img {
 }
 .slick-next::before {
 	content: "\f10b";
-	font-family: "Ionicons";
+    font-family: 'Poppins', sans-serif;
 	color: #333;
 	opacity: 1;
 	display: block;
@@ -4639,7 +4639,7 @@ blockquote p {
 	left: 50px;
 	top: 10px;
 	color: #000;
-	font-family: "Font Awesome 5 Free";
+    font-family: 'Poppins', sans-serif;
 	font-weight: 900;
 	font-size: 70px;
 	opacity: 0.05;
