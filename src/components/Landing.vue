@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div  v-bind:class="{ bgWhite: dark == false,  bgDark: dark == true }" >
 <!-- LOADER -->
 <div v-if="loader" id="preloader">
     <div class="sk-folding-cube">
@@ -13,18 +13,30 @@
 </div>
 <!-- END LOADER --> 
 
-<div style="margin-bottom: 10px;">
-  <b-navbar fixed="top" type="dark" variant="dark" style="background: black !important; height: 60px;">
-      <a v-b-toggle.sidebar-1>
-                <img src="@/assets/menuIcon.png" alt="Menu" style="width: 28px; cursor: pointer; margin-left: 20px;">
-            </a>
-    <b-navbar-brand href="#">
+  <div class="topNav sticky-top" style="">
+      <div class="row">
+    <div style="padding-left: 50px;">
         <router-link :to="{ name: 'singleCategory'}">
-        <img src="@/assets/zlifeWhite.png" alt="ZuniLife" style="width: 100px; margin-left: 20px;">
+        <img src="@/assets/zlifeWhite.png" alt="ZuniLife" style="width: 110px;">
         </router-link>
-    </b-navbar-brand>
-  </b-navbar>
-</div>
+    </div>
+    <div style="margin-left: auto; padding-right: 50px;">
+    <div style="text-align: left; border-radius: 5px;" v-if="cookiesObject.permission == 'granted'">
+      <b-dropdown id="dropdown-1" class="m-md-2 b2" no-caret variant="none" style="background: #1A1D22; border-radius: 5px; color: white; height: 39px;">
+    <template #button-content >
+    <div style="">
+    <img src="@/assets/mob.svg" alt="lgOut" style="width: 20px; cursor: pointer; padding-bottom: 5px;"><span class="tone" style="font-size: 14px; padding-bottom: 5px;">{{cookiesObject.number}} </span> 
+    </div>
+    </template>
+    <b-dropdown-item  @click="logout()" style="font-size: 14px;"><img src="@/assets/lgt.svg" alt="lgOut" style="width: 20px; cursor: pointer; padding-bottom: 5px; margin-left: 10px;"> Log out</b-dropdown-item>
+  </b-dropdown>
+    </div>
+    <div style="text-align: left;" v-else>
+        <b-button type="" class="bbtn" name="login" @click="$refs['first-modal'].show()" style="font-size: 11px;  font-weight: bold; border: solid 2px #ff7900; border-radius: 5px; padding: 9px;">{{ $t('LanguageEn.login') }}</b-button>
+    </div>
+    </div>
+    </div>
+  </div>
 
 <!-- start Sidebar -->
 
@@ -34,37 +46,24 @@
         <div style="text-align: left;">
             <img src="@/assets/zlifeBlack.png"  alt="Zunilife" style="width: 100px; margin-bottom: 30px;">
         </div>
-          <div style="text-align: left; margin-bottom: 20px;" v-if="cookiesObject.permission == 'granted'">
-            <span style="font-size: 17px;" v-if="cookiesObject.number"> {{cookiesObject.number.slice(1)}} </span>
-            <img src="@/assets/logout-256.png" @click="logout()" alt="Menu" style="width: 30px; cursor: pointer;">
-          </div>
-          <div style="text-align: left; margin-bottom: 20px;" v-else>
-            <b-button type="" name="login" @click="$refs['first-modal'].show()" style="font-size: 12px; background: #ff7900; font-weight: bold;">{{ $t('LanguageEn.login') }}</b-button>
-          </div>
+        
         <p style="font-size: 19px; text-align: left; color: black;"> 
             <span style="color: #ff7900"> Settings </span>
         </p>
         <ul style="list-style-type: none; text-align: left; margin-left: 10px;"> 
-            <!-- <li class="listItem">
-            <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
-            <a style="cursor: pointer; margin-left: 5px;">example </a>
-            </li>
-            <li class="listItem">
-            <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
-            <a style="cursor: pointer; margin-left: 5px;">example </a>
-            </li> -->
-            <li class="listItem" @click="showText(1,2),$refs['text-modal'].show()">
+         
+            <!-- <li class="listItem" @click="showText(1,2),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.about') }} </a>
-            </li>
+            </li> -->
             <li v-if="showLang == 1" class="listItem" @click="$refs['language-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;" >{{ $t('LanguageEn.language') }}</a>
             </li>
-            <li class="listItem"  @click="showText(2,2),$refs['text-modal'].show()">
+            <!-- <li class="listItem"  @click="showText(2,2),$refs['text-modal'].show()">
             <img src="@/assets/globe.png" alt="Menu" style="width: 18px; cursor: pointer;">
             <a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.termsC') }}</a>
-            </li>
+            </li> -->
         </ul>
       </div>
     </b-sidebar>
@@ -83,7 +82,7 @@
             </li>
         </ul>
     </b-modal>
-    <b-modal ref="text-modal" hide-footer :title="text.title">
+    <b-modal ref="text-modal" body-class="defModal" header-class="defModal1" hide-footer :title="text.title">
         <p v-html="text.text">{{text.text}}</p>
     </b-modal>
 
@@ -99,9 +98,19 @@
 <footer class="footer_dark bg_black" style="background: black;">
     <div class="bottom_footer border-top-tran">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <p class="copyright m-0 text-center"> © {{new Date().getFullYear()}} {{ $t('LanguageEn.reserved') }}</p>
+            <div class="row" style="text-align: left;">
+                <div class="col-12" style="color: lightgrey;">
+                    <span class="listItem">
+                        <router-link :to="{ name: 'about', params: { }}">
+                            <img src="@/assets/arr.svg" alt="ZuniLife" style="width: 15px; margin-left: 5px;"><a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.about') }} </a>
+                        </router-link>
+                    </span>
+                      <span class="listItem">
+                        <router-link :to="{ name: 'terms', params: { }}">
+                         <img src="@/assets/arr.svg" alt="ZuniLife" style="width: 15px; margin-left: 5px;"><a style="cursor: pointer; margin-left: 5px;">{{ $t('LanguageEn.termsC') }} </a>
+                        </router-link>
+                    </span>
+                    <span class="copyright m-0 text-center" style="float: right;"> © {{new Date().getFullYear()}} {{ $t('LanguageEn.reserved') }}</span>
                 </div>
             </div>
         </div>
@@ -111,16 +120,17 @@
 
 <!--  MODALS -->   
 
-<b-modal ref="first-modal" id="first-modall" hide-footer hide-header title="Using Component Methods">
+<b-modal ref="first-modal" id="first-modall" body-class="defModal" hide-footer hide-header>
         <div class="heading_s1">
-            <img src="@/assets/zlifeBlack.png" alt="ZuniLife" style="width: 100px;">
+            <img src="@/assets/zlifeWhite.png" alt="ZuniLife" style="width: 100px;">
         </div>
-        <div style="margin-bottom: 20px; margin-top: 40px;">
-            <VuePhoneNumberInput autofocus v-model="number" @update="onUpdate" style="" default-country-code="CM"/>
+        <span style="float: left;">Entrez votre numéro de mobile</span>
+        <div style="margin-bottom: 20px; margin-top: 50px;">
+            <VuePhoneNumberInput dark autofocus v-model="number" @update="onUpdate" style="" default-country-code="CM"/>
         </div> 
         <span style="float: left; margin-bottom: 10px;">{{ $t('LanguageEn.selectBundle') }}</span><br>
-        <b-form-select v-model="bundlee" class="mb-3" @change="setBundle">
-            <b-form-select-option v-for="bundle in bundles" :key="bundle.id" @change="setBundle(bundle.bundleId)" :value="bundle.bundleId"> <span> {{bundle.bundleName}} </span> </b-form-select-option>
+        <b-form-select v-model="bundlee" class="mb-3" @change="setBundle" style="background: #424242; color: lightgrey;">
+            <b-form-select-option v-for="bundle in bundles" :key="bundle.id" @change="setBundle(bundle.bundleId)" :value="bundle.bundleId" style="color: lightgrey;"> <span> {{bundle.bundleName}} </span> </b-form-select-option>
         </b-form-select>
         <!-- <div>
             <b-dropdown id="dropdown-1" text="Bundles" class="m-md-2" style="background: #ff7900 !important; color: white !important; font-size: 10px; !important" variant="none">
@@ -139,41 +149,41 @@
         </span>
         </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;"  @click="login(), $refs['first-modal'].hide()" v-if="bundlee != '' && results.isValid == true">{{ $t('LanguageEn.next') }}</button>
-                <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" disabled v-else>{{ $t('LanguageEn.next') }}</button>
+                <button type="submit" class="btn btn-default btn-block bbtn" style="z-index: 0; border-radius: 12px;"  @click="login(), $refs['first-modal'].hide()" v-if="bundlee != '' && results.isValid == true">{{ $t('LanguageEn.next') }}</button>
+                <button type="submit" class="btn btn-default btn-block bbtn" style="z-index: 0; border-radius: 12px;" disabled v-else>{{ $t('LanguageEn.next') }}</button>
             </div>
     </b-modal>
-    <b-modal ref="my-modal" hide-footer hide-header title="Using Component Methods">
-      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-    <div class="modal-content border-0">
+    <b-modal ref="my-modal" body-class="defModal" hide-footer hide-header>
+    <div class="border-0">
     <div class="modal-body">
     <div class="row no-gutters">
     <div class="col-12">
-    <div class="padding_eight_all">	
+    <div class="padding_six_all">	
                             <div class="heading_s1">
-                                <h4>{{ $t('LanguageEn.verification') }}</h4>
+                                <h4 style="color: white;">{{ $t('LanguageEn.verification') }}</h4>
                             </div>
                                 <div class="form-group">
-                                    <input type="text" required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" :placeholder="$t('LanguageEn.enterCode')">
+                                    <span style="float: left; margin-bottom: 5px;">{{ $t('LanguageEn.enterCode') }}</span>
+                                    <input style="background: #424242; color: lightgrey;" type="text"  required="" @keyup.enter="verifyOtp()" class="form-control" id="otp" v-model="OTP" name="OTP" placeholder="OTP Code">
                                 </div>
                                 <div class="form-group">
-                                    <button type="" class="btn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.verify') }}</button>
+                                    <button type="" style="border-radius: 12px;" class="btn bbtn btn-default btn-block" name="login" @click="verifyOtp()">{{ $t('LanguageEn.verify') }}</button>
                                 </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </b-modal>
-   <b-modal ref="my-modal2" hide-footer  :title="$t('LanguageEn.regTerms')">
-        <p v-html="text.text">{{text.text}}</p>
+   <b-modal ref="my-modal2" hide-header hide-footer body-class="defModal" header-class="defModal1">
+        <h5 style="color: white; margin-bottom: 20px;">{{ $t('LanguageEn.regTerms') }}</h5>
+        <p v-html="text.text" style="color: lightgrey;">{{text.text}}</p>
         <b-row>
         <b-col>
-            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal2'].hide()">{{ $t('LanguageEn.cancel') }}</button>
+            <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: white; border-color: white; border-radius: 12px;" @click="$refs['my-modal2'].hide()">{{ $t('LanguageEn.cancel') }}</button>
         </b-col>
         <b-col>
-            <button type="submit" class="btn btn-default btn-block" style="z-index: 0;" @click="register()">{{ $t('LanguageEn.subscribe') }}</button>
+            <button type="submit" class="btn bbtn btn-default btn-block" style="z-index: 0; border-radius: 12px;" @click="register()">{{ $t('LanguageEn.subscribe') }}</button>
         </b-col>
         </b-row>
     </b-modal>
@@ -192,7 +202,10 @@
         <p v-html="text.text">{{text.text}}</p>
         <button type="submit" class="btn mbtn btn-default btn-block"  style="z-index: 0; background: none; color: black; border-color: black;" @click="$refs['my-modal7'].hide(), login()">Daxil Ol</button>
     </b-modal>
-
+    <div style="position: fixed; bottom: 80px; right: 30px;  z-index: 1; cursor: pointer;">
+        <img v-if="dark == false" @click="setTheme(!dark)" style="width: 45px;" src="@/assets/dark.svg" alt="">
+        <img v-else @click="setTheme(!dark)" style="width: 70px; margin-bottom: -10px; margin-right: -10px;" src="@/assets/light.svg" alt="">
+    </div>
 
 
 
@@ -242,13 +255,13 @@ export default {
   VuePhoneNumberInput,
 },
 computed: {
-   ...mapGetters(['tocken', 'bundlee']),
+   ...mapGetters(['tocken', 'bundlee', "dark"]),
    resultsTable () {
         return Object.keys(this.results)
       },
   },
   methods:{
-    ...mapActions(["setToken", "setPermission", "setBundle"]),
+    ...mapActions(["setToken", "setPermission", "setBundle", "setTheme"]),
     appData(){
         var myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=daa11664c49161bf93cd02dbd6c4fb8131611146765");
@@ -262,7 +275,6 @@ computed: {
         fetch(window.API+"/appData", requestOptions)
         .then(response => response.json())
         .then(result => {
-                // console.log(result)
                 this.showLang = result.Languages.value;
                 this.webSubs = result.webSubs.value;
                 this.activPage = result.activPage.value;
@@ -357,7 +369,6 @@ computed: {
             document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             // document.cookie = 'refToken = ' + result.refreshToken + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             this.setToken(result.token);
-            console.log(result)
             })
         .catch(error => console.log('error', error));
         document.cookie = 'number = ' + this.results.formattedNumber + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
@@ -382,7 +393,6 @@ computed: {
         .then(response => response.json())
         .then(result => {
             if (result.status == 'ACTIVE') {
-            console.log(result);
             document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             document.cookie = 'refToken = ' + result.refreshToken + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             document.cookie = 'permission = granted ;expires = Thu, 01 Jan 2040 00:00:00 GMT;';
@@ -442,7 +452,6 @@ computed: {
             location.assign('/')
            } else {
                alert(result.message);
-               console.log(result)
            }
         })
         .catch(error => console.log('error', error));
@@ -465,7 +474,6 @@ computed: {
             this.$refs['my-modal'].show();
             document.cookie = 'token = ' + result.token + ';expires = Thu, 01 Jan 2040 00:00:00 GMT;';
             this.setToken(result.token);
-            console.log(result);
         })
         .catch(error => console.log('error', error));
     },
@@ -474,7 +482,7 @@ computed: {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style >
 @import '../assets/style.css';
 @import '../assets/responsive.css';
 @import '../assets/themify-icons.css';
@@ -486,24 +494,84 @@ computed: {
 @import '../assets/owl.theme.default.min.css';
 @import '../assets/owl.theme.css';
 @import '../assets/magnific-popup.css';
-
+.bgWhite{
+    background: #EEEFF2;
+    color: #0F1215;
+    -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
+}
+.bgDark{
+    background: #0F1215;
+    color: #EEEFF2;
+    -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
+}
+.clWhite{
+    color: #0F1215 !important;
+    -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
+}
+.clDark{
+    color: #EEEFF2 !important;
+    -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
+}
+.topNav{
+background: #13161A !important; 
+height: 80px;
+line-height: 80px;
+}
 
 .header_wrap{
   margin-top: 60px;
 }
 
-.listItem{
-    margin-top: 5px;
-    color: black;
-    font-weight: 500;
-    font-size: 16px;
+.b2 .dropdown-menu{
+    background: #1A1D22 !important;
+    color: white !important;
+    width: 190px;
+}
+.b2 .dropdown-item{
+    color: white;
+    height: 25px;
+    line-height: 25px;
+}
+.tone{
+  color: lightgrey !important;
+}
+.tone:hover{
+  color: #ff7900 !important;
+}
+
+.b2:hover{
+  color: #ff7900 !important;
 }
 
 .listItem:hover{
     color: #ffa500;
+    -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
 }
 
 .chosenLanguage{
   color:  #e99a06;
 }
+.bbtn{
+    background: transparent;
+}
+.bbtn:hover{
+    background: #ff7900;
+    -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
+}
+.defModal{
+    background: #0F1215;
+}
+.defModal1{
+    background: #0F1215;
+    color: white;
+    border: none;
+    border-radius: 0px;
+}
+
 </style>

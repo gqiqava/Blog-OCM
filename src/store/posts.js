@@ -81,7 +81,7 @@ export default {
         favsTe: [],
         httpReq: 'https://sportapi.zuniac.com',
         bundlee: '',
-        dark: false,
+        dark: true,
     },
     getters: {
       tocken: (state) => state.tocken,

@@ -259,7 +259,7 @@ components: {
 </script>
 
 <style scoped>
-@import '../assets/style.css';
+/* @import '../assets/style.css';
 @import '../assets/responsive.css';
 @import '../assets/themify-icons.css';
 @import '../assets/animate.css';
@@ -269,7 +269,7 @@ components: {
 @import '../assets/owl.carousel.min.css';
 @import '../assets/owl.theme.default.min.css';
 @import '../assets/owl.theme.css';
-@import '../assets/magnific-popup.css';
+@import '../assets/magnific-popup.css'; */
 
 
 .header_wrap{

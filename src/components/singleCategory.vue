@@ -1,55 +1,184 @@
 <template>
 <div class="section">
 <!-- <button type="" class="btn btn-default" name="login" @click="slidePrev()">prev</button> -->
-<div v-if="cookiesObject.permission == 'granted'" style="">
-  <hooper  class=""  :settings="hooperSettings" :autoPlay="true" :playSpeed="4000" :infiniteScroll="true" :centerMode="true" style="margin-bottom: 10px; height: 100%;">
-    <slide v-for="(post, indx) in posts" :key="indx" :index="indx" class="">
-          <div class="blog_post">
+<div v-if="cookiesObject.permission == 'granted'" style="" class="container">
+  <div v-bind:class="{ row: windowHeight > 765,}" class="">
+  <div class="col mr-3 pr-3 " v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="border-radius: 9px;">
+    <h3 style="text-align: left; margin-left: 15px; font-weight: 600;  padding-top: 25px; padding-bottom: 15px; font-size: 20px;">Religion</h3>
+  <div class="col pr-0 pl-0" v-for="(post, j) in rel" :key="j">
+      <div  class="col"> 
+        <div class="blog_post">
                 <div class="blog_img">
-                        <a>
-                          <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
-                            <img :src="imageLink + post.icon" :alt="post.id" style="width: 99.9%; height: 300px; object-fit: cover;">
-                          </router-link>
-                        </a>
-                         <div class="blog_tags" style="background: rgba(24, 24, 24, 0.65); text-align: center;">
-                            <h2 class="blog_tags_cat" style="">{{post.serviceName}}</h2>
-                            <a class="blog_tags_cat bg_warning" style="margin-left: 4px; margin-bottom: 4px;" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
+                            <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
+                            <img class="mainImg" :src="imageLink + post.icon" alt="blog_img" style="height: 110px; width: 100%; border-radius: 9px;">
+                        </router-link>
+                      
+                    </div>  
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <h5 class="">
+                              <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
+                              <span style="font-size: 12px; color: white; font-weight: 650; padding: 3px 7px; border-radius: 4px;" v-html="post.name" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}"> {{post.name}} </span>  
+                              </router-link> 
+                              </h5>
+                           
                         </div>
                     </div>
-                </div>
-    </slide>
-        <hooper-navigation slot="hooper-addons"></hooper-navigation>
-  </hooper>
+                </div> 
+        </div> 
   </div>
-  <hooper  class=""  :settings="hooperSettings" :autoPlay="true" :playSpeed="4000" :infiniteScroll="true" :centerMode="true" style="margin-bottom: 10px; height: 100%;" v-else>
-    <slide v-for="(post, indx) in posts" :key="indx" :index="indx" class="">
-          <div class="blog_post">
+    </div>
+  <div class="col mr-3 pr-3 " v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="border-radius: 9px;">
+    <h3 style="text-align: left; margin-left: 15px; font-weight: 600;  padding-top: 25px; padding-bottom: 15px; font-size: 20px;">La Belle Vie</h3>
+  <div class="col pr-0 pl-0" v-for="(post, j) in rel1" :key="j">
+      <div  class="col"> 
+        <div class="blog_post">
                 <div class="blog_img">
-                        <a>
-                            <img :src="imageLink + post.icon" :alt="post.id" v-b-modal.first-modall @click="setBundle(post.serviceId)" style="width: 99.9%; height: 300px; object-fit: cover;">
-                        </a>
-                         <div class="blog_tags" style="background: rgba(24, 24, 24, 0.65); text-align: center;">
-                            <h2 class="blog_tags_cat" style="">{{post.serviceName}}</h2>
-                            <a class="blog_tags_cat bg_warning" style="margin-left: 4px; margin-bottom: 4px;" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
+                            <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
+                            <img class="mainImg" :src="imageLink + post.icon" alt="blog_img" style="height: 110px; width: 100%; border-radius: 9px;">
+                        </router-link>
+                      
+                    </div>  
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <h5 class="">
+                              <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
+                              <span style="font-size: 12px; color: white; font-weight: 650; padding: 3px 7px; border-radius: 4px;" v-html="post.name" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}"> {{post.name}} </span>  
+                              </router-link> 
+                              </h5>
+                           
                         </div>
                     </div>
-                </div>
-    </slide>
-        <hooper-navigation slot="hooper-addons"></hooper-navigation>
-  </hooper>
+                </div> 
+        </div> 
+  </div>
+    </div>
+  <div class="col mr-3 pr-3 " v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="border-radius: 9px;">
+    <h3 style="text-align: left; margin-left: 15px; font-weight: 600;  padding-top: 25px; padding-bottom: 15px; font-size: 20px;">Affaires</h3>
+  <div class="col pr-0 pl-0" v-for="(post, j) in rel2" :key="j">
+      <div  class="col"> 
+        <div class="blog_post">
+                <div class="blog_img">
+                            <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
+                            <img class="mainImg" :src="imageLink + post.icon" alt="blog_img" style="height: 110px; width: 100%; border-radius: 9px;">
+                        </router-link>
+                      
+                    </div>  
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <h5 class="">
+                              <router-link :to="{ name: 'categoryPosts', params: { categoryId : post.id, servicId : post.serviceId }}">  
+                              <span style="font-size: 12px; color: white; font-weight: 650; padding: 3px 7px; border-radius: 4px;" v-html="post.name" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}"> {{post.name}} </span> 
+                              </router-link> 
+                              </h5>
+                           
+                        </div>
+                    </div>
+                </div> 
+        </div> 
+  </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- not regged  -->
+
+  <div v-else style="" class="container">
+ <div v-bind:class="{ row: windowHeight > 765,}" class="">
+  <div class="col mr-3 pr-3 " v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="border-radius: 9px;">
+    <h3 style="text-align: left; margin-left: 15px; font-weight: 600; padding-top: 25px; padding-bottom: 15px; font-size: 20px;">Religion</h3>
+  <div class="col pl-0 pr-0" v-for="(post, j) in rel" :key="j">
+      <div  class="col"> 
+        <div class="blog_post">
+                <div class="blog_img">
+                            <img class="mainImg" v-b-modal.first-modall @click="setBundle(post.serviceId)" :src="imageLink + post.icon" alt="blog_img" style="height: 110px; width: 100%; border-radius: 9px;">
+                         <!-- <div class="blog_tags">
+                            <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
+                        </div> -->
+                    </div>  
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <h5 class="">
+                              <span v-b-modal.first-modall @click="setBundle(post.serviceId)" style="font-size: 12px; color: white; font-weight: 650; padding: 3px 7px; border-radius: 4px;" v-html="post.name" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}"> {{post.name}} </span> 
+                              </h5>
+                            <!-- <ul class="blog_meta">
+                              <span style="color: #686868;"> {{post.contentNum}} articles sur la {{post.name}} </span>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div> 
+        </div> 
+  </div>
+    </div>
+  <div class="col mr-3 pr-3 " v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="border-radius: 9px;">
+    <h3 style="text-align: left; margin-left: 15px; font-weight: 600; padding-top: 25px; padding-bottom: 15px; font-size: 20px;">La Belle Vie</h3>
+  <div class="col pr-0 pl-0" v-for="(post, j) in rel1" :key="j">
+      <div  class="col"> 
+        <div class="blog_post">
+                <div class="blog_img">
+                            <img class="mainImg" v-b-modal.first-modall @click="setBundle(post.serviceId)" :src="imageLink + post.icon" alt="blog_img" style="height: 110px; width: 100%; border-radius: 9px;">
+                         <!-- <div class="blog_tags">
+                            <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
+                        </div> -->
+                    </div>  
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <h5 class="">
+                              <span v-b-modal.first-modall @click="setBundle(post.serviceId)" style="font-size: 12px; color: white; font-weight: 650; padding: 3px 7px; border-radius: 4px;" v-html="post.name" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}"> {{post.name}} </span> 
+                              </h5>
+                            <!-- <ul class="blog_meta">
+                              <span style="color: #686868;"> {{post.contentNum}} articles sur la {{post.name}} </span>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div> 
+        </div> 
+  </div>
+    </div>
+  <div class="col mr-3 pr-3 " v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="border-radius: 9px;">
+    <h3 style="text-align: left; margin-left: 15px; font-weight: 600;  padding-top: 25px; padding-bottom: 15px; font-size: 20px;">Affaires</h3>
+  <div class="col pr-0 pl-0" v-for="(post, j) in rel2" :key="j">
+      <div  class="col"> 
+        <div class="blog_post">
+                <div class="blog_img">
+                            <img class="mainImg" v-b-modal.first-modall @click="setBundle(post.serviceId)" :src="imageLink + post.icon" alt="blog_img" style="height: 110px; width: 100%; border-radius: 9px;">
+                         <!-- <div class="blog_tags">
+                            <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}">{{post.name}}</a>
+                        </div> -->
+                    </div>  
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <h5 class="">
+                              <span v-b-modal.first-modall @click="setBundle(post.serviceId)" style="font-size: 12px; color: white; font-weight: 650; padding: 3px 7px; border-radius: 4px;" v-html="post.name" v-bind:class="{ redPill: post.id == 1, orangePill: post.id == 2, bluePill: post.id == 3, yellowPill: post.id == 4, pinkPill: post.id == 5, maroonPill: post.id == 6}"> {{post.name}} </span> 
+                              </h5>
+                            <!-- <ul class="blog_meta">
+                              <span style="color: #686868;"> {{post.contentNum}} articles sur la {{post.name}} </span>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div> 
+        </div> 
+  </div>
+    </div>
+    </div>
   
-	<div class="container" v-if="cookiesObject.permission == 'granted'">
+  </div>
+  
+  <!-- articles -->
+
+	<div class="container" v-if="cookiesObject.permission == 'granted'" style="margin-top: 20px;">
    <div v-for="bundle in loggedArticles" :key="bundle.id">
    <div v-if="showSeparator == 1" class="widget">
-      <h5 class="border-bottom" style="text-align: left; font-weight: 600; font-size: 23px; line-height: 50px;"><img src="@/assets/check.png" alt="" style="width: 22px; margin-bottom: 10px;" v-if="bundle.isActive == true"> {{bundle.serviceName}} </h5>
+     <!-- <img src="@/assets/check.png" alt="" style="width: 22px; margin-bottom: 10px;" v-if="bundle.isActive == true"> -->
+      <h5 class="" style="text-align: left; font-weight: 600; font-size: 20px; line-height: 50px;"> {{bundle.serviceName}} </h5>
     </div>
   <div class="row">
-      <div v-for="article in bundle.initialContent" :key="article.id" class="col-xl-3 col-lg-3 col-md-6">
+      <div v-for="article in bundle.initialContent" :key="article.id" class="col-xl-3 col-lg-3 col-md-6 pl-2 pr-2">
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
                       <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, servicId: article.category.serviceId, contentId: article.id }}">
-                            <img :src="imageLink + article.thumbnail" alt="blog_img" style="width: 100%;">
+                            <img :src="imageLink + article.thumbnail" alt="blog_img" style="width: 90%; object-fit: cover; height: 200px; border-radius: 9px;">
                           </router-link>
                         </a>
                          <div class="blog_tags">
@@ -58,11 +187,11 @@
                     </div>
                     <div class="blog_content">
                       <router-link :to="{ name: 'singlePost', params: { categoryId : article.category.id, servicId: article.category.serviceId, contentId: article.id }}">
-                        <div class="blog_text">
-                          <h6 class="blog_heading">
-                           <span v-html="article.contentDataSet[0].title">{{article.contentDataSet[0].title}}</span>
+                        <div class="" v-bind:class="{ clWhite: dark == false,  clDark: dark == true }">
+                          <h6 class="" style="">
+                           <span class="listItem" v-html="article.contentDataSet[0].title">{{article.contentDataSet[0].title}}</span>
                           </h6>
-                          <p style="line-height: 1.25;" v-html="article.contentDataSet[0].body">{{article.contentDataSet[0].body}}</p>
+                          <p style="color: #686868;" v-html="article.contentDataSet[0].body">{{article.contentDataSet[0].body}} </p>
                         </div>
                       </router-link>
                     </div>
@@ -72,28 +201,28 @@
 </div>
 </div>
 
-<div class="container" v-else>
+<div class="container" v-else style="margin-top: 20px;">
   <div v-for="bundle in randomArticles" :key="bundle.id">
     <div v-if="showSeparator == 1" class="widget">
-      <h5 class="border-bottom" style="text-align: left; font-weight: 600; font-size: 23px; line-height: 50px;">{{bundle.serviceName}}</h5>
+      <h5 class="" style="text-align: left; font-weight: 600; font-size: 20px; line-height: 50px;">{{bundle.serviceName}}</h5>
     </div>
   <div class="row">
-      <div v-for="article in bundle.initialContent" :key="article.id" class="col-xl-3 col-lg-3 col-md-6" v-b-modal.first-modall @click="setBundle(bundle.serviceId)">
+      <div v-for="article in bundle.initialContent" :key="article.id" class="col-xl-3 col-lg-3 col-md-6 pl-2 pr-2" v-b-modal.first-modall @click="setBundle(bundle.serviceId)">
         <div class="blog_post">
                 <div class="blog_img">
                         <a >
-                            <img :src="imageLink + article.thumbnail" alt="blog_img" style="width: 100%;">
+                            <img :src="imageLink + article.thumbnail" alt="blog_img" style="width: 100%; object-fit: cover; height: 200px;  border-radius: 9px;">
                         </a>
                          <div class="blog_tags">
                             <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: article.category.id == 1, orangePill: article.category.id == 2, bluePill: article.category.id == 3, yellowPill: article.category.id == 4, pinkPill: article.category.id == 5, maroonPill: article.category.id == 6}">{{article.category.name}}</a>
                         </div>
                     </div>
                     <div class="blog_content">
-                        <div class="blog_text">
+                        <div class="blog_text" v-bind:class="{ clWhite: dark == false,  clDark: dark == true }">
                            <h6 class="blog_heading">
-                            <span v-html="article.contentDataSet[0].title">{{article.contentDataSet[0].title}}</span>
+                            <span class="listItem" v-html="article.contentDataSet[0].title">{{article.contentDataSet[0].title}}</span>
                             </h6>
-                            <p style="line-height: 1.25;" v-html="article.contentDataSet[0].body">{{article.contentDataSet[0].body}}</p>
+                            <p style="color: #686868;" v-html="article.contentDataSet[0].body">{{article.contentDataSet[0].body}}</p>
                         </div>
                     </div>
                 </div>
@@ -107,8 +236,6 @@
 </template>
 
 <script>
-import { Hooper, Slide, Navigation as HooperNavigation } from 'hooper';
-import 'hooper/dist/hooper.css';
 import {mapGetters, mapActions} from 'vuex';
 
 export default {
@@ -117,29 +244,17 @@ export default {
   return {
         posts: [],
         cookiesObject: '',
-        hooperSettings: {
-        itemsToShow: 4,
-        breakpoints: {
-          200: {
-            itemsToShow: 1
-          },
-          450: {
-            itemsToShow: 1
-          },
-          765: {
-            itemsToShow: 1.8
-          },
-          1000: {
-            itemsToShow: 1.8
-          }
-        }
-      },
       imageLink: window.API + '/media/',
       randomArticles: [],
       loggedArticles: [],
       filtered: [],
       refToken: '',
       showSeparator: '',
+      rel: '',
+      rel1: '',
+      rel2: '',
+      txt: '',
+      windowHeight: window.innerWidth,      
     }
   },
   async created(){
@@ -169,21 +284,34 @@ export default {
       .then(response => response.json())
       .then(result => {
         this.posts = result.content;
+        this.rel = result.content.filter( category => category.serviceId == 3);
+        this.rel1 = result.content.filter( category => category.serviceId == 1);
+        this.rel2 = result.content.filter( category => category.serviceId == 2);
+
         })
       .catch(error => console.log('error', error));
 
 
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize);
+    })
+
+  },
+  
+  beforeDestroy() { 
+    window.removeEventListener('resize', this.onResize); 
   },
 components: {
-  Hooper,
-  Slide,
-  HooperNavigation,
+
 },
 methods:{
     ...mapActions(["setToken", "setPermission", "setBundle"]),
     // slidePrev() {
     //   this.$refs.carousel.slidePrev();
     // },
+     onResize() {
+      this.windowHeight = window.innerWidth
+    },
     appData(){
         var myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=daa11664c49161bf93cd02dbd6c4fb8131611146765");
@@ -260,7 +388,6 @@ methods:{
                     location.assign('/');
                 } else {
                   this.refreshTok();
-                  console.log(result);
                 }
           } else
           this.loggedArticles = result;
@@ -292,11 +419,13 @@ methods:{
   },
 props: {
   },
-  computed: {
-   ...mapGetters(['tocken', 'bundlee']),
+  
+   computed: {
+   ...mapGetters(['tocken', 'bundlee', 'dark']),
    resultsTable () {
         return Object.keys(this.results)
       },
+    
   },
 
   
@@ -305,7 +434,7 @@ props: {
 </script>
 
 <style>
-@import '../assets/style.css';
+/* @import '../assets/style.css';
 @import '../assets/responsive.css';
 @import '../assets/themify-icons.css';
 @import '../assets/animate.css';
@@ -315,25 +444,31 @@ props: {
 @import '../assets/owl.carousel.min.css';
 @import '../assets/owl.theme.default.min.css';
 @import '../assets/owl.theme.css';
-@import '../assets/magnific-popup.css';
+@import '../assets/magnific-popup.css'; */
 
 .redPill{
-background: rgb(197, 11, 11);
+background: rgba(126, 66, 177, 0.8);
 }
 .orangePill{
-background: rgb(226, 125, 9);
+background: rgba(191, 64, 108, 0.8);
 }
 .bluePill{
-background: rgb(9, 49, 226);
+background: rgba(52, 71, 175, 0.8);
 }
 .pinkPill{
-background: rgb(226, 9, 197);
+background: rgba(50, 180, 191, 0.8);
 }
 .yellowPill{
-background: rgb(212, 209, 0);
+background: rgba(66, 177, 117, 0.8);
 }
 .maroonPill{
-background: rgb(172, 51, 51);
+background: rgba(149, 24, 25, 0.8);
+}
+.mainImg{
+ filter: brightness(45%);
+}
+.mainImg:hover{
+ filter: brightness(100%);
 }
 
 /* .hooper-prev {
@@ -356,4 +491,26 @@ background: rgb(172, 51, 51);
 .notSub{
   background: rgba(0, 0, 0, 0.2); ;
 }
+.clWhite1{
+  background: #E7E8EA;
+  -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
+}
+.clDark1{
+  background: #13161a; 
+  -webkit-transition: all 0.5s ease;
+	transition: all .5s ease;
+}
+/* @media only screen and (max-width: 600px) {
+  .MobileHide {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+
+  .MobileHide {
+    display: none;
+  }
+} */
 </style>

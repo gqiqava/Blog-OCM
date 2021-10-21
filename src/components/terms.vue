@@ -1,6 +1,6 @@
 <template>
   <div class="section container" style="height: 100%;">
-    <p style="text-align: left; margin-top: 60px; margin-bottom: 60px;">
+    <p style="text-align: left; margin-bottom: 60px;">
        <router-link :to="{ name: 'singleCategory'}">
             <b-button v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="font-size: 12px; padding: 8px;"> <img src="@/assets/home.svg" alt="ZuniLife" style="width: 15px; margin-bottom: 3px;"> <span v-bind:class="{ clWhite: dark == false,  clDark: dark == true }">{{ $t('LanguageEn.homePage') }} </span></b-button> 
         </router-link>

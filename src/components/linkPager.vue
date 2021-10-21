@@ -18,17 +18,12 @@
                             <h2 class="blog_title">{{postContent.title}}</h2>
                             <ul class="blog_meta">
                             <div style="position: fixed; bottom: 20px; left: auto;  z-index: 1;">
-                            <audio controls style="">
-                            <source v-html="audio" :src="audio">
+                            <audio v-if="audio1" controls style="">
+                            <source  :src="audio1">
                             </audio>
                             </div>
                             </ul>
                             <p v-html="postContent.body">{{postContent.body}}</p>
-                            <!-- <div style="text-align: center;">
-                            <audio controls style="">
-                            <source :src="postContent.audio">
-                            </audio>
-                            </div> -->
                             <!-- <div style="text-align: center;">
                             <a :href="postContent.audio" target="_blank"><img src="@/assets/player2.png" :alt="audio" style="width: 130px;"></a>
                             </div> -->
@@ -72,7 +67,7 @@
                         <li v-for="(link, indx) in links" :key="link.id" @click="newCon(link.day)" style="cursor: pointer;">
                             <div class="post_footer" v-if="indx < val">
                                 <div class="post_img">
-                                    <img class="rounded-circle" :src="media + link.image" alt="letest_post1">
+                                    <img class="rounded-circle" :src="media + link.thumbnail" alt="letest_post1">
                                 </div>
                                 <div class="post_content">
                                     <h6 class="hov" style="font-size: 12px; line-height: 18px; text-align: left;" v-html="link.title">{{link.title}}</h6>
@@ -120,7 +115,6 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 
-
 export default {
   name: 'linkPager',
   data(){
@@ -129,7 +123,7 @@ export default {
       post: {},
       postContent: [],
       links: [],
-      audio: '',
+      audio1: null,
       media: window.API+'/media/',
       d: '',
       categors:'',
@@ -137,7 +131,7 @@ export default {
       cookiesObject:'',
     }
   },
-  async created(){
+  async beforeMount(){
     this.id = this.$route.params.id;
     this.d = this.$route.params.d;
 
@@ -159,7 +153,7 @@ export default {
         .then(result => {
             this.post = result.contentDTO.category;
             this.postContent = result.contentDTO.contentDataSet[0];
-            this.audio = window.API+'/media/' + result.contentDTO.contentDataSet[0].audio;
+            this.audio1 = window.API+'/media/' + result.contentDTO.contentDataSet[0].media;
             this.links = result.contentLinks;
             })
         .catch(error => console.log('error', error));
@@ -208,7 +202,7 @@ export default {
 </script>
 
 <style>
-@import '../assets/style.css';
+/* @import '../assets/style.css';
 @import '../assets/responsive.css';
 @import '../assets/themify-icons.css';
 @import '../assets/animate.css';
@@ -218,7 +212,7 @@ export default {
 @import '../assets/owl.carousel.min.css';
 @import '../assets/owl.theme.default.min.css';
 @import '../assets/owl.theme.css';
-@import '../assets/magnific-popup.css';
+@import '../assets/magnific-popup.css'; */
 
 .links:hover{
     color: orange;

@@ -4,23 +4,24 @@
 <div class="section" v-if="showCont == 3">
 	<div class="container">
     <div class="row">
-    <div class="col-lg-9">
+    <div class="col-lg-12">
             <div class="single_post">
-                    <div class="blog_img" style="margin-top: 25px;">
-                        <img :src="imageLink + banner" alt="blog_img1">
+                    <div class="blog_img " style=" margin-bottom: 20px;">
+                        <img :src="imageLink + banner" alt="blog_img1" style="height: 200px;  border-radius: 10px;">
                         <div class="blog_tags">
                             <!-- <a class="blog_tags_cat bg_blue" style="background: #ff7900;">{{}}</a> -->
                         </div>
                     </div>
                     <div class="blog_content">
                         <div class="blog_text">
-                            <h2 class="blog_title" v-html="post.title">{{post.title}}</h2>
-                            <ul class="blog_meta">
+                            <span style="font-size: 12px; padding: 3px 7px; color: white; border-radius: 5px; font-weight: 600;" class="" v-bind:class="{ redPill: categoryId == 1, orangePill: categoryId == 2, bluePill: categoryId == 3, yellowPill: categoryId == 4, pinkPill: categoryId == 5, maroonPill: categoryId == 6}">{{categors[categoryId-1].name}}</span>
+                            <h2 class="blog_title" style="margin-top: 10px;" v-html="post.title">{{post.title}}</h2>
+                            <ul class="">
                             <!-- <div style="" @click="openPlayer()">
                             <a><img src="@/assets/player1.png" :alt="audio" style="width: 50px; cursor: pointer;"></a>
                             </div> -->
                             <div style="position: fixed; bottom: 20px; left: auto;  z-index: 1;">
-                            <audio controls style="">
+                            <audio controls style="border-radius: 10px; ">
                             <source v-html="audio" :src="audio">
                             </audio>
                             </div>
@@ -30,49 +31,45 @@
                     </div>
                 </div>               
             </div>
-            <div class="sidebar col-lg-3">
-            <div class="widget" style="margin-top: 25px;">
-                <h5 class="widget_title" style="text-align: left;">Categories</h5>
-                <ul class="widget_categories">
-                    <li v-for="category in categors" :key="category.id" @click="goTo(category.id)" style="cursor: pointer;"><div class="cat_bg background_bg overlay_bg_50" :style="{ backgroundImage: 'url(' + imageLink + category.icon + ')' }" ><div class="post_category"><span class="cat_title"><img src="@/assets/current.png" alt="" style="width: 22px; margin-right: 8px;" v-if="categoryId == category.id">{{category.name}}</span></div></div></li>
-                </ul>
-            </div>
-            <div class="widget" style="margin-top: 25px;">
-                <h5 class="widget_title" style="text-align: left;">{{ $t('LanguageEn.alsoSee') }}:</h5>
-                    <ul class="recent_post">
-                        <li v-for="(link, indx) in links" :key="link.id" @click="newCon(link.contentId)" style="cursor: pointer;">
-                            <div class="post_footer" v-if="indx < val">
-                                <div class="post_img">
-                                    <img class="rounded-circle" :src="imageLink + link.thumbnail" alt="letest_post1">
-                                </div>
-                                <div class="post_content">
-                                    <h6 class="hov" style="font-size: 12px; line-height: 18px; text-align: left;" v-html="link.title">{{link.title}}</h6>
-                                </div>
-                                </div>
-                        </li>
-                        <router-link :to="{ name: 'categoryPosts', params: { categoryId : categoryId }}">
-                        <button style="background: none; border: none; "><img src="@/assets/loadMore.png" alt="" style="width: 20px; margin-top: -60px;"></button>
-                        </router-link>
-                </ul>
-            </div>
-            <!-- <div class="sidebar mt-4 pt-2 mt-lg-0 pt-lg-0">
-                <div class="widget">
-                    <h5 class="widget_title" style="margin-top: 25px; text-align: left;">{{ $t('LanguageEn.alsoSee') }}:</h5>
-                        <div class="" v-for="(link, indx) in links" :key="link.id" style="cursor: pointer; text-align: left;  z-index: -1;" @click="newCon(link.contentId)">
-                            <img src="https://diagnostax.co.uk/wp-content/uploads/Cool-Cats-2.0-1024x585.png" v-if="indx < val" alt="" style="width: 300px;">
-                            <p class="links" v-html="link.title" v-if="indx < val"> {{link.title}} </p>
+           
+<!-- Related Articles -->
+
+    <h5 class="widget_title container" style="text-align: left; margin-top: 25px; margin-bottom: 30px;">{{ $t('LanguageEn.alsoSee') }}:</h5>
+
+    <div class="row container">
+      <div v-for="(link, indx) in links" :key="link.id" class="col-xl-3 col-lg-3 col-md-6 pr-2 pl-2" style="cursor: pointer;">
+        <div class="blog_post" v-if="indx < val">
+                <div class="blog_img">
+                            <img :src="imageLink + link.thumbnail" @click="newCon(link.contentId)" alt="blog_img" style="width: 90%; object-fit: cover; height: 200px; border-radius: 8px;">
+                         <div class="blog_tags">
                         </div>
-                        <button @click="val = val+5" style="background: none; border: none;"><img src="@/assets/loadMore.png" alt="" style="width: 30px; margin-top: 10px;"></button>
+                    </div>  
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <h5 class="blog_heading">
+                                <h6 class="hov" style="font-size: 12px; line-height: 20px; text-align: left; font-weight: 550; margin-left: 13px;" v-html="link.title" @click="newCon(link.contentId)">{{link.title}}</h6>
+                              </h5>
+                        </div>
                     </div>
-                </div> -->
-            </div>
+                </div>
+        </div>
+  </div>
+
+<h5 class="widget_title container" style="text-align: left; margin-top: 20px; margin-bottom: 20px; 	border-bottom: 1px solid #ddd; padding-bottom: 8px;">Categories  <img src="@/assets/dots.svg" alt="" style="width: 17px; margin-top: -3px;"> </h5>
+  <div class="col-xl-12 col-md-12 col-sm-12 " style="margin-top: 0px; text-align: left;">
+    <!-- <b-form-select v-model="categoryId" class="mb-3" @change="setCat">
+        <b-form-select-option v-for="sngl in cats" :key="sngl.id" @change="setCat(sngl.id)" :value="sngl.id"> <span> {{sngl.name}} </span> </b-form-select-option>
+    </b-form-select> -->
+   <p v-bind:class="{ clWhite: dark == false,  clDark: dark == true }" style="font-weight: 600; font-size: 15px;"> All categories <span style="margin-left: 14px; cursor: pointer;" v-for="sngl in categors" :key="sngl.id" @click="setCat(sngl.id, sngl.serviceId)" v-bind:class="{textColor: categoryId == sngl.id}">{{sngl.name}} <img src="@/assets/check.svg" v-if="categoryId == sngl.id" alt="" style="width: 24px; margin-left: -5px; margin-top: -3px;"></span></p>
+    </div>
+            
         </div>
     </div>
 </div>
 <div class="section" v-else-if="showCont == 2">
-	<div class="container">
+	<div class="container" style="height: 480px;">
     <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="margin-top: 90px;">
             <img src="@/assets/zlifeBlack.png" alt="" style="width: 350px;">    
             <h1 style="margin-top: 50px;">404 <br> {{ $t('LanguageEn.notFound') }}</h1> 
             <router-link :to="{ name: 'singleCategory'}">
@@ -83,9 +80,9 @@
     </div>
 </div>
 <div class="section" v-else-if="showCont == 1">
-	<div class="container">
+	<div class="container" style="height: 480px;">
     <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="margin-top: 90px;">
             <img src="@/assets/zlifeBlack.png" alt="" style="width: 350px;">    
             <h3 style="margin-top: 50px;">{{ $t('LanguageEn.notSubbed') }}</h3> 
             <router-link :to="{ name: 'singleCategory'}">
@@ -150,7 +147,7 @@
 </template>
 
 <script>
-
+import {mapGetters, } from 'vuex';
 
 export default {
   name: 'singlePost',
@@ -172,7 +169,7 @@ export default {
       showCont: '',
       links: [],
       text:'',
-      val: 5,
+      val: 4,
       categors: '',
       isActive: true,
       serId: '',
@@ -232,12 +229,18 @@ export default {
   },
   components: {
 },
+computed: {
+   ...mapGetters(["dark"]),
+  },
 props: {
   },
 
 methods:{
     goTo(val){
         this.$router.push({ name: 'categoryPosts', params: { categoryId: val } })
+    },
+    setCat(val, val2){
+        this.$router.push({ name: 'categoryPosts',params: { categoryId : val, servicId : val2 } })
     },
     getCategories(){
         var myHeaders = new Headers();
@@ -353,9 +356,9 @@ methods:{
             })
         .catch(error => console.log('error', error));
     },
-    openPlayer(){
-        window.open(this.audio, 'newwin', 'height=80px, width=280px');
-    },
+    // openPlayer(){
+    //     window.open(this.audio, 'newwin', 'height=80px, width=280px');
+    // },
     newCon(contentId){
             this.$router.push({ name: 'singlePost', params: { contentId: contentId, categoryId: this.categoryId } })
         },
@@ -365,7 +368,7 @@ methods:{
 </script>
 
 <style>
-@import '../assets/style.css';
+/* @import '../assets/style.css';
 @import '../assets/responsive.css';
 @import '../assets/themify-icons.css';
 @import '../assets/animate.css';
@@ -375,7 +378,7 @@ methods:{
 @import '../assets/owl.carousel.min.css';
 @import '../assets/owl.theme.default.min.css';
 @import '../assets/owl.theme.css';
-@import '../assets/magnific-popup.css';
+@import '../assets/magnific-popup.css'; */
 
 .hov:hover{
     color: orange;

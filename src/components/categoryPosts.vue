@@ -1,18 +1,26 @@
 <template>
 <div>
 <div class="section" v-if="showCont == 3">
+     <p class="container" style="text-align: left; margin-bottom: 60px;">
+        <router-link :to="{ name: 'singleCategory'}">
+            <b-button v-bind:class="{ clWhite1: dark == false,  clDark1: dark == true }" style="font-size: 12px; padding: 8px;"> <img src="@/assets/home.svg" alt="ZuniLife" style="width: 15px; margin-bottom: 3px;"> <span v-bind:class="{ clWhite: dark == false,  clDark: dark == true }">{{ $t('LanguageEn.homePage') }} </span></b-button> 
+        </router-link>
+        <img src="@/assets/arr.svg" alt="ZuniLife" style="width: 20px; margin-left: 5px;"><a style=" margin-left: 5px;" v-bind:class="{ clWhite: dark == false,  clDark: dark == true }"> Tous les articles </a>
+    </p>     
+<div class="container border-bottom" style="">
+    <h4 class="col-xl-5 col-md-5 col-sm-12 pl-0 pr-0" style="text-align: left;"> <span style="font-weight: 600;"> Tous les articles</span> <span style="font-size: 12px; padding: 3px 7px; color: white; border-radius: 5px; margin-left: 4px;" v-bind:class="{ redPill: categoryId == 1, orangePill: categoryId == 2, bluePill: categoryId == 3, yellowPill: categoryId == 4, pinkPill: categoryId == 5, maroonPill: categoryId == 6}">{{cats[categoryId-1].name}}</span> <span style="color: grey; font-size: 12px; margin-left: 3px;">{{sz}} articles</span></h4>
+    <!-- <p class="col-xl-5 col-md-5 col-sm-12 pl-0 pr-0" style="text-align: left;">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p> -->
+</div>
 <div class="container">
-    <div class="col-xl-5 col-md-5 col-sm-12 pl-0 pr-0" style="margin-top: 23px;">
-    <b-form-select v-model="categoryId" class="mb-3" @change="setCat">
-        <b-form-select-option v-for="sngl in cats" :key="sngl.id" @change="setCat(sngl.id)" :value="sngl.id"> <span> {{sngl.name}} </span> </b-form-select-option>
-    </b-form-select>
+    <div class="col-xl-12 col-md-12 col-sm-12 pl-0 pr-0" style="margin-top: 23px; text-align: left;">
+      <p v-bind:class="{ clWhite: dark == false,  clDark: dark == true }" style="font-weight: 600; font-size: 15px;">Toutes les catégories <span style="margin-left: 14px; cursor: pointer;" v-for="sngl in cats" :key="sngl.id" @click="setCat(sngl.id, sngl.serviceId)" v-bind:class="{textColor: categoryId == sngl.id}">{{sngl.name}} <img src="@/assets/check.svg" v-if="categoryId == sngl.id" alt="" style="width: 24px; margin-left: -4px; margin-top: -3px;"></span></p>
     </div>
   <div class="row">
-      <div v-for="post in posts" :key="post.id" class="col-xl-3 col-lg-3 col-md-6">
+      <div v-for="post in posts" :key="post.id" class="col-xl-3 col-lg-3 col-md-6 pl-3 pr-3">
         <div class="blog_post">
                 <div class="blog_img">
                         <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}">
-                            <img :src="imageLink + post.content.thumbnail" alt="blog_img" style="height: 100%; width: 100%;">
+                            <img :src="imageLink + post.content.thumbnail" alt="blog_img" style="width: 100%; object-fit: cover; height: 200px; border-radius: 8px;">
                         </router-link>
                          <div class="blog_tags">
                             <a class="blog_tags_cat bg_warning" v-bind:class="{ redPill: categoryId == 1, orangePill: categoryId == 2, bluePill: categoryId == 3, yellowPill: categoryId == 4, pinkPill: categoryId == 5, maroonPill: categoryId == 6}">{{post.content.category.name}}</a>
@@ -21,15 +29,17 @@
                     <div class="blog_content">
                         <div class="blog_text">
                             <h5 class="blog_heading">
-                              <router-link :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}">
-                               <span v-html="post.content.contentDataSet[0].title"> {{post.content.contentDataSet[0].title}} </span>
+                              <router-link  :to="{ name: 'singlePost', params: { categoryId : categoryId, contentId: post.content.id }}">
+                                <div v-bind:class="{ clWhite: dark == false,  clDark: dark == true }">
+                               <span class="listItem" style="font-size: 17px;" v-html="post.content.contentDataSet[0].title"> {{post.content.contentDataSet[0].title}} </span>
+                               </div>
                               </router-link>
                               </h5>
                             <ul class="blog_meta">
                                 <!-- <li><img src="@/assets/calendar.png" alt="" style="width: 20px;"> <span style="font-size: 13px; font-style: italic;">{{post.subscriptionDate.slice(0,10)}}</span></li> -->
                                 <!-- <li><a href="#"><i class="ti-comments"></i> <span>{{post.id}}</span></a></li> -->
                             </ul>
-                            <p style="line-height: 1.25;" v-html="post.content.contentDataSet[0].body"> {{post.content.contentDataSet[0].body}} </p>
+                            <p style="color: #686868; font-size: 15px;" v-html="post.content.contentDataSet[0].body"> {{post.content.contentDataSet[0].body}} </p>
                         </div>
                     </div>
                 </div>
@@ -38,9 +48,9 @@
     </div>
 </div>
 <div class="section" v-else-if="showCont == 2">
-	<div class="container">
+	<div class="container" style="height: 480px;">
     <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="margin-top: 90px;">
             <img src="@/assets/zlifeBlack.png" alt="" style="width: 350px;">    
             <h1 style="margin-top: 50px;">404 <br> {{ $t('LanguageEn.notFound') }}</h1> 
             <router-link :to="{ name: 'singleCategory'}">
@@ -51,9 +61,9 @@
     </div>
 </div>
 <div class="section" v-else-if="showCont == 1">
-	<div class="container">
+	<div class="container" style="height: 480px;">
     <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="margin-top: 90px;">
             <img src="@/assets/zlifeBlack.png" alt="" style="width: 350px;">    
             <h3 style="margin-top: 50px;">{{ $t('LanguageEn.notSubbed') }}</h3> 
             <router-link :to="{ name: 'singleCategory'}">
@@ -116,8 +126,11 @@
 </template>
 
 <script>
+import {mapGetters, } from 'vuex';
+
 
 export default {
+
   name: 'categoryPosts',
   data(){
   return {
@@ -133,7 +146,8 @@ export default {
         cats: '',
         cat:'',
         serId: '',
-         lang: 2,
+        lang: 2,
+        sz: '0',
     }
   },
   async created(){
@@ -163,21 +177,18 @@ export default {
                 this.showText(4, this.serId);
                 this.$refs['my-modal2'].show();
                 this.actToken = result.newToken;
-                console.log(result)
         } else if(result.code == 404){
                     this.showCont = 2;
-                console.log(result)
         } else if ( result.status == 'PAST_DUE'){
                 this.showCont = 1;
                 this.showText(3);
                 this.$refs['my-modal3'].show();
                 this.actToken = result.newToken;
-                console.log(result)
         }  else if ( result.code == 401){
                 location.assign('/');
         } else {
         this.posts = result.content;
-        console.log(result)
+        this.sz = result.content.length;
         this.showCont = 3;
         }
         })
@@ -187,9 +198,12 @@ export default {
   },
   components: {
 },
+computed: {
+   ...mapGetters(["dark"]),
+  },
 methods: {
-    setCat(val){
-        this.$router.push({ name: 'categoryPosts',params: { categoryId : val, servicId : 3 } })
+    setCat(val, val2){
+        this.$router.push({ name: 'categoryPosts',params: { categoryId : val, servicId : val2 } })
     },
     categories(){
          var myHeaders = new Headers();
@@ -314,7 +328,7 @@ methods: {
 </script>
 
 <style>
-@import '../assets/style.css';
+/* @import '../assets/style.css';
 @import '../assets/responsive.css';
 @import '../assets/themify-icons.css';
 @import '../assets/animate.css';
@@ -324,30 +338,15 @@ methods: {
 @import '../assets/owl.carousel.min.css';
 @import '../assets/owl.theme.default.min.css';
 @import '../assets/owl.theme.css';
-@import '../assets/magnific-popup.css';
+@import '../assets/magnific-popup.css'; */
 
 .mbtn:hover{
     color: #ff7900 !important;
     border-color: #ff7900 !important;
 }
 
-.redPill{
-background: rgb(197, 11, 11);
-}
-.orangePill{
-background: rgb(226, 125, 9);
-}
-.bluePill{
-background: rgb(9, 49, 226);
-}
-.pinkPill{
-background: rgb(226, 9, 197);
-}
-.yellowPill{
-background: rgb(212, 209, 0);
-}
-.maroonPill{
-background: rgb(172, 51, 51);
+.textColor{
+    color: #FF7900;
 }
 
 </style>
