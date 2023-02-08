@@ -1,1 +1,1 @@
-window.API = 'https://contentapi.zuniac.com';
+window.API = 'https://zldigipay.zuniac.com';
